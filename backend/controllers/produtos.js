@@ -1,6 +1,6 @@
 const { isAuthorized } = require("../middleware/auth.js");
 var mongo = require('mongodb');
-test
+
 module.exports = function (app, collections) {
     var users = collections["users"];
     var items = collections["items"];
