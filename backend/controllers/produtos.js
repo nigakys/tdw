@@ -28,7 +28,7 @@ module.exports = function (app, collections) {
     app.post('/', (req, res) => {
         items.insertOne(req.body, function (err, res) {
             if (err) res.status(400).send("Erro a inserir");
-            else res.stauts(200).send("Prato inserido" + req.body); res.stauts(200).send("Prato inserido" + req.body);
+            else res.status(200).send("Produto inserido" + req.body);
         });
 
     })
