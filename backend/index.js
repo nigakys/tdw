@@ -14,7 +14,7 @@ MongoClient.connect(url, {useUnifiedTopology: true}, function (err, client) {
 			"items": client.db("Db").collection("items")
 		}
 
-		require("./controllers/pratosDia")(app, collections);
+		require("./controllers/produtos")(app, collections);
 
 		app.listen(port, () => console.log('App | Pedro Carmo'));
 	}
