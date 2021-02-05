@@ -1,21 +1,25 @@
-const express = require("express");
+const express = require("express")
+const mongoose = require("mongoose");
+const dbName = "Grupo5";
 const app = express();
-const port = 4000;
 app.use(express.json());
+const port = 4000;
+const uri = "mongodb://admin:admin@cluster0-shard-00-00.tqocv.mongodb.net:27017,cluster0-shard-00-01.tqocv.mongodb.net:27017,cluster0-shard-00-02.tqocv.mongodb.net:27017/<dbname>?ssl=true&replicaSet=atlas-pblict-shard-0&authSource=admin&retryWrites=true&w=majority";
+const connect = mongoose.connect(uri, { dbName: dbName,useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true });
 
-var MongoClient = require('mongodb').MongoClient;
 
-var url = "mongodb://pcarmo:pcarmo123@cluster-shard-00-00.jabin.mongodb.net:27017,cluster-shard-00-01.jabin.mongodb.net:27017,cluster-shard-00-02.jabin.mongodb.net:27017/db?ssl=true&replicaSet=atlas-610jb3-shard-0&authSource=admin&retryWrites=true&w=majority";
- test = 2 
-MongoClient.connect(url, {useUnifiedTopology: true}, function (err, client) {
-	if (err == null) {
-		let collections = {
-			"users": client.db("Db").collection("users"),
-			"items": client.db("Db").collection("items")
-		}
+connect.then(() => {
+    console.log("Connected");
 
-		require("./controllers/pratosDia")(app, collections);
+    let produtos = require("./controllers/produtos");
+    app.use("/produtos", produtos)
 
-		app.listen(port, () => console.log('App | Pedro Carmo'));
-	}
+    app.use((req, next) => {
+        var data = new Date();
+        console.log("Pedido: " + req.method + "\nData: " + data.toUTCString());
+    });
+
+
+
+    app.listen(port, () => console.log('App | Pedro Carmo'));
 });

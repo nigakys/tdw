@@ -1,67 +1,90 @@
-const { isAuthorized } = require("../middleware/auth.js");
-var mongo = require('mongodb');
+var mongo = require("mongodb");
+var express = require('express');
+const produtos = require("../models/produtos");
+var router = express.Router();
 
-module.exports = function (app, collections) {
-    var users = collections["users"];
-    var items = collections["items"];
 
-    app.use((req, res, next) => {
-        users.find().toArray().then(result => {
-            isAuthorized(req, res, next, result);
-        })
-    });
-
-    app.get('/', (req, res) => {
-        items.find().toArray().then(result => {
+router.get('/', (req, res) => {
+    produtos.find().then(result => {
+        if (result != null) {
             res.status(200).send(result);
-        })
-    });
-
-    app.get('/:id', (req, res) => {
-        var id = new mongo.ObjectID(req.params.id);
-        var query = { _id: id };
-        items.findOne(query).then(result => {
-            res.status(200).send(result);
-        })
-    });
-
-    app.post('/', (req, res) => {
-        items.insertOne(req.body, function (err, res) {
-            if (err) res.status(400).send("Erro a inserir");
-            else res.status(200).send("Produto inserido" + req.body);
-        });
-
+        }
+        else {
+            res.status(400).send("Nada encontrado")
+        }
     })
+});
 
-    app.put('/:id', (req, res) => {
-        var id = new mongo.ObjectID(req.params.id);
-        var query = { _id: id };
-        var values = { $set: req.body };
-
-        items.updateOne(query, values, function (err, res) {
-            if (err) throw err;
-        });
-        res.status(200).send("Item atualizado com sucesso");
-    })
-
-    app.delete('/:id', (req, res) => {
-        var id = new mongo.ObjectID(req.params.id);
-        var query = { _id: id };
-
-        items.deleteOne(query, function (err, res) {
-            if (err) {
-                return err;               
+router.get('/:id', (req, res) => {
+    var id = new mongo.ObjectID(req.params.id);
+    var query = { _id: id };
+    if (req.params != null) {
+        produtos.find(query).then(result => {
+            if (result != null) {
+                res.status(200).send(result);
             }
-        });
-        res.status(200).send("Item apagado com sucesso");
-    })
-
-    app.delete('/', (req, res) => {
-        items.deleteMany(function (err, res) {
-            if (err) {
-                return err;
+            else {
+                res.status(400).send("Nada encontrado")
             }
-        });
-        res.status(200).send("Todos os items foram apagados")
+        })
+    }
+    else {
+
+    }
+});
+
+router.post('/', (req, res) => {
+    if (req.body != null) {
+        produtos.create(req.body).then(() => {
+            res.status(200).send("Produto inserido" + JSON.stringify(req.body));
+        })
+            .catch((err) => {
+                throw err;
+            })
+    }
+    else {
+        res.status(400).send("Body sem valores")
+    }
+
+})
+
+router.patch('/:id', (req, res) => {
+    var id = new mongo.ObjectID(req.params.id);
+    var query = { _id: id };
+
+    if (req.body != null && req.params != null) {
+        produtos.updateOne(query, req.body).then(() => {
+            res.status(200).send("Atualizado com sucesso: " + JSON.stringify(req.body));
+        }).catch((err) => {
+            res.status(400).send(err.message);
+        })
+    }
+    else{
+        res.status(400).send("Body ou Id nao enviados");
+    }
+})
+
+router.delete('/:id', (req, res) => {
+    var id = new mongo.ObjectID(req.params.id);
+    var query = { _id: id };
+    if (req.params.id != null) {
+        produtos.deleteOne(query).then(() => {
+            res.status(200).send("Apagado com sucesso");
+        }).catch((err) => {
+            res.status(400).send(err.message);
+        })
+    }
+    else{
+        res.status(400).send("Id nao enviado");
+    }
+})
+
+router.delete('/', (req, res) => {
+    produtos.deleteMany().then(() => {
+        res.status(200).send("Apagado com sucesso");
+    }).catch((err) => {
+        res.status(400).send(err.message);
     })
-}
+})
+
+module.exports = router;
