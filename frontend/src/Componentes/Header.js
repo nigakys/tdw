@@ -1,6 +1,5 @@
-
 import React from "react";
-
+import { NavLink } from "react-router-dom";
 
 
 class Header extends React.Component{
@@ -19,6 +18,7 @@ class Header extends React.Component{
         </div>
         <div class="nav-menu">
         <ul class="nav-links">
+        <NavLink className="navlink" to="/Dashboard">Dashboard</NavLink>
             <li>
                 <a href="#home">Home</a>
             </li>
@@ -43,7 +43,7 @@ class Header extends React.Component{
                 </div>
               
                <div class="coluna"> 
-                <img src="imagens/cart.png"></img>
+                <img src="imagens/cart.png" alt="erro"></img>
                </div>
           
              

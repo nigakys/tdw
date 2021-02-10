@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8000/";
+const BASE_URL = "http://localhost:4000/";
 var mongo = require("mongodb");
 
 function GetProdutos() {
@@ -58,9 +58,7 @@ function GetSortProdutoPreco(preco) {
   });
 }
 
-function criarProduto(id, list) {
-  var id = new mongo.ObjectID(id);
-
+function criarProduto(list) {
   return fetch(BASE_URL + "produtos/", {
     method: "POST",
     headers: {
@@ -76,7 +74,8 @@ function criarProduto(id, list) {
   });
 }
 
-function upadateProduto(id, list) {
+function upadateProduto(_id, list) {
+  var id = new mongo.ObjectID(_id);
   return fetch(BASE_URL + "produtos/" + id, {
     method: "PATCH",
     headers: {
@@ -109,7 +108,6 @@ function deleteProduto(_id, list) {
   });
 }
 
-{/*-----------------------------------------------------------------------------------------------------------------------------------------------*/}
 
 function GetUser() {
   return fetch(BASE_URL + "users/", {
@@ -157,6 +155,7 @@ function upadateUser(id, list) {
     return response.json();
   });
 }
+
 function getUserByEmail(email) {
   return fetch(BASE_URL + "users/email/" + email, {
     method: "GET",
@@ -186,10 +185,7 @@ function GetUniqueUser(id) {
     return response.json();
   });
 }
-{/*--------------------------------------------------------------------------------------------------------------------------------------*/}
-function criarCarrinho(id, list) {
-  var id = new mongo.ObjectID(id);
-
+function criarCarrinho(list) {
   return fetch(BASE_URL + "carrinho/", {
     method: "POST",
     headers: {
@@ -221,7 +217,7 @@ function upadateCarrinho(id, list) {
   });
 }
 
-export default {
+var funcoes = {
   GetProdutos,
   criarProduto,
   upadateProduto,
@@ -233,5 +229,9 @@ export default {
   GetUniqueProduto,
   getUserByEmail,
   GetTipoProduto,
-  GetSortProdutoPreco
-};
+  GetSortProdutoPreco,
+  upadateUser,
+  GetUniqueUser
+}
+
+export default funcoes;
