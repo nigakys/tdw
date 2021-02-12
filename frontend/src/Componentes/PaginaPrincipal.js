@@ -126,9 +126,35 @@ class PaginaPrincipal extends React.Component {
 
                             <div class="div_produtos">
                                 <div class="div_cadaProduto">
+                                <img  src="imagens/casaco2.png"></img>
 
 
                                 </div>
+                                <div class="div_cadaProduto">
+                                <img  src="imagens/casaco2.png"></img>
+
+
+                                </div>
+
+                                <div class="div_cadaProduto">
+                                <img  src="imagens/casaco2.png"></img>
+
+
+                                </div>
+
+                                <div class="div_cadaProduto">
+                                <img  src="imagens/casaco2.png"></img>
+
+
+                                </div>
+
+                                <div class="div_cadaProduto">
+                                <img  src="imagens/casaco2.png"></img>
+
+
+                                </div>
+
+
 
                             </div>
                         </section>
