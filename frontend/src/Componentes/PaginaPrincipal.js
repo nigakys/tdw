@@ -55,6 +55,7 @@ class PaginaPrincipal extends React.Component {
             return (
                 <div className="col">
                     {this.state.produtos.map((pos) => {
+                        console.log(pos)
                         return (
                             <ProdutosInfo key={pos.id} id={pos._id} nome={pos.nome} preco={pos.preco} stock={pos.stock} tamanho={pos.tamanho}></ProdutosInfo>
                         )
@@ -120,7 +121,7 @@ class PaginaPrincipal extends React.Component {
 
                         <section id="container_produtos" class="container_produtos">
                             <div> <h2>Novos Produtos</h2>
-                                <span>ver todos</span>
+                                <span>ver todos </span>
                             </div>
 
                             <div class="div_produtos">

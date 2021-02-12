@@ -2,6 +2,7 @@ const BASE_URL = "http://localhost:4000/";
 var mongo = require("mongodb");
 
 function GetProdutos() {
+  console.log("1")
   return fetch(BASE_URL + "produtos/", {
     method: "GET",
     headers: {
@@ -10,8 +11,10 @@ function GetProdutos() {
     },
   }).then((response) => {
     if (response.status !== 200) {
+      
       return [];
     }
+    
     return response.json();
   });
 }
