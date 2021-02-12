@@ -35,11 +35,12 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
     if (req.body != null) {
+        
         produtos.create(req.body).then(() => {
             res.status(200).send("Produto inserido" + JSON.stringify(req.body));
         })
             .catch((err) => {
-                throw err;
+                console.log(err)
             })
     }
     else {
@@ -48,7 +49,7 @@ router.post('/', (req, res) => {
 
 })
 
-router.patch('/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     var id = new mongo.ObjectID(req.params.id);
     var query = { _id: id };
 

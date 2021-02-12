@@ -1,6 +1,6 @@
 import React from "react";
 import api from "../api";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch,withRouter } from "react-router-dom";
 import Produtos from "./Produtos";
 import Dashboard from "./Dashboard";
 import Form from "./Form";
@@ -19,6 +19,35 @@ class PaginaPrincipal extends React.Component {
         api.GetProdutos().then((data) => {
             this.setState({ produtos: data })
         })
+    }
+
+    criarEditar = (event, info) => {
+        var id;
+        event.preventDefault();
+        if (info.id == null) {
+            this.state.produtos.push({
+                nome: info.nome,
+                preco: info.preco,
+                stock: info.stock,
+                tamanho: info.tamanho
+            });
+            id = info.id;
+            api.criarProduto(this.state.produtos[this.state.produtos.length-1])
+        }
+
+        else {
+            this.state.produtos.map((pos) => {
+                if (info.id == pos._id) {
+                    pos.nome = info.nome;
+                    pos.preco = info.preco;
+                    pos.stock = info.stock;
+                    pos.tamanho = info.tamanho;
+                }
+                api.upadateProduto(info.id,pos)
+
+            })
+        }
+        this.props.history.push("/Dashboard")
     }
 
     MostrarProdutos = () => {
@@ -136,7 +165,6 @@ class PaginaPrincipal extends React.Component {
                         {...props}
                         produtos={this.state.produtos}
                         criarEditar={this.criarEditar}>
-
                     </Form>
                 }
                 />
@@ -158,4 +186,4 @@ function ProdutosInfo(props) {
 }
 
 
-export default PaginaPrincipal;
+export default withRouter(PaginaPrincipal);

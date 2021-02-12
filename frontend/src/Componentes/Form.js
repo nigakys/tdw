@@ -7,10 +7,11 @@ class Form extends React.Component {
         super(props);
         if (props.match != null && props.match.params.id != null) {
             this.props.produtos.map((pos) => {
-                if (pos.id === parseInt(props.match.params.id)) {
+                if (pos._id == props.match.params.id) {
+                    
                     this.state = {
                         produtos: {
-                            id: pos.id,
+                            id: pos._id,
                             nome: pos.nome,
                             preco: pos.preco,
                             tamanho: pos.tamanho,
@@ -51,13 +52,13 @@ class Form extends React.Component {
                     <h1>Editar Produto</h1>
                 }
                 <form onSubmit={(e) => this.props.criarEditar(e,this.state.produtos)}>
-                    Nome: <input id="Nome" value={this.state.sandes.nome} onChange={(e) => this.updateField(e, "nome")}></input>
+                    Nome: <input id="Nome" value={this.state.produtos.nome} onChange={(e) => this.updateField(e, "nome")}></input>
                     <p></p>
-                    Preco: <input id="Preco" value={this.state.sandes.preco} onChange={(e) => this.updateField(e, "preco")}></input>
+                    Preco: <input id="Preco" value={this.state.produtos.preco} onChange={(e) => this.updateField(e, "preco")}></input>
                     <p></p>
-                    Stock: <input id="Stock" value={this.state.sandes.stock} onChange={(e) => this.updateField(e, "stock")}></input>
+                    Stock: <input id="Stock" value={this.state.produtos.stock} onChange={(e) => this.updateField(e, "stock")}></input>
                     <p></p>
-                    Tamanho: <select id="Tamanho" value={this.state.sandes.stock} onChange={(e) => this.updateField(e, "stock")}>
+                    Tamanho: <select id="Tamanho" value={this.state.produtos.tamanho} onChange={(e) => this.updateField(e, "tamanho")}>
                         <option value="s">s</option>
                         <option value="m" >m</option>
                         <option value="l">l</option>

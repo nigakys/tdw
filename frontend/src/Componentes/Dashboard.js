@@ -1,11 +1,11 @@
 import React from "react";
-import { Link } from 'react-router-dom'
+import { Link,withRouter} from 'react-router-dom'
 
 class Dashboard extends React.Component {
     render() {
-        console.log("ola" + JSON.stringify(this.props))
         return (
             <div>
+                <td> <Link to={`/Dashboard/add/`}><button>Adicionar</button></Link> </td>
                 <table className="table">
                     <thead>
                         <tr>
@@ -23,7 +23,7 @@ class Dashboard extends React.Component {
                             this.props.produtos.map((item, i) => {
                                 return (
                                     <tr key={i}>
-                                        <td>{item.id}</td>
+                                        <td>{item._id}</td>
                                         
 
                                         <td>{item.nome}</td>
@@ -35,9 +35,9 @@ class Dashboard extends React.Component {
 
                                         <td>{item.stock}</td>
 
-                                        <td> <Link to={`/Dashboard/edit/${item.id}`}><button>Editar</button></Link> </td>
+                                        <td> <Link to={`/Dashboard/edit/${item._id}`}><button>Editar</button></Link> </td>
 
-                                        <td> <button onClick={() => this.props.funcaoRemover(item.id)}>Eliminar</button> </td>
+                                        <td> <button onClick={() => this.props.funcaoRemover(item._id)}>Eliminar</button> </td>
                                         
                                     </tr>
                                 )
@@ -51,4 +51,4 @@ class Dashboard extends React.Component {
     }
 }
 
-export default Dashboard;
+export default withRouter(Dashboard);

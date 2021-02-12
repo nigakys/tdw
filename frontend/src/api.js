@@ -77,7 +77,7 @@ function criarProduto(list) {
 function upadateProduto(_id, list) {
   var id = new mongo.ObjectID(_id);
   return fetch(BASE_URL + "produtos/" + id, {
-    method: "PATCH",
+    method: "PUT",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
