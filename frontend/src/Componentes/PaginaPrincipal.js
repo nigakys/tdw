@@ -1,25 +1,31 @@
 import React from "react";
 import api from "../api";
-import { Route, Switch,withRouter } from "react-router-dom";
+import { Link, Route, Switch, withRouter } from "react-router-dom";
 import Produtos from "./Produtos";
 import Dashboard from "./Dashboard";
-import Form from "./Form";
+import FormProduto from "./FormProduto";
+import ProdutoInfo from "./ProdutoInfo";
 
 class PaginaPrincipal extends React.Component {
     constructor(props) {
         super(props);
-    
+
         this.state = {
-          produtos: []
-    
+            produtos: []
+
         };
-      }
+    }
 
     GetProdutos = () => {
         api.GetProdutos().then((data) => {
             this.setState({ produtos: data })
         })
     }
+
+    addCarrinho = (produto) => {
+        localStorage.setItem('cart', JSON.stringify(produto))
+    }
+
 
     criarEditar = (event, info) => {
         var id;
@@ -28,11 +34,10 @@ class PaginaPrincipal extends React.Component {
             this.state.produtos.push({
                 nome: info.nome,
                 preco: info.preco,
-                stock: info.stock,
-                tamanho: info.tamanho
+                tipo: info.tipo
             });
             id = info.id;
-            api.criarProduto(this.state.produtos[this.state.produtos.length-1])
+            api.criarProduto(this.state.produtos[this.state.produtos.length - 1])
         }
 
         else {
@@ -43,7 +48,7 @@ class PaginaPrincipal extends React.Component {
                     pos.stock = info.stock;
                     pos.tamanho = info.tamanho;
                 }
-                api.upadateProduto(info.id,pos)
+                api.upadateProduto(info.id, pos)
 
             })
         }
@@ -55,9 +60,8 @@ class PaginaPrincipal extends React.Component {
             return (
                 <div className="col">
                     {this.state.produtos.map((pos) => {
-                        console.log(pos)
                         return (
-                            <ProdutosInfo key={pos.id} id={pos._id} nome={pos.nome} preco={pos.preco} stock={pos.stock} tamanho={pos.tamanho}></ProdutosInfo>
+                            <ProdutosInfo key={pos.id} produto={pos}></ProdutosInfo>
                         )
                     })}
                 </div>
@@ -153,20 +157,27 @@ class PaginaPrincipal extends React.Component {
                 ></Route>
 
                 <Route exact path="/Dashboard/add" render={props => (
-                    <Form
+                    <FormProduto
                         {...props}
                         produtos={this.state.produtos}
                         criarEditar={this.criarEditar}
-                    ></Form>
+                    ></FormProduto>
                 )}
                 ></Route>
 
                 <Route exact path="/Dashboard/edit/:id" render={props =>
-                    <Form
+                    <FormProduto
                         {...props}
                         produtos={this.state.produtos}
                         criarEditar={this.criarEditar}>
-                    </Form>
+                    </FormProduto>
+                }
+                />
+                <Route exact path="/Dashboard/info/:id" render={props =>
+                    <ProdutoInfo
+                        {...props}
+                        produtos={this.state.produtos}>
+                    </ProdutoInfo>
                 }
                 />
             </Switch>
@@ -177,11 +188,11 @@ class PaginaPrincipal extends React.Component {
 function ProdutosInfo(props) {
     return (
         <div className="col">
-            <b>{props.id}</b>
-            <b>{props.nome}</b>
-            <b>{props.preco}</b>
-            <b>{props.tamanho}</b>
-            <b>{props.stock}</b>
+            <b>{props.produto.nome}</b>
+            <b>{props.produto.preco}</b>
+            <b>{props.produto.tipo}</b>
+            <b>{props.produto.imagem}</b>
+            <Link to="/Produtos"><button>ver</button></Link>
         </div>
     )
 }

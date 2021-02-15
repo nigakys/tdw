@@ -2,7 +2,7 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 
 
-class Form extends React.Component {
+class FormProduto extends React.Component {
     constructor(props) {
         super(props);
         if (props.match != null && props.match.params.id != null) {
@@ -56,13 +56,7 @@ class Form extends React.Component {
                     <p></p>
                     Preco: <input id="Preco" value={this.state.produtos.preco} onChange={(e) => this.updateField(e, "preco")}></input>
                     <p></p>
-                    Stock: <input id="Stock" value={this.state.produtos.stock} onChange={(e) => this.updateField(e, "stock")}></input>
-                    <p></p>
-                    Tamanho: <select id="Tamanho" value={this.state.produtos.tamanho} onChange={(e) => this.updateField(e, "tamanho")}>
-                        <option value="s">s</option>
-                        <option value="m" >m</option>
-                        <option value="l">l</option>
-                    </select>
+                    Tipo: <input id="Tipo" value={this.state.produtos.stock} onChange={(e) => this.updateField(e, "Tipo")}></input>
                     <p></p>
                     <Link to="/dashboard"><button >Voltar</button></Link>
                     <button type="submit">Enviar</button>
@@ -72,4 +66,4 @@ class Form extends React.Component {
     }
 }
 
-export default withRouter(Form);
+export default withRouter(FormProduto);

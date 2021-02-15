@@ -12,6 +12,11 @@ connect.then(() => {
     console.log("Connected");
 
     let produtos = require("./controllers/produtos");
+    let variantes = require("./controllers/variantes");
+    let users = require("./controllers/users");
+
+    app.use("/variantes", variantes)
+    app.use("/users", users)
     app.use("/produtos", produtos)
 
     app.use((req, next) => {

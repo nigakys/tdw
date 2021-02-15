@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const alunosSchema = new Schema({
+const usersSchema = new Schema({
     username: {
         type: String,
         required: true,
@@ -16,11 +16,24 @@ const alunosSchema = new Schema({
         required: true,
         unique: true 
     },
+    morada:{
+        contacto: {
+            type: String
+        },
+        cidade: {
+            type: String
+        },
+        ruaCasa: {
+            type: String
+        },
+        codPostal: {
+            type: String
+        }
+    },
     isAdmin:{
         type: Boolean,
         default: false
     }
 })
 
-var Alunos = mongoose.model("alunos", alunosSchema);
-module.exports = Alunos;
+module.exports = mongoose.model("Users", usersSchema,"users");

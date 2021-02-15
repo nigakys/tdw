@@ -9,11 +9,11 @@ class Dashboard extends React.Component {
                 <table className="table">
                     <thead>
                         <tr>
-                            <td><b>ID</b></td>
+                            <td><b>ref</b></td>
+                            <td><b>Imagem</b></td>
                             <td><b>Nome</b></td>
-                            <td><b>Tamanho</b></td>
-                            <td><b>Preco</b></td>
-                            <td><b>Stock</b></td>
+                            <td><b>Tipo</b></td>
+                            <td><b>Preço</b></td>
                             <td style={{ textAlign: "center" }} colSpan="2"> <b>Ações</b></td>
                         </tr>
                     </thead>
@@ -23,20 +23,18 @@ class Dashboard extends React.Component {
                             this.props.produtos.map((item, i) => {
                                 return (
                                     <tr key={i}>
-                                        <td>{item._id}</td>
+                                        <td>{item.ref}</td>
                                         
-
+                                        <td><img src={item.imagem}></img></td>
+                                        
                                         <td>{item.nome}</td>
 
-                                        {item.tamanho === "" ?
-                                            <td>N/D</td> : <td>{item.tamanho}</td>
-                                        }
+                                        <td>{item.tipo}</td>
+
                                         <td>{item.preco}</td>
 
-                                        <td>{item.stock}</td>
-
                                         <td> <Link to={`/Dashboard/edit/${item._id}`}><button>Editar</button></Link> </td>
-
+                                        <td> <Link to={`/Dashboard/info/${item._id}`}><button>Ver/Editar Variantes</button></Link> </td>
                                         <td> <button onClick={() => this.props.funcaoRemover(item._id)}>Eliminar</button> </td>
                                         
                                     </tr>

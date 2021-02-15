@@ -2,8 +2,22 @@ const BASE_URL = "http://localhost:4000/";
 var mongo = require("mongodb");
 
 function GetProdutos() {
-  console.log("1")
   return fetch(BASE_URL + "produtos/", {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      return [];
+    }
+    return response.json();
+  });
+}
+
+function GetVariantesProduto(id) {
+  return fetch(BASE_URL + "variantes/" + id, {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -18,6 +32,9 @@ function GetProdutos() {
     return response.json();
   });
 }
+
+
+
 function GetUniqueProduto(id) {
   return fetch(BASE_URL + "produtos/" + id, {
     method: "GET",
@@ -234,7 +251,8 @@ var funcoes = {
   GetTipoProduto,
   GetSortProdutoPreco,
   upadateUser,
-  GetUniqueUser
+  GetUniqueUser,
+  GetVariantesProduto
 }
 
 export default funcoes;

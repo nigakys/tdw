@@ -1,11 +1,11 @@
 var mongo = require("mongodb");
 var express = require('express');
-const produtos = require("../models/produtos");
+const variantes = require("../models/variantes");
 var router = express.Router();
 
 
 router.get('/', (req, res) => {
-    produtos.find().then(result => {
+    variantes.find().then(result => {
         if (result != null) {
             res.status(200).send(result);
         }
@@ -16,11 +16,11 @@ router.get('/', (req, res) => {
 });
 
 
-router.get('/:id', (req, res) => {
-    var id = new mongo.ObjectID(req.params.id);
-    var query = { _id: id };
-    if (req.params != null) {
-        produtos.find(query).then(result => {
+router.get('/:ref', (req, res) => {
+    var query = { ref: req.params.ref };
+
+    if (req.params != null && !isNaN(req.params.ref)) {
+        variantes.find(query).then(result => {
             if (result != null) {
                 res.status(200).send(result);
             }
@@ -30,14 +30,14 @@ router.get('/:id', (req, res) => {
         })
     }
     else {
-
+        res.status(400).send("Parametros vazios ou inválidos")
     }
 });
 
 router.post('/', (req, res) => {
     if (req.body != null) {
-        
-        produtos.create(req.body).then(() => {
+
+        variantes.create(req.body).then(() => {
             res.status(200).send("Produto inserido" + JSON.stringify(req.body));
         })
             .catch((err) => {
@@ -55,13 +55,13 @@ router.put('/:id', (req, res) => {
     var query = { _id: id };
 
     if (req.body != null && req.params != null) {
-        produtos.updateOne(query, req.body).then(() => {
+        variantes.updateOne(query, req.body).then(() => {
             res.status(200).send("Atualizado com sucesso: " + JSON.stringify(req.body));
         }).catch((err) => {
             res.status(400).send(err.message);
         })
     }
-    else{
+    else {
         res.status(400).send("Body ou Id nao enviados");
     }
 })
@@ -70,19 +70,19 @@ router.delete('/:id', (req, res) => {
     var id = new mongo.ObjectID(req.params.id);
     var query = { _id: id };
     if (req.params.id != null) {
-        produtos.deleteOne(query).then(() => {
+        variantes.deleteOne(query).then(() => {
             res.status(200).send("Apagado com sucesso");
         }).catch((err) => {
             res.status(400).send(err.message);
         })
     }
-    else{
+    else {
         res.status(400).send("Id nao enviado");
     }
 })
 
 router.delete('/', (req, res) => {
-    produtos.deleteMany().then(() => {
+    variantes.deleteMany().then(() => {
         res.status(200).send("Apagado com sucesso");
     }).catch((err) => {
         res.status(400).send(err.message);

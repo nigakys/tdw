@@ -10,14 +10,8 @@ class Header extends React.Component{
         navSlide();
         teste();
         teste1();
-      
-
-
     }
 
-
-
-    
     render(){
         
         
@@ -74,14 +68,7 @@ class Header extends React.Component{
 
             </nav>
             </div>
-
-
-
-
-
-
-         
-            
+   
         </div>)
     }
 
