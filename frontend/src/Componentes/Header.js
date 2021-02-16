@@ -10,6 +10,13 @@ class Header extends React.Component{
         navSlide();
         teste();
         teste1();
+<<<<<<< HEAD
+=======
+        alert();
+      
+
+
+>>>>>>> 02a497f13bcb7bd45cb802a36ec49d8f4acabb95
     }
 
     render(){
@@ -23,24 +30,31 @@ class Header extends React.Component{
         </div>
         <div class="nav-menu">
         <ul class="nav-links">
+            <li>
         <NavLink className="navlink" to="/Dashboard">Dashboard</NavLink>
-            <li>
-                <a href="#home">Home</a>
+               
             </li>
             <li>
-                <a href="#special">Especial</a>
+            <NavLink className="navlink" to="/">Home</NavLink>
+    
             </li>
             <li>
-                <a href="#container_produtos">Novidades</a>
+            <NavLink className="navlink" to="/ProdutosEspeciais">Especial</NavLink>
+                
             </li>
             <li>
-                <a href="#subscrever">Newsletter</a>
+            <NavLink className="navlink" to="/Novidades">Novidades</NavLink>
+            
+            </li>
+            <li>
+            <NavLink className="navlink" to="/Newsletter">Newsletter</NavLink>
+              
             </li>
          </ul>
         </div>
         <div class="icons">
                <div class="coluna">
-               <img src="../imagens/user.png" alt="erro"></img>
+               <img className="img1" src="../imagens/user.png" alt="erro"></img>
                 
                </div>
               
@@ -73,6 +87,13 @@ class Header extends React.Component{
     }
 
 
+}
+function alert(){
+   const img = document.querySelector(".img1");
+
+   img.addEventListener("imageClick",()=>{
+  
+   })
 }
  
 var colorr
