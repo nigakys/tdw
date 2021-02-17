@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
-import api from '../api'
 
 class FormProduto extends React.Component {
     constructor(props) {
@@ -12,6 +11,7 @@ class FormProduto extends React.Component {
                     this.state = {
                         produtos: {
                             id: pos._id,
+                            ref: pos.ref,
                             tipo: pos.tipo,
                             nome: pos.nome,
                             preco: pos.preco,
@@ -47,9 +47,9 @@ class FormProduto extends React.Component {
         addProduto[fieldName] = event.target.value;
 
         if (fieldName === "imagem") {
-            this.setState({ imagem: event.target.files[0]})
+            this.setState({ imagem: event.target.files[0] })
         }
-        else if(fieldName === "especial"){
+        else if (fieldName === "especial") {
             addProduto[fieldName] = event.target.checked;
             console.log(this.state.produtos.especial)
             this.setState({ produtos: addProduto })
@@ -60,7 +60,7 @@ class FormProduto extends React.Component {
         event.preventDefault();
     }
 
-    
+
 
 
 
@@ -72,6 +72,8 @@ class FormProduto extends React.Component {
                     <h1>Editar Produto</h1>
                 }
                 <form onSubmit={(e) => this.props.criarEditar(e, this.state.produtos, this.state.imagem)}>
+                    Referência: <input id="Ref" value={this.state.produtos.ref} onChange={(e) => this.updateField(e, "ref")}></input>
+                    <p></p>
                     Nome: <input id="Nome" value={this.state.produtos.nome} onChange={(e) => this.updateField(e, "nome")}></input>
                     <p></p>
                     Categoria: <input id="Tipo" value={this.state.produtos.tipo} onChange={(e) => this.updateField(e, "tipo")}></input>

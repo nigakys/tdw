@@ -31,48 +31,46 @@ class PaginaPrincipal extends React.Component {
         var id;
         event.preventDefault();
         var imagemForm = new FormData;
-        imagemForm.append('file',imagem)
+        imagemForm.append('file', imagem)
         var nomeImagem;
-        if(imagem == null){
-            nomeImagem=""
-        }
-        else{
-            nomeImagem = imagem.name
-        }
+        imagem == null ? nomeImagem = "" : nomeImagem = imagem.name
+        var data = new Date;
 
         if (produto.id == null) {
             this.state.produtos.push({
                 tipo: produto.tipo,
                 nome: produto.nome,
+                ref: produto.ref,
                 preco: produto.preco,
                 especial: produto.especial,
-                dataAdicionado: produto.dataAdicionado,
+                dataAdicionado: data.toUTCString(),
                 imagem: nomeImagem
             });
             id = produto.id;
-            api.criarProduto(this.state.produtos[this.state.produtos.length - 1],imagemForm);
+            api.criarProduto(this.state.produtos[this.state.produtos.length - 1], imagemForm);
         }
 
         else {
             this.state.produtos.map((pos) => {
-                if(imagem == null){
-                    nomeImagem= pos.imagem
+                if (imagem == null) {
+                    nomeImagem = pos.imagem
                 }
-                else{
+                else {
                     nomeImagem = imagem.name
                 }
                 if (produto.id == pos._id) {
                     pos.tipo = produto.tipo;
                     pos.nome = produto.nome;
+                    pos.ref = produto.ref;
                     pos.preco = produto.preco;
                     pos.especial = produto.especial;
                     pos.dataAdicionado = produto.dataAdicionado;
                     pos.imagem = nomeImagem;
                 }
-                api.updateProduto(produto.id, pos,imagemForm)
+                api.updateProduto(produto.id, pos, imagemForm)
             })
         }
-         this.props.history.push("/Dashboard")
+        this.props.history.push("/Dashboard")
     }
 
     MostrarProdutos = () => {
@@ -98,7 +96,7 @@ class PaginaPrincipal extends React.Component {
     render() {
         return (
             <Switch>
-                <Route exact path="/" render={props =>
+                <Route exact path="/" render={() =>
                 (
                     <div>
                         <section id="home" class="home">
@@ -147,39 +145,14 @@ class PaginaPrincipal extends React.Component {
                             <div> <h2>Novos Produtos</h2>
                                 <span>ver todos </span>
                             </div>
-
                             <div class="div_produtos">
-                                <div class="div_cadaProduto">
-                                    <img src="imagens/casaco2.png"></img>
-
-
-                                </div>
-                                <div class="div_cadaProduto">
-                                    <img src="imagens/casaco2.png"></img>
-
-
-                                </div>
-
-                                <div class="div_cadaProduto">
-                                    <img src="imagens/casaco2.png"></img>
-
-
-                                </div>
-
-                                <div class="div_cadaProduto">
-                                    <img src="imagens/casaco2.png"></img>
-
-
-                                </div>
-
-                                <div class="div_cadaProduto">
-                                    <img src="imagens/casaco2.png"></img>
-
-
-                                </div>
-
-
-
+                                {this.state.produtos.map((pos) => {
+                                    return (
+                                        <div class="div_cadaProduto">
+                                            <img src={"http://localhost:4000/files/" + pos.imagem}></img>
+                                        </div>
+                                    )
+                                })}
                             </div>
                         </section>
                         <section id="subscrever" class="subscrever">
@@ -237,7 +210,7 @@ function ProdutosInfo(props) {
             <b>{props.produto.nome}</b>
             <b>{props.produto.preco}</b>
             <b>{props.produto.tipo}</b>
-            <b>{props.produto.imagem}</b>
+            <b><img src={"http://localhost:4000/files/" + props.produto.imagem}></img></b>
             <Link to="/Produtos"><button>ver</button></Link>
         </div>
     )
