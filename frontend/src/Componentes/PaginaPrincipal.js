@@ -27,32 +27,36 @@ class PaginaPrincipal extends React.Component {
     }
 
 
-    criarEditar = (event, info) => {
+    criarEditar = (event, produto, imagem) => {
         var id;
         event.preventDefault();
-        if (info.id == null) {
+        if (produto.id == null) {
             this.state.produtos.push({
-                nome: info.nome,
-                preco: info.preco,
-                tipo: info.tipo
+                tipo: produto.tipo,
+                nome: produto.nome,
+                preco: produto.preco,
+                especial: produto.especial,
+                dataAdicionado: produto.dataAdicionado,
+                imagem: imagem.name
             });
-            id = info.id;
-            api.criarProduto(this.state.produtos[this.state.produtos.length - 1])
+            id = produto.id;
+            api.criarProduto(this.state.produtos[this.state.produtos.length - 1],imagem);
         }
 
         else {
             this.state.produtos.map((pos) => {
-                if (info.id == pos._id) {
-                    pos.nome = info.nome;
-                    pos.preco = info.preco;
-                    pos.stock = info.stock;
-                    pos.tamanho = info.tamanho;
+                if (produto.id == pos._id) {
+                    pos.tipo = produto.tipo;
+                    pos.nome = produto.nome;
+                    pos.preco = produto.preco;
+                    pos.especial = produto.especial;
+                    pos.dataAdicionado = produto.dataAdicionado;
+                    pos.imagem = imagem.name;
                 }
-                api.upadateProduto(info.id, pos)
-
+                api.updateProduto(produto.id, pos,imagem)
             })
         }
-        this.props.history.push("/Dashboard")
+         this.props.history.push("/Dashboard")
     }
 
     MostrarProdutos = () => {
@@ -130,30 +134,30 @@ class PaginaPrincipal extends React.Component {
 
                             <div class="div_produtos">
                                 <div class="div_cadaProduto">
-                                <img  src="imagens/casaco2.png"></img>
+                                    <img src="imagens/casaco2.png"></img>
 
 
                                 </div>
                                 <div class="div_cadaProduto">
-                                <img  src="imagens/casaco2.png"></img>
-
-
-                                </div>
-
-                                <div class="div_cadaProduto">
-                                <img  src="imagens/casaco2.png"></img>
+                                    <img src="imagens/casaco2.png"></img>
 
 
                                 </div>
 
                                 <div class="div_cadaProduto">
-                                <img  src="imagens/casaco2.png"></img>
+                                    <img src="imagens/casaco2.png"></img>
 
 
                                 </div>
 
                                 <div class="div_cadaProduto">
-                                <img  src="imagens/casaco2.png"></img>
+                                    <img src="imagens/casaco2.png"></img>
+
+
+                                </div>
+
+                                <div class="div_cadaProduto">
+                                    <img src="imagens/casaco2.png"></img>
 
 
                                 </div>

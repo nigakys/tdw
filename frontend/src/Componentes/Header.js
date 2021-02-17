@@ -10,13 +10,6 @@ class Header extends React.Component{
         navSlide();
         teste();
         teste1();
-<<<<<<< HEAD
-=======
-        alert();
-      
-
-
->>>>>>> 02a497f13bcb7bd45cb802a36ec49d8f4acabb95
     }
 
     render(){

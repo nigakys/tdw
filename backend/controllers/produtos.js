@@ -2,7 +2,8 @@ var mongo = require("mongodb");
 var express = require('express');
 const produtos = require("../models/produtos");
 var router = express.Router();
-
+const fileUpload = require("express-fileupload");
+router.use(fileUpload());
 
 router.get('/', (req, res) => {
     produtos.find().then(result => {
@@ -36,10 +37,10 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
     if (req.body != null) {
-        
-        produtos.create(req.body).then(() => {
-            res.status(200).send("Produto inserido" + JSON.stringify(req.body));
-        })
+        produtos.create(req.body)
+            .then(() => {
+                res.status(200).send("Produto inserido" + JSON.stringify(req.body));
+            })
             .catch((err) => {
                 console.log(err)
             })
@@ -49,6 +50,18 @@ router.post('/', (req, res) => {
     }
 
 })
+
+router.post('/imagem', function (req, res) {
+    var file = req.files.file;
+    var filename = file.name;
+    file.mv('./files/' + filename, function (err) {
+        if (err) {
+            console.log(err)
+        } else {
+            res.status(200).send("Imagem recebida")
+        }
+    })
+});
 
 router.put('/:id', (req, res) => {
     var id = new mongo.ObjectID(req.params.id);
@@ -61,7 +74,7 @@ router.put('/:id', (req, res) => {
             res.status(400).send(err.message);
         })
     }
-    else{
+    else {
         res.status(400).send("Body ou Id nao enviados");
     }
 })
@@ -76,7 +89,7 @@ router.delete('/:id', (req, res) => {
             res.status(400).send(err.message);
         })
     }
-    else{
+    else {
         res.status(400).send("Id nao enviado");
     }
 })

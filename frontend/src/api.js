@@ -49,6 +49,7 @@ function GetUniqueProduto(id) {
     return response.json();
   });
 }
+
 function GetTipoProduto(tipo) {
   return fetch(BASE_URL + "produtos/tipo/" + tipo, {
     method: "GET",
@@ -63,6 +64,7 @@ function GetTipoProduto(tipo) {
     return response.json();
   });
 }
+
 function GetSortProdutoPreco(preco) {
   return fetch(BASE_URL + "produtos/preco/" + preco, {
     method: "GET",
@@ -78,23 +80,27 @@ function GetSortProdutoPreco(preco) {
   });
 }
 
-function criarProduto(list) {
+function criarProduto(produto,imagem) {
   return fetch(BASE_URL + "produtos/", {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(list),
+    body: JSON.stringify(produto),
   }).then((response) => {
     if (response.status !== 200) {
       return [];
     }
+    uploadImagem(imagem)
     return response.json();
   });
 }
 
-function upadateProduto(_id, list) {
+function updateProduto(_id, produto,imagem) {
+  
+  console.log(produto)
+  console.log(imagem)
   var id = new mongo.ObjectID(_id);
   return fetch(BASE_URL + "produtos/" + id, {
     method: "PUT",
@@ -102,14 +108,29 @@ function upadateProduto(_id, list) {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(list),
+    body: JSON.stringify(produto),
   }).then((response) => {
     if (response.status !== 200) {
       return [];
     }
+    uploadImagem(imagem)
     return response.json();
   });
 }
+
+function uploadImagem(imagem) {
+  return fetch(BASE_URL + "produtos/imagem", {
+    method: "POST",
+    body: imagem,
+  }).then((response) => {
+    if (response.status !== 200) {
+      return [];
+    }
+    return "success";
+  });
+}
+
+
 
 function deleteProduto(_id, list) {
   var id = new mongo.ObjectID(_id);
@@ -240,7 +261,7 @@ function upadateCarrinho(id, list) {
 var funcoes = {
   GetProdutos,
   criarProduto,
-  upadateProduto,
+  updateProduto,
   deleteProduto,
   criarCarrinho,
   upadateCarrinho,
@@ -252,7 +273,8 @@ var funcoes = {
   GetSortProdutoPreco,
   upadateUser,
   GetUniqueUser,
-  GetVariantesProduto
+  GetVariantesProduto,
+  uploadImagem,
 }
 
 export default funcoes;
