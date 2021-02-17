@@ -98,9 +98,7 @@ function criarProduto(produto,imagem) {
 }
 
 function updateProduto(_id, produto,imagem) {
-  
-  console.log(produto)
-  console.log(imagem)
+
   var id = new mongo.ObjectID(_id);
   return fetch(BASE_URL + "produtos/" + id, {
     method: "PUT",
@@ -113,6 +111,7 @@ function updateProduto(_id, produto,imagem) {
     if (response.status !== 200) {
       return [];
     }
+    
     uploadImagem(imagem)
     return response.json();
   });

@@ -45,15 +45,22 @@ class FormProduto extends React.Component {
     updateField = (event, fieldName) => {
         var addProduto = this.state.produtos;
         addProduto[fieldName] = event.target.value;
+
         if (fieldName === "imagem") {
-            this.setState({ imagem: event.target.files[0], })
+            this.setState({ imagem: event.target.files[0]})
+        }
+        else if(fieldName === "especial"){
+            addProduto[fieldName] = event.target.checked;
+            console.log(this.state.produtos.especial)
+            this.setState({ produtos: addProduto })
         }
         else {
             this.setState({ produtos: addProduto })
         }
-
         event.preventDefault();
     }
+
+    
 
 
 
@@ -71,9 +78,10 @@ class FormProduto extends React.Component {
                     <p></p>
                     Preco: <input id="Preco" value={this.state.produtos.preco} onChange={(e) => this.updateField(e, "preco")}></input>
                     <p></p>
-                    Imagem: <input type="File" id="Imagem" value={this.state.produtos.imagem} onChange={(e) => this.updateField(e, "imagem")}></input>
+                    Imagem: <input type="File" id="Imagem" onChange={(e) => this.updateField(e, "imagem")}></input>
                     <p></p>
-                    Especial: <input type="checkbox" id="Especial" value={this.state.produtos.especial} onChange={(e) => this.updateField(e, "especial")}></input>
+                    <img src={"http://localhost:4000/files/" + this.state.produtos.imagem}></img>
+                    Especial: <input type="checkbox" id="Especial" defaultChecked={this.state.produtos.especial} onChange={(e) => this.updateField(e, "especial")}></input>
                     <p></p>
                     <Link to="/dashboard"><button >Voltar</button></Link>
                     <button type="submit">Adicionar</button>

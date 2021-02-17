@@ -30,6 +30,16 @@ class PaginaPrincipal extends React.Component {
     criarEditar = (event, produto, imagem) => {
         var id;
         event.preventDefault();
+        var imagemForm = new FormData;
+        imagemForm.append('file',imagem)
+        var nomeImagem;
+        if(imagem == null){
+            nomeImagem=""
+        }
+        else{
+            nomeImagem = imagem.name
+        }
+
         if (produto.id == null) {
             this.state.produtos.push({
                 tipo: produto.tipo,
@@ -37,23 +47,29 @@ class PaginaPrincipal extends React.Component {
                 preco: produto.preco,
                 especial: produto.especial,
                 dataAdicionado: produto.dataAdicionado,
-                imagem: imagem.name
+                imagem: nomeImagem
             });
             id = produto.id;
-            api.criarProduto(this.state.produtos[this.state.produtos.length - 1],imagem);
+            api.criarProduto(this.state.produtos[this.state.produtos.length - 1],imagemForm);
         }
 
         else {
             this.state.produtos.map((pos) => {
+                if(imagem == null){
+                    nomeImagem= pos.imagem
+                }
+                else{
+                    nomeImagem = imagem.name
+                }
                 if (produto.id == pos._id) {
                     pos.tipo = produto.tipo;
                     pos.nome = produto.nome;
                     pos.preco = produto.preco;
                     pos.especial = produto.especial;
                     pos.dataAdicionado = produto.dataAdicionado;
-                    pos.imagem = imagem.name;
+                    pos.imagem = nomeImagem;
                 }
-                api.updateProduto(produto.id, pos,imagem)
+                api.updateProduto(produto.id, pos,imagemForm)
             })
         }
          this.props.history.push("/Dashboard")

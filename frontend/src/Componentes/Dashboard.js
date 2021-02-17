@@ -25,7 +25,7 @@ class Dashboard extends React.Component {
                                     <tr key={i}>
                                         <td>{item.ref}</td>
                                         
-                                        <td><img src={item.imagem}></img></td>
+                                        <td><img src={"http://localhost:4000/files/"+item.imagem}></img></td>
                                         
                                         <td>{item.nome}</td>
 

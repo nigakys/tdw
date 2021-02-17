@@ -51,22 +51,24 @@ router.post('/', (req, res) => {
 
 })
 
-router.post('/imagem', function (req, res) {
+router.post('/imagem',function (req, res) {
+    if(req.files!=null){
     var file = req.files.file;
     var filename = file.name;
-    file.mv('./files/' + filename, function (err) {
+    
+    file.mv('./public/files/' + filename, function (err) {
         if (err) {
             console.log(err)
         } else {
             res.status(200).send("Imagem recebida")
         }
     })
+}
 });
 
 router.put('/:id', (req, res) => {
     var id = new mongo.ObjectID(req.params.id);
     var query = { _id: id };
-
     if (req.body != null && req.params != null) {
         produtos.updateOne(query, req.body).then(() => {
             res.status(200).send("Atualizado com sucesso: " + JSON.stringify(req.body));
