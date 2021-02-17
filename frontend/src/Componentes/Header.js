@@ -18,8 +18,8 @@ class Header extends React.Component{
         return (<div> 
             <div className="header">
                 <nav class="nav">
-            <div class="loja">
-                <h2>Loja</h2>
+            <div><a class="loja">    <NavLink  className="navlink" to="/"> <ul>Loja</ul> </NavLink></a>
+            
         </div>
         <div class="nav-menu">
         <ul class="nav-links">
@@ -27,10 +27,7 @@ class Header extends React.Component{
         <NavLink className="navlink" to="/Dashboard">Dashboard</NavLink>
                
             </li>
-            <li>
-            <NavLink className="navlink" to="/">Home</NavLink>
-    
-            </li>
+           
             <li>
             <NavLink className="navlink" to="/ProdutosEspeciais">Especial</NavLink>
                 

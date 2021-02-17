@@ -112,10 +112,11 @@ class PaginaPrincipal extends React.Component {
                                 <h2>Produtos Especiais</h2>
                                 <span>Ver todos</span>
                             </div>
+                            
                             <div class="card">
                                 <div class="imgspe">
 
-                                    {this.MostrarProdutos()}
+                                   
 
                                 </div>
                                 <div class="contentBox">
@@ -147,10 +148,12 @@ class PaginaPrincipal extends React.Component {
                             </div>
                             <div class="div_produtos">
                                 {this.state.produtos.map((pos) => {
-                                    return (
+                                    return (<div>
                                         <div class="div_cadaProduto">
                                             <img src={"http://localhost:4000/files/" + pos.imagem}></img>
                                         </div>
+                                          
+                                      </div>
                                     )
                                 })}
                             </div>
