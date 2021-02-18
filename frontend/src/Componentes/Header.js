@@ -1,92 +1,78 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
+class Header extends React.Component {
+  componentDidMount() {
+    randomNavHeaderColor();
+    navSlide();
+    teste();
+    teste1();
+  }
 
-class Header extends React.Component{
+  render() {
+    return (
+      <div>
+        <div className="header">
+          <nav class="nav">
+            <div>
+              <NavLink className="loja" to="/">
+                {" "}
+                Loja{" "}
+              </NavLink>
+            </div>
+            <div class="nav-menu">
+              <ul class="nav-links">
+                <li>
+                  <NavLink to="/Dashboard">Dashboard</NavLink>
+                </li>
 
+                <li>
+                  <NavLink to="/ProdutosEspeciais">Especial</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/Novidades">Novidades</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/Newsletter">Newsletter</NavLink>
+                </li>
+              </ul>
+            </div>
+            <div class="icons">
+              <div class="coluna">
+                <img
+                  className="img1"
+                  src="../imagens/user.png"
+                  alt="erro"
+                ></img>
+              </div>
 
-    componentDidMount(){
-        randomNavHeaderColor();
-        navSlide();
-        teste();
-        teste1();
-    }
-
-    render(){
-        
-        
-        return (<div> 
-            <div className="header">
-                <nav class="nav">
-            <div><a class="loja">    <NavLink  className="navlink" to="/"> <ul>Loja</ul> </NavLink></a>
-            
-        </div>
-        <div class="nav-menu">
-        <ul class="nav-links">
-            <li>
-        <NavLink className="navlink" to="/Dashboard">Dashboard</NavLink>
-               
-            </li>
-           
-            <li>
-            <NavLink className="navlink" to="/ProdutosEspeciais">Especial</NavLink>
-                
-            </li>
-            <li>
-            <NavLink className="navlink" to="/Novidades">Novidades</NavLink>
-            
-            </li>
-            <li>
-            <NavLink className="navlink" to="/Newsletter">Newsletter</NavLink>
-              
-            </li>
-         </ul>
-        </div>
-        <div class="icons">
-               <div class="coluna">
-               <img className="img1" src="../imagens/user.png" alt="erro"></img>
-                
-               </div>
-              
-                <div class="coluna">
+              <div class="coluna">
                 <img src="../imagens/pes.png" alt="erro"></img>
-                    
-                </div>
-              
-               <div class="coluna"> 
+              </div>
+
+              <div class="coluna">
                 <img src="../imagens/cart.png" alt="erro"></img>
-               </div>
-          
-             
+              </div>
+            </div>
 
-             </div>
-
-          <div class="menu">
+            <div class="menu">
               <div class="line1"></div>
               <div class="line2"></div>
               <div class="line3"></div>
-
-          </div>
-        
-     
-
-            </nav>
             </div>
-   
-        </div>)
-    }
-
-
+          </nav>
+        </div>
+      </div>
+    );
+  }
 }
-function alert(){
-   const img = document.querySelector(".img1");
+function alert() {
+  const img = document.querySelector(".img1");
 
-   img.addEventListener("imageClick",()=>{
-  
-   })
+  img.addEventListener("imageClick", () => {});
 }
- 
-var colorr
+
+var colorr;
 
 function randomNavHeaderColor() {
   const nav = document.querySelector(".nav");
@@ -103,21 +89,21 @@ function randomNavHeaderColor() {
       nav.style.backgroundColor = color[0];
       header.style.backgroundColor = color[0];
       navLinks.style.backgroundColor = color[0];
-      colorr = 0
+      colorr = 0;
     } else if (random > 2 && random <= 5) {
       nav.style.backgroundColor = color[1];
       header.style.backgroundColor = color[1];
       navLinks.style.backgroundColor = color[1];
-      colorr = 1
+      colorr = 1;
     } else if (random > 5 && random <= 8) {
       nav.style.backgroundColor = color[2];
       header.style.backgroundColor = color[2];
       navLinks.style.backgroundColor = color[2];
-      colorr = 2
+      colorr = 2;
     }
   });
-};
-function navSlide(){ 
+}
+function navSlide() {
   const menu = document.querySelector(".menu");
   const nav = document.querySelector(".nav-links");
   const navLinks = document.querySelectorAll(".nav-links li");
@@ -134,7 +120,8 @@ function navSlide(){
         link.style.animation = "";
       } else {
         link.style.animation = `navLinkFade 0.5s ease forwards ${
-          index / 7 + 0.5}s`;
+          index / 7 + 0.5
+        }s`;
       }
     });
 
@@ -142,40 +129,25 @@ function navSlide(){
 
     menu.classList.toggle("toggle");
   });
-};
+}
 
 // hover img
-function teste(){
+function teste() {
   var color = ["#86e6f9", "#DED87F", "#B25FE8"];
 
-  
   document.querySelectorAll(".div_cadaProduto img").forEach((item) => {
     item.addEventListener("mouseenter", () => {
       item.style.backgroundColor = color[colorr];
-     
     });
   });
-  
-};
+}
 
-
-function teste1(){
+function teste1() {
   document.querySelectorAll(".div_cadaProduto img ").forEach((item) => {
     item.addEventListener("mouseleave", () => {
-      item.style.backgroundColor = '#e6e0e0';
-     
+      item.style.backgroundColor = "#e6e0e0";
     });
   });
-};
-
-
-  
-
-
-
-
-
-
+}
 
 export default Header;
-
