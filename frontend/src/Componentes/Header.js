@@ -34,7 +34,7 @@ class Header extends React.Component {
             </div>
             <div class="icons">
               <div class="coluna">
-                <NavLink to="/perfil">
+                <NavLink to="/Login">
                   <img
                     className="img1"
                     src="../imagens/user.png"

@@ -109,17 +109,32 @@ class PaginaPrincipal extends React.Component {
               <section class="special">
                 <div>
                   <h2>Produtos Especiais</h2>
-                  <span>Ver todos</span>
+                  <NavLink to="/ProdutosEspeciais"><span>Ver todos</span></NavLink>
                 </div>
 
-                <div class="card">
-                  <div class="imgspe"></div>
-                  <div class="contentBox">
+                <div class="div_produtos">
+                
+                  {this.state.produtos.map((pos) => {
+                   
+                    if(pos.especial){
+                      
+                  
+                    return (
+                      <div>
+                        <div class="container1">
+                        <div className="card">
+                         
+                           <div className="imgbox">
 
-                    {//this.MostrarProdutos()
-                    }
-
-                    <div class="size">
+                          <img
+                            onMouseEnter={() => MouseEnter()}
+                            onMouseLeave={() => MouseLeave()}
+                            src={"http://localhost:4000/files/" + pos.imagem}
+                          ></img>
+                        </div>
+                        <div className="contentbx">
+                          <h3>{pos.nome}</h3>
+                            <div class="size">
                       <h3>Size</h3>
                       <span>7</span><br></br>
                       <span>8</span><br></br>
@@ -128,20 +143,36 @@ class PaginaPrincipal extends React.Component {
                     </div>
                     <div class="cor">
                       <h3>Cor</h3>
-                      <span>7</span><br></br>
-                      <span>8</span><br></br>
-                      <span>9</span><br></br>
-                      <span>10</span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
                     </div>
-                  </div>
+                    </div>
+                        </div>
+                          
+                        </div>
+                      </div>
+                    );
+
+                    }
+                  })}
                 </div>
+
+                  
+                
+              
               </section>
 
               <section class="container_produtos">
                 <div>
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> c872d7c3114c7a3291bc0dc40c395c92157a1c3f
                   <h2>Novos Produtos</h2>
-                  <span>ver todos </span>
+                  <NavLink to="/Produtos"><span>Ver todos</span></NavLink>
                 </div>
                 <div class="div_produtos">
                   {this.state.produtos.map((pos) => {
@@ -153,6 +184,7 @@ class PaginaPrincipal extends React.Component {
                             onMouseLeave={() => MouseLeave()}
                             src={"http://localhost:4000/files/" + pos.imagem}
                           ></img>
+                          <div>{pos.nome}</div>
                         </div>
                       </div>
                     );
