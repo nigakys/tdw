@@ -178,14 +178,131 @@
   margin-right: auto;
   margin-top: 100px;
   position: relative;
+  background: rgb(230, 230, 230);
+  
 }
-.special .card {
+.container1{
   position: relative;
-  width: 320px;
-  height: 450px;
-  border-radius: 20px;
+
+}
+.container1 .card {
+ position: relative;
+ width: 379px;
+ height: 550px;
+ background:#0c0b0b;
+ border-radius: 20px;
+ overflow: hidden;
+ display: flex;
+ flex-wrap: wrap;
+ margin: 20px;
+ justify-content: start;
+
+
+}
+.container1 .card:before{
+  content: '';
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: green;
+  clip-path: circle(180px at 26% 26%);
+  transition: 0.5s ease-in-out;
+}
+.container1 .card:hover:before{
+  clip-path: circle(300px at 20% 10%);
+}
+.container1 .card::after{
+  position: absolute;
+  top: 30%;
+  left: -20%;
+
 }
 
+.container1 .card .imgbox{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(50%);
+
+  z-index: 10000;
+  width:399px;
+ transition: 0.5s;
+}
+.container1 .card:hover .imgbox{
+  position: absolute;
+  top:20%;
+  transform: translateY(0);
+}
+.imgbox img{
+  position: absolute;
+  width: 250px;
+
+  transform: translate(-50%,-50%) rotate(20deg);
+}
+.contentbx{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  text-align: center;
+  transition: 1s;
+  z-index: 10;
+  
+}
+
+.container1 .card .contentbx h3{
+  color: #e6e0e0;
+}
+
+.container1 .card .contentbx .cor,
+.container1 .card .contentbx .size
+{
+  display: flex;
+  transition: 0.5s;
+  opacity: 0;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+.container1 .card .contentbx .size span{
+  width: 26px;
+  height: 26px;
+  text-align: center;
+  line-height: 26px;
+  font-size: 14px;
+  display: inline-block;
+  color: #111;
+  background: white;
+  margin: 0 5px;
+  transition: 0.5s;
+  color: #111;
+}
+.container1 .card .contentbx .cor span{
+  width: 20px;
+  height: 20px;
+  background: #ff0;
+  border-radius: 50%;
+  margin: 0 5px;
+}
+
+.container1 .card:hover .contentbx .cor,
+.container1 .card:hover .contentbx .size{
+
+  opacity: 1;
+  visibility: visible;
+}
+.container1 .card:hover .contentbx{
+  height: 210px;
+}
+.container1 .card:hover .contentbx h2{
+  position: relative;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color:#fff
+
+}
 /* section produtos*/
 .div_cadaProduto {
   margin: 10px;
