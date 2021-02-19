@@ -5,8 +5,6 @@ class Header extends React.Component {
   componentDidMount() {
     randomNavHeaderColor();
     navSlide();
-    teste();
-    teste1();
   }
 
   render() {
@@ -15,10 +13,7 @@ class Header extends React.Component {
         <div className="header">
           <nav class="nav">
             <div>
-              <NavLink className="loja" to="/">
-                {" "}
-                Loja{" "}
-              </NavLink>
+              <NavLink className="loja" to="/">Loja</NavLink>
             </div>
             <div class="nav-menu">
               <ul class="nav-links">
@@ -39,11 +34,13 @@ class Header extends React.Component {
             </div>
             <div class="icons">
               <div class="coluna">
-                <img
-                  className="img1"
-                  src="../imagens/user.png"
-                  alt="erro"
-                ></img>
+                <NavLink to="/perfil">
+                  <img
+                    className="img1"
+                    src="../imagens/user.png"
+                    alt="erro"
+                  ></img>
+                </NavLink>
               </div>
 
               <div class="coluna">
@@ -69,7 +66,7 @@ class Header extends React.Component {
 function alert() {
   const img = document.querySelector(".img1");
 
-  img.addEventListener("imageClick", () => {});
+  img.addEventListener("imageClick", () => { });
 }
 
 var colorr;
@@ -119,9 +116,8 @@ function navSlide() {
       if (link.style.animation) {
         link.style.animation = "";
       } else {
-        link.style.animation = `navLinkFade 0.5s ease forwards ${
-          index / 7 + 0.5
-        }s`;
+        link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.5
+          }s`;
       }
     });
 
@@ -132,22 +128,6 @@ function navSlide() {
 }
 
 // hover img
-function teste() {
-  var color = ["#86e6f9", "#DED87F", "#B25FE8"];
 
-  document.querySelectorAll(".div_cadaProduto img").forEach((item) => {
-    item.addEventListener("mouseenter", () => {
-      item.style.backgroundColor = color[colorr];
-    });
-  });
-}
-
-function teste1() {
-  document.querySelectorAll(".div_cadaProduto img ").forEach((item) => {
-    item.addEventListener("mouseleave", () => {
-      item.style.backgroundColor = "#e6e0e0";
-    });
-  });
-}
 
 export default Header;

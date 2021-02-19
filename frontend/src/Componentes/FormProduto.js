@@ -1,5 +1,8 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
+import "../Switch.css"
+import Switch from "./Switch"
+
 
 class FormProduto extends React.Component {
     constructor(props) {
@@ -31,16 +34,21 @@ class FormProduto extends React.Component {
                     tipo: "",
                     nome: "",
                     preco: "",
-                    especial: "",
+                    especial: false,
                     dataAdicionado: "",
                     imagem: null
                 },
                 imagem: null
             }
         }
-    } ref
+    }
 
 
+    toggle = () => {
+        var addProduto = this.state.produtos;
+        addProduto.especial ? addProduto.especial = false : addProduto.especial = true
+        this.setState({ produtos: addProduto})
+    }
 
     updateField = (event, fieldName) => {
         var addProduto = this.state.produtos;
@@ -49,20 +57,11 @@ class FormProduto extends React.Component {
         if (fieldName === "imagem") {
             this.setState({ imagem: event.target.files[0] })
         }
-        else if (fieldName === "especial") {
-            addProduto[fieldName] = event.target.checked;
-            console.log(this.state.produtos.especial)
-            this.setState({ produtos: addProduto })
-        }
         else {
             this.setState({ produtos: addProduto })
         }
         event.preventDefault();
     }
-
-
-
-
 
     render() {
         return (
@@ -72,6 +71,7 @@ class FormProduto extends React.Component {
                     <h1>Editar Produto</h1>
                 }
                 <form onSubmit={(e) => this.props.criarEditar(e, this.state.produtos, this.state.imagem)}>
+
                     Referência: <input id="Ref" value={this.state.produtos.ref} onChange={(e) => this.updateField(e, "ref")}></input>
                     <p></p>
                     Nome: <input id="Nome" value={this.state.produtos.nome} onChange={(e) => this.updateField(e, "nome")}></input>
@@ -83,7 +83,7 @@ class FormProduto extends React.Component {
                     Imagem: <input type="File" id="Imagem" onChange={(e) => this.updateField(e, "imagem")}></input>
                     <p></p>
                     <img src={"http://localhost:4000/files/" + this.state.produtos.imagem}></img>
-                    Especial: <input type="checkbox" id="Especial" defaultChecked={this.state.produtos.especial} onChange={(e) => this.updateField(e, "especial")}></input>
+                    Especial: <Switch  checked={this.state.produtos.especial} handleToggle={() => this.toggle()}/>
                     <p></p>
                     <Link to="/dashboard"><button >Voltar</button></Link>
                     <button type="submit">Adicionar</button>

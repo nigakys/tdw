@@ -5,6 +5,7 @@ import Produtos from "./Produtos";
 import Dashboard from "./Dashboard";
 import FormProduto from "./FormProduto";
 import ProdutoInfo from "./ProdutoInfo";
+import Login from "./Login";
 
 class PaginaPrincipal extends React.Component {
   constructor(props) {
@@ -95,17 +96,17 @@ class PaginaPrincipal extends React.Component {
           path="/"
           render={() => (
             <div>
-              <section  class="home">
+              <section class="home">
                 <div className="home_container">
                   <h1 className="tit1">NOVOS</h1>
                   <h3 className="tit2">PRODUTOS</h3>
-                <NavLink to="/Produtos"> <button className="buttonHome">Ver Produtos</button></NavLink> 
+                  <NavLink to="/Produtos"> <button className="buttonHome">Ver Produtos</button></NavLink>
                 </div>
                 <div className="home_data">
                   <img className="homeimg" src="../imagens/home.png"></img>
                 </div>
               </section>
-              <section  class="special">
+              <section class="special">
                 <div>
                   <h2>Produtos Especiais</h2>
                   <span>Ver todos</span>
@@ -114,7 +115,10 @@ class PaginaPrincipal extends React.Component {
                 <div class="card">
                   <div class="imgspe"></div>
                   <div class="contentBox">
-                   {this.MostrarProdutos()}
+
+                    {//this.MostrarProdutos()
+                    }
+
                     <div class="size">
                       <h3>Size</h3>
                       <span>7</span><br></br>
@@ -145,6 +149,8 @@ class PaginaPrincipal extends React.Component {
                       <div>
                         <div class="div_cadaProduto">
                           <img
+                            onMouseEnter={() => MouseEnter()}
+                            onMouseLeave={() => MouseLeave()}
                             src={"http://localhost:4000/files/" + pos.imagem}
                           ></img>
                         </div>
@@ -166,6 +172,11 @@ class PaginaPrincipal extends React.Component {
           exact
           path="/Produtos"
           render={() => <Produtos></Produtos>}
+        ></Route>
+        <Route
+          exact
+          path="/Login"
+          render={() => <Login></Login>}
         ></Route>
         <Route
           exact
@@ -214,6 +225,23 @@ class PaginaPrincipal extends React.Component {
       </Switch>
     );
   }
+}
+
+function MouseEnter() {
+  var color = ["#86e6f9", "#DED87F", "#B25FE8"];
+  document.querySelectorAll(".div_cadaProduto img").forEach((item) => {
+    item.addEventListener("mouseenter", () => {
+      item.style.backgroundColor = color[1];
+    });
+  });
+}
+
+function MouseLeave() {
+  document.querySelectorAll(".div_cadaProduto img ").forEach((item) => {
+    item.addEventListener("mouseleave", () => {
+      item.style.backgroundColor = "#e6e0e0";
+    });
+  });
 }
 
 function ProdutosInfo(props) {
