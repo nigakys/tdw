@@ -4,13 +4,16 @@ const users = require("../models/users");
 var router = express.Router();
 
 //erro 11000 duplicado
-router.get('/', (req, res) => {
-    users.find().then(result => {
+router.get('/:user', (req, res) => {
+    var user = req.params.user;
+    var query = { username: user }
+
+    users.findOne(query).then(result => {
         if (result != null) {
             res.status(200).send(result);
         }
         else {
-            res.status(400).send("Nada encontrado")
+            res.status(400).send("User nao existe")
         }
     })
 });
@@ -35,10 +38,11 @@ router.get('/:ref', (req, res) => {
 });
 
 router.post('/', (req, res) => {
+    console.log("1" + JSON.stringify(req.body))
     if (req.body != null) {
-        
         users.create(req.body).then(() => {
             res.status(200).send("Produto inserido" + JSON.stringify(req.body));
+            console.log(1)
         })
             .catch((err) => {
                 console.log(err)
@@ -61,7 +65,7 @@ router.put('/:id', (req, res) => {
             res.status(400).send(err.message);
         })
     }
-    else{
+    else {
         res.status(400).send("Body ou Id nao enviados");
     }
 })
@@ -76,7 +80,7 @@ router.delete('/:id', (req, res) => {
             res.status(400).send(err.message);
         })
     }
-    else{
+    else {
         res.status(400).send("Id nao enviado");
     }
 })

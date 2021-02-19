@@ -10,12 +10,22 @@ class Login extends React.Component {
         this.state = {
             user: {},
             acao: "log",
-            checked: false
+            checked: false,
+            ola: ""
         };
     }
 
-    handleSubmit = () => {
+    handleSubmit = (event) => {
+        if (this.state.acao === "reg") {
+            api.criarUser(this.state.user)
+        } else {
+            api.GetUser(this.state.user.username).then((data) => {
+                console.log(data)
+            }).catch((error)=>{console.log(error)})
 
+            if (this.state.checked) {
+            }
+        }
     }
 
     toggleCheck = () => {
@@ -33,29 +43,28 @@ class Login extends React.Component {
         this.setState({ user: user2 })
 
         event.preventDefault();
-        console.log(this.state.user)
     }
 
     renderForm = () => {
         if (this.state.acao === "log") {
             return (
                 <div>
-                    User: <input id="User" onChange={(e) => this.updateField(e, "user")}></input><p></p>
-                    Pass: <input id="Pass" type="password" onChange={(e) => this.updateField(e, "pass")}></input><p></p>
+                    User: <input id="UserLogin" onChange={(e) => this.updateField(e, "username")}></input><p></p>
+                    Pass: <input id="PassLogin" type="password" onChange={(e) => this.updateField(e, "password")}></input><p></p>
                     Guardar dados: <Switch handleToggle={() => this.toggleCheck()} checked={this.state.checked} />
                     <p></p>
-                    <button type="submit">Login</button>
+                    <button onClick={(e) => this.handleSubmit(e)} >Login</button>
                 </div>
             );
         }
         else {
             return (
                 <div>
-                    User: <input id="User" onChange={(e) => this.updateField(e, "user")}></input><p></p>
-                    Email:<input id="Email" type="email" onChange={(e) => this.updateField(e, "email")}></input><p></p>
-                    Pass: <input id="Pass" type="password" onChange={(e) => this.updateField(e, "pass")}></input><p></p>
+                    User: <input id="UserRegister" onChange={(e) => this.updateField(e, "username")}></input><p></p>
+                    Email:<input id="EmailRegister" type="email" onChange={(e) => this.updateField(e, "email")}></input><p></p>
+                    Pass: <input id="PassRegister" type="password" onChange={(e) => this.updateField(e, "password")}></input><p></p>
                     <p></p>
-                    <button type="submit">Register</button>
+                    <button onClick={(e) => this.handleSubmit(e)} >Register</button>
                 </div>
             );
         }
@@ -66,7 +75,8 @@ class Login extends React.Component {
             <div>
                 <button onClick={() => this.toggleAcao("reg")}>registar</button>
                 <button onClick={() => this.toggleAcao("log")}>login</button>
-                <form onSubmit={(e) => this.handleSubmit(e, this.state.acao)}>
+
+                <form onSubmit={(e) => this.handleSubmit(e)}>
                     {this.renderForm()}
                 </form>
             </div>

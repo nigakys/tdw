@@ -139,7 +139,7 @@ class PaginaPrincipal extends React.Component {
 
               <section class="container_produtos">
                 <div>
-                  {" "}
+
                   <h2>Novos Produtos</h2>
                   <span>ver todos </span>
                 </div>
@@ -231,7 +231,7 @@ function MouseEnter() {
   var color = ["#86e6f9", "#DED87F", "#B25FE8"];
   document.querySelectorAll(".div_cadaProduto img").forEach((item) => {
     item.addEventListener("mouseenter", () => {
-      item.style.backgroundColor = color[1];
+      item.style.backgroundColor = color[sessionStorage.getItem("cor")];
     });
   });
 }

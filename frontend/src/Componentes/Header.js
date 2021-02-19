@@ -98,6 +98,7 @@ function randomNavHeaderColor() {
       navLinks.style.backgroundColor = color[2];
       colorr = 2;
     }
+    sessionStorage.setItem("cor",colorr)
   });
 }
 function navSlide() {

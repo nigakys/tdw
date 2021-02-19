@@ -25,10 +25,10 @@ function GetVariantesProduto(id) {
     },
   }).then((response) => {
     if (response.status !== 200) {
-      
+
       return [];
     }
-    
+
     return response.json();
   });
 }
@@ -80,7 +80,7 @@ function GetSortProdutoPreco(preco) {
   });
 }
 
-function criarProduto(produto,imagem) {
+function criarProduto(produto, imagem) {
   return fetch(BASE_URL + "produtos/", {
     method: "POST",
     headers: {
@@ -97,7 +97,7 @@ function criarProduto(produto,imagem) {
   });
 }
 
-function updateProduto(_id, produto,imagem) {
+function updateProduto(_id, produto, imagem) {
 
   var id = new mongo.ObjectID(_id);
   return fetch(BASE_URL + "produtos/" + id, {
@@ -111,7 +111,7 @@ function updateProduto(_id, produto,imagem) {
     if (response.status !== 200) {
       return [];
     }
-    
+
     uploadImagem(imagem)
     return response.json();
   });
@@ -127,6 +127,24 @@ function uploadImagem(imagem) {
     }
     return "success";
   });
+}
+
+function GetUser(user) {
+  return fetch(BASE_URL + "users/" + user, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    }
+  }).then((response) => {
+    if (response.status !== 200) {
+      return [];
+    }
+    return response.json();
+  }).catch((error) => { 
+    console.log(error);
+    return 2; })
+
 }
 
 
@@ -149,29 +167,15 @@ function deleteProduto(_id, list) {
 }
 
 
-function GetUser() {
-  return fetch(BASE_URL + "users/", {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  }).then((response) => {
-    if (response.status !== 200) {
-      return [];
-    }
-    return response.json();
-  });
-}
 
-function novoUser(list) {
+function criarUser(user) {
   return fetch(BASE_URL + "users/", {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(list),
+    body: JSON.stringify(user),
   }).then((response) => {
     if (response.status !== 200) {
       return [];
@@ -202,7 +206,7 @@ function getUserByEmail(email) {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-    },    
+    },
   }).then((response) => {
     if (response.status !== 200) {
       return [];
@@ -264,7 +268,7 @@ var funcoes = {
   deleteProduto,
   criarCarrinho,
   upadateCarrinho,
-  novoUser,
+  criarUser,
   GetUser,
   GetUniqueProduto,
   getUserByEmail,
