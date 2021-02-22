@@ -65,8 +65,10 @@ class Header extends React.Component {
 
               </div>
 
-              <div class="coluna">
+              <div class="coluna"><NavLink to ="/">
+
                 <img src="../imagens/pes.png" alt="erro"></img>
+              </NavLink>
               </div>
 
               <div class="coluna">

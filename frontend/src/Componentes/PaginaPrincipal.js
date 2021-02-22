@@ -120,7 +120,10 @@ class PaginaPrincipal extends React.Component {
                 <div className="home_container">
                   <h1 className="tit1">NOVOS</h1>
                   <h3 className="tit2">PRODUTOS</h3>
-                  <NavLink to="/Produtos"> <button className="buttonHome">Ver Produtos</button></NavLink>
+                  <NavLink to="/Produtos">
+                    {" "}
+                    <button className="buttonHome">Ver Produtos</button>
+                  </NavLink>
                 </div>
                 <div className="home_data">
                   <img className="homeimg" src="../imagens/home.png"></img>
@@ -129,35 +132,38 @@ class PaginaPrincipal extends React.Component {
               <section class="special">
                 <div>
                   <h2>Produtos Especiais</h2>
-                  <NavLink to="/ProdutosEspeciais"><span>Ver todos</span></NavLink>
+                  <NavLink to="/ProdutosEspeciais">
+                    <span>Ver todos</span>
+                  </NavLink>
                 </div>
 
                 <div class="div_produtos">
-
                   {this.state.produtos.map((pos) => {
-
                     if (pos.especial) {
-
-
                       return (
                         <div>
                           <div class="container1">
                             <div className="card">
-
                               <div className="imgbox">
-
                                 <img
                                   onMouseEnter={() => MouseEnter()}
                                   onMouseLeave={() => MouseLeave()}
-                                  src={"http://localhost:4000/files/" + pos.imagem}
+                                  src={
+                                    "http://localhost:4000/files/" + pos.imagem
+                                  }
                                 ></img>
                               </div>
                               <div className="contentbx">
                                 <h3>{pos.nome}</h3>
                                 <div class="size">
                                   <h3>Size</h3>
-                                  {pos.tipo === "tenis" ? this.tenis() : this.casaco()}
-
+                                  <span>7</span>
+                                  <br></br>
+                                  <span>8</span>
+                                  <br></br>
+                                  <span>9</span>
+                                  <br></br>
+                                  <span>10</span>
                                 </div>
                                 <div class="cor">
                                   <h3>Cor</h3>
@@ -168,24 +174,20 @@ class PaginaPrincipal extends React.Component {
                                 </div>
                               </div>
                             </div>
-
                           </div>
                         </div>
                       );
-
                     }
                   })}
                 </div>
-
-
-
-
               </section>
 
               <section class="container_produtos">
                 <div>
                   <h2>Novos Produtos</h2>
-                  <NavLink to="/Produtos"><span>Ver todos</span></NavLink>
+                  <NavLink to="/Produtos">
+                    <span>Ver todos</span>
+                  </NavLink>
                 </div>
                 <div class="div_produtos">
                   {this.state.produtos.map((pos) => {
@@ -218,11 +220,8 @@ class PaginaPrincipal extends React.Component {
           path="/Produtos"
           render={() => <Produtos></Produtos>}
         ></Route>
-        <Route
-          exact
-          path="/Login"
-          render={() => <Login></Login>}
-        ></Route>
+
+        <Route exact path="/Login" render={() => <Login></Login>}></Route>
         <Route
           exact
           path="/Dashboard"
