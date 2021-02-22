@@ -5,16 +5,17 @@ class Dashboard extends React.Component {
     render() {
         return (
             <div>
-                <td> <Link to={`/Dashboard/add/`}><button>Adicionar</button></Link> </td>
+                <div className="DivButtonAdd"><Link to={`/Dashboard/add/`}><button className="ContentButtonAdd">Adicionar novos items</button></Link> </div>
+                <div className="Content">
                 <table className="table">
                     <thead>
                         <tr>
-                            <td><b>ref</b></td>
-                            <td><b>Imagem</b></td>
-                            <td><b>Nome</b></td>
-                            <td><b>Tipo</b></td>
-                            <td><b>Preço</b></td>
-                            <td style={{ textAlign: "center" }} colSpan="2"> <b>Ações</b></td>
+                            <td className="TdRef"><b className="TdText">ref</b></td>
+                            <td  className="TdImg"><b className="TdText">Imagem</b></td>
+                            <td  className="TdNome"> <b className="TdText">Nome</b></td>
+                            <td  className="TdTipo"><b className="TdText">Tipo</b></td>
+                            <td  className="TdPreco"><b className="TdText">Preço</b></td>
+                            <td className="TdAcoes"> <b className="TdText">Ações</b></td>
                         </tr>
                     </thead>
 
@@ -22,20 +23,24 @@ class Dashboard extends React.Component {
                         {
                             this.props.produtos.map((item, i) => {
                                 return (
-                                    <tr key={i}>
-                                        <td>{item.ref}</td>
+                                    <tr className="tr1" key={i}>
+                                        <td  className="TdRef_">{item.ref}</td>
                                         
-                                        <td><img src={"http://localhost:4000/files/"+item.imagem}></img></td>
+                                        <td  className="TdImg_"><img className="ContentImg" src={"http://localhost:4000/files/"+item.imagem}></img></td>
                                         
-                                        <td>{item.nome}</td>
+                                        <td  className="TdNome_">{item.nome}</td>
 
-                                        <td>{item.tipo}</td>
+                                        <td  className="TdTipo_">{item.tipo}</td>
 
-                                        <td>{item.preco}</td>
+                                        <td  className="TdPreco_">{item.preco}</td>
 
-                                        <td> <Link to={`/Dashboard/edit/${item._id}`}><button>Editar</button></Link> </td>
-                                        <td> <Link to={`/Dashboard/info/${item._id}`}><button>Ver/Editar Variantes</button></Link> </td>
-                                        <td> <button onClick={() => this.props.funcaoRemover(item._id)}>Eliminar</button> </td>
+                                        <td  className="TdAcoes_">
+                                             <Link to={`/Dashboard/edit/${item._id}`}><button  className="ContentButtonEdit">Editar</button>
+                                             </Link>
+                                         <Link to={`/Dashboard/info/${item._id}`}><button className="ContentButtonStock">Stock</button>
+                                         </Link> 
+                                         <button  className="ContentButtonElim" onClick={() => this.props.funcaoRemover(item._id)}>Eliminar</button>
+                                          </td>
                                         
                                     </tr>
                                 )
@@ -43,6 +48,7 @@ class Dashboard extends React.Component {
                         }
                     </tbody>
                 </table>
+                </div>
 
             </div>
         )

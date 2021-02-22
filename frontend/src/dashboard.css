@@ -1,0 +1,205 @@
+table {
+  border: 1px black solid;
+  overflow-x: auto;
+}
+.ContentImg {
+  width: 100%;
+}
+.Content {
+  background: rgb(230, 230, 230);
+  margin-left: 2%;
+  margin-right: 2%;
+  
+}
+.TdRef {
+  width: 8%;
+}
+.TdImg {
+  width: 10%;
+}
+.TdTipo {
+  width: 10%;
+}
+.TdPreco {
+  width: 10%;
+}
+.TdNome {
+  width: 20%;
+}
+.TdAcoes {
+  width: 15%;
+}
+.TdRef_ {
+  padding-left: 2%;
+}
+
+.TdTipo_ {
+  padding-left: 2%;
+}
+.TdPreco_ {
+  padding-left: 2%;
+}
+.TdNome_ {
+  padding-left: 2%;
+}
+.TdAcoes_ {
+  padding-left: 2%;
+  justify-content: center;
+  align-items: center;
+}
+.TdAcoes,
+.TdImg,
+.TdNome,
+.TdPreco,
+.TdRef,
+.TdTipo {
+  border: 1px black solid;
+  padding-left: 2%;
+
+  height: 70px;
+}
+.TdText {
+    text-transform: uppercase;
+  font-weight: bold;
+  font-size: 20px;
+  
+  
+}
+
+.TdAcoes_,
+.TdImg_,
+.TdNome_,
+.TdPreco_,
+.TdRef_,
+.TdTipo_ {
+  align-items: center;
+  border: 1px black solid;
+  padding-top: 2%;
+
+  height: 100px;
+}
+.ContentButtonEdit {
+  background-color: #3b6aec;
+  border-radius: 6px;
+  border: 1px solid #000000;
+  width: 90%;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 90%;
+  font-weight: bold;
+  padding: 6px 24px;
+  text-decoration: none;
+}
+.ContentButtonEdit:hover {
+  background-color: #3e1442;
+}
+.ContentButtonEdit:active {
+  position: relative;
+  top: 1px;
+}
+.ContentButtonStock {
+  background-color: #d1a366;
+  width: 90%;
+  border-radius: 6px;
+  border: 1px solid #000000;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 90%;
+  font-weight: bold;
+  padding: 6px 24px;
+  text-decoration: none;
+  margin-top: 10%;
+}
+.ContentButtonStock:hover {
+  background-color: #3e1442;
+}
+.ContentButtonStock:active {
+  position: relative;
+  top: 1px;
+}
+
+.ContentButtonElim {
+ width: 90%;
+  background-color: #d62e10;
+  border-radius: 6px;
+  border: 1px solid#0f0f0f;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 90%;
+  font-weight: bold;
+  padding: 6px 24px;
+  text-decoration: none;
+  margin-top: 10%;
+}
+.ContentButtonElim:hover {
+  background-color: #3e1442;
+}
+.ContentButtonElim:active {
+  position: relative;
+  top: 1px;
+}
+.ContentButtonAdd{
+    width: 30%;
+    background-color: #292120;
+    border-radius: 6px;
+    border: 1px solid#0f0f0f;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 90%;
+    font-weight: bold;
+    padding: 6px 24px;
+    text-decoration: none;
+    margin-top: 3%;
+    margin-bottom: 3%;
+   
+    text-align: center;
+}
+.DivButtonAdd{
+     
+ 
+    text-align: center;
+}
+
+@media screen and (max-width: 650px) {
+    .ContentButtonStock ,.ContentButtonElim,.ContentButtonEdit{
+        width: 95%;
+      
+    font-size: 9px;
+    padding: 0;
+    height: 30px;
+     
+    }
+    .TdText{
+       
+     
+      font-size: 13px;
+    
+      
+      
+      
+    }
+    .Content {
+   
+        margin-left: 0%;
+        margin-right: 0%;
+      }
+      .TdRef {
+        width: 2%;
+      }
+      .TdImg{
+          width: 20%;
+      }
+      .ContentButtonAdd{
+    font-size: 12px;
+    }
+      
+    
+}
