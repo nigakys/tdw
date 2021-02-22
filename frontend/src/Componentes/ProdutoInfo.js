@@ -17,7 +17,9 @@ class ProdutoInfo extends React.Component {
 
         var id;
         this.props.produtos.map((pos) => {
-            id = pos.ref;
+            if(pos._id == this.props.match.params.id){
+                id = pos.ref
+            }
         });
         api.GetVariantesProduto(id).then((data) => {
             this.setState({ produtos: data })

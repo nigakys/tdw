@@ -2,6 +2,7 @@ var mongo = require("mongodb");
 var express = require('express');
 const users = require("../models/users");
 var router = express.Router();
+var functions = require("../shared/functions")
 
 //erro 11000 duplicado
 router.get('/:user', (req, res) => {
@@ -18,40 +19,41 @@ router.get('/:user', (req, res) => {
     })
 });
 
+router.get('/email/:email', (req, res) => {
+    var email = req.params.email;
+    var query = { email: email }
 
-router.get('/:ref', (req, res) => {
-    var ref = req.params.ref;
-    var query = { ref: ref };
-    if (req.params != null) {
-        users.find(query).then(result => {
-            if (result != null) {
-                res.status(200).send(result);
-            }
-            else {
-                res.status(400).send("Nada encontrado")
-            }
-        })
-    }
-    else {
-
-    }
+    users.findOne(query).then(result => {
+        if (result == null) {
+            res.status(200).send(email);
+        }
+        else {
+            res.status(400).send("email ja existe")
+        }
+    }).catch(() => { res.status(400).send("Query error") })
 });
 
-router.post('/', (req, res) => {
-    console.log("1" + JSON.stringify(req.body))
-    if (req.body != null) {
-        users.create(req.body).then(() => {
-            res.status(200).send("Produto inserido" + JSON.stringify(req.body));
-            console.log(1)
-        })
-            .catch((err) => {
-                console.log(err)
-            })
-    }
-    else {
-        res.status(400).send("Body sem valores")
-    }
 
+router.post('/', (req, res) => {
+    var pass = req.body.password;
+
+    functions.hashPassword(pass).then((result) => {
+        req.body.password = result
+        if (req.body != null) {
+            users.create(req.body)
+                .then(() => {
+                    res.status(200).send("User registado")
+                })
+                .catch((err) => {
+                    if (err.code == "11000") {
+                        res.status(400).send("User duplicado")
+                    }
+                })
+        }
+        else {
+            res.status(400).send("Body sem valores")
+        }
+    })
 })
 
 router.put('/:id', (req, res) => {

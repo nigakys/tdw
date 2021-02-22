@@ -88,6 +88,26 @@ class PaginaPrincipal extends React.Component {
     this.GetProdutos();
   }
 
+  tenis = () => {
+    return (<>
+      <span>7</span><br></br>
+      <span>8</span><br></br>
+      <span>9</span><br></br>
+      <span>10</span>
+    </>
+    )
+  }
+
+  casaco = () => {
+    return (<>
+      <span>s</span><br></br>
+      <span>xs</span><br></br>
+      <span>m</span><br></br>
+      <span>l</span>
+    </>
+    )
+  }
+
   render() {
     return (
       <Switch>
@@ -113,64 +133,57 @@ class PaginaPrincipal extends React.Component {
                 </div>
 
                 <div class="div_produtos">
-                
-                  {this.state.produtos.map((pos) => {
-                   
-                    if(pos.especial){
-                      
-                  
-                    return (
-                      <div>
-                        <div class="container1">
-                        <div className="card">
-                         
-                           <div className="imgbox">
 
-                          <img
-                            onMouseEnter={() => MouseEnter()}
-                            onMouseLeave={() => MouseLeave()}
-                            src={"http://localhost:4000/files/" + pos.imagem}
-                          ></img>
+                  {this.state.produtos.map((pos) => {
+
+                    if (pos.especial) {
+
+
+                      return (
+                        <div>
+                          <div class="container1">
+                            <div className="card">
+
+                              <div className="imgbox">
+
+                                <img
+                                  onMouseEnter={() => MouseEnter()}
+                                  onMouseLeave={() => MouseLeave()}
+                                  src={"http://localhost:4000/files/" + pos.imagem}
+                                ></img>
+                              </div>
+                              <div className="contentbx">
+                                <h3>{pos.nome}</h3>
+                                <div class="size">
+                                  <h3>Size</h3>
+                                  {pos.tipo === "tenis" ? this.tenis() : this.casaco()}
+
+                                </div>
+                                <div class="cor">
+                                  <h3>Cor</h3>
+                                  <span></span>
+                                  <span></span>
+                                  <span></span>
+                                  <span></span>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
                         </div>
-                        <div className="contentbx">
-                          <h3>{pos.nome}</h3>
-                            <div class="size">
-                      <h3>Size</h3>
-                      <span>7</span><br></br>
-                      <span>8</span><br></br>
-                      <span>9</span><br></br>
-                      <span>10</span>
-                    </div>
-                    <div class="cor">
-                      <h3>Cor</h3>
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </div>
-                    </div>
-                        </div>
-                          
-                        </div>
-                      </div>
-                    );
+                      );
 
                     }
                   })}
                 </div>
 
-                  
-                
-              
+
+
+
               </section>
 
               <section class="container_produtos">
                 <div>
-<<<<<<< HEAD
-
-=======
-      
->>>>>>> c872d7c3114c7a3291bc0dc40c395c92157a1c3f
                   <h2>Novos Produtos</h2>
                   <NavLink to="/Produtos"><span>Ver todos</span></NavLink>
                 </div>

@@ -144,10 +144,7 @@ function GetUser(user) {
   }).catch((error) => { 
     console.log(error);
     return 2; })
-
 }
-
-
 
 function deleteProduto(_id, list) {
   var id = new mongo.ObjectID(_id);
@@ -200,7 +197,7 @@ function upadateUser(id, list) {
   });
 }
 
-function getUserByEmail(email) {
+function GetEmail(email) {
   return fetch(BASE_URL + "users/email/" + email, {
     method: "GET",
     headers: {
@@ -209,10 +206,12 @@ function getUserByEmail(email) {
     },
   }).then((response) => {
     if (response.status !== 200) {
-      return [];
+      return null;
     }
-    return response.json();
-  });
+    return response;
+  }).catch((error)=>{
+    console.log(error)
+  })
 }
 
 function GetUniqueUser(id) {
@@ -229,6 +228,8 @@ function GetUniqueUser(id) {
     return response.json();
   });
 }
+
+
 function criarCarrinho(list) {
   return fetch(BASE_URL + "carrinho/", {
     method: "POST",
@@ -271,7 +272,7 @@ var funcoes = {
   criarUser,
   GetUser,
   GetUniqueProduto,
-  getUserByEmail,
+  GetEmail,
   GetTipoProduto,
   GetSortProdutoPreco,
   upadateUser,

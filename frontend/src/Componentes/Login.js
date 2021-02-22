@@ -11,17 +11,44 @@ class Login extends React.Component {
             user: {},
             acao: "log",
             checked: false,
-            ola: ""
+            userValid: true,
+            emailValid: true,
+            passwordValid: true,
+            passwordCerta: true
         };
     }
 
     handleSubmit = (event) => {
+        event.preventDefault();
         if (this.state.acao === "reg") {
-            api.criarUser(this.state.user)
+            api.GetEmail(this.state.user.email).then((data) => {
+                data === null ? this.setState({ emailValid: false }) : this.setState({ emailValid: true })
+
+                this.state.user.username.length < 6 ? this.setState({ userValid: false }) : this.setState({ userValid: true })
+
+                this.state.user.password.length < 6 ? this.setState({ passwordValid: false }) : this.setState({ passwordValid: true })
+
+                if (this.state.userValid && this.state.passwordValid && this.state.emailValid) {
+                    api.criarUser(this.state.user)
+                }
+            }).catch((error) => { console.log(error) })
+
         } else {
             api.GetUser(this.state.user.username).then((data) => {
-                console.log(data)
-            }).catch((error)=>{console.log(error)})
+                var bcrypt = require("bcryptjs")
+
+                bcrypt.compare(this.state.user.password, data.password).then((result) => {
+                    if (result) {
+                        sessionStorage.username = data.username;
+                        sessionStorage.userid = data._id;
+                        sessionStorage.email = data.email;
+                        window.location.href = "/"
+                    }
+                    else {
+                        this.setState({ passwordCerta: false })
+                    }
+                })
+            }).catch((error) => { console.log(error) })
 
             if (this.state.checked) {
             }
@@ -45,6 +72,44 @@ class Login extends React.Component {
         event.preventDefault();
     }
 
+    renderErros = () => {
+        if (!this.state.userValid) {
+            return (
+                <div className="erros">
+                    Nome de utilizador tem de ter pelo menos 6 caracteres
+                </div>
+            )
+        }
+        else if (!this.state.emailValid) {
+            return (
+                <div className="erros">
+                    Já existe uma conta com este email
+                </div>
+            )
+        }
+        else if (!this.state.passwordValid) {
+            return (
+                <div className="erros">
+                    Palavra passe tem de ter pelo menos 6 caracteres
+                </div>
+            )
+        }
+        else if (!this.state.passwordValid) {
+            return (
+                <div className="erros">
+                    Palavra passe tem de ter pelo menos 6 caracteres
+                </div>
+            )
+        }
+        else if (!this.state.passwordCerta) {
+            return (
+                <div className="erros">
+                    Palavra passe errada
+                </div>
+            )
+        }
+    }
+
     renderForm = () => {
         if (this.state.acao === "log") {
             return (
@@ -53,7 +118,7 @@ class Login extends React.Component {
                     Pass: <input id="PassLogin" type="password" onChange={(e) => this.updateField(e, "password")}></input><p></p>
                     Guardar dados: <Switch handleToggle={() => this.toggleCheck()} checked={this.state.checked} />
                     <p></p>
-                    <button onClick={(e) => this.handleSubmit(e)} >Login</button>
+                    <button type="submit">Login</button>
                 </div>
             );
         }
@@ -63,8 +128,9 @@ class Login extends React.Component {
                     User: <input id="UserRegister" onChange={(e) => this.updateField(e, "username")}></input><p></p>
                     Email:<input id="EmailRegister" type="email" onChange={(e) => this.updateField(e, "email")}></input><p></p>
                     Pass: <input id="PassRegister" type="password" onChange={(e) => this.updateField(e, "password")}></input><p></p>
+                    {}
                     <p></p>
-                    <button onClick={(e) => this.handleSubmit(e)} >Register</button>
+                    <button type="submit" >Register</button>
                 </div>
             );
         }
@@ -78,6 +144,7 @@ class Login extends React.Component {
 
                 <form onSubmit={(e) => this.handleSubmit(e)}>
                     {this.renderForm()}
+                    {this.renderErros()}
                 </form>
             </div>
         )

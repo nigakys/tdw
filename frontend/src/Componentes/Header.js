@@ -7,7 +7,34 @@ class Header extends React.Component {
     navSlide();
   }
 
+  renderLink = () => {
+    if (sessionStorage.username != null) {
+      return (
+        <NavLink to="/Perfil">
+          <img
+            className="img1"
+            src="../imagens/user.png"
+            alt="erro"
+          ></img>
+        </NavLink >
+      )
+    }
+    else {
+      return (
+        <NavLink to="/Login">
+          <img
+            className="img1"
+            src="../imagens/user.png"
+            alt="erro"
+          ></img>
+        </NavLink >
+      )
+    }
+
+  }
+
   render() {
+    console.log(1)
     return (
       <div>
         <div className="header">
@@ -34,13 +61,8 @@ class Header extends React.Component {
             </div>
             <div class="icons">
               <div class="coluna">
-                <NavLink to="/Login">
-                  <img
-                    className="img1"
-                    src="../imagens/user.png"
-                    alt="erro"
-                  ></img>
-                </NavLink>
+                {this.renderLink()}
+
               </div>
 
               <div class="coluna">
@@ -98,7 +120,7 @@ function randomNavHeaderColor() {
       navLinks.style.backgroundColor = color[2];
       colorr = 2;
     }
-    sessionStorage.setItem("cor",colorr)
+    sessionStorage.setItem("cor", colorr)
   });
 }
 function navSlide() {
