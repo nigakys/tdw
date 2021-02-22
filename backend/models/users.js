@@ -14,9 +14,9 @@ const usersSchema = new Schema({
     email: {
         type: String,
         required: true,
-        unique: true 
+        unique: true
     },
-    morada:{
+    morada: {
         contacto: {
             type: String
         },
@@ -30,10 +30,18 @@ const usersSchema = new Schema({
             type: String
         }
     },
-    isAdmin:{
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    token: {
+        type: String,
+        required: true
+    },
+    verified: {
         type: Boolean,
         default: false
     }
 })
 
-module.exports = mongoose.model("Users", usersSchema,"users");
+module.exports = mongoose.model("Users", usersSchema, "users");

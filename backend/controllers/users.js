@@ -19,6 +19,17 @@ router.get('/:user', (req, res) => {
     })
 });
 
+router.get('/ativar/:id', (req, res) => {
+    var query = {token: req.params.id}
+    var newValues = { $set: {verified: true} };
+
+    users.updateOne(query, newValues).then(() => {
+        res.status(200).send("Atualizado com sucesso: " + JSON.stringify(req.body));
+    }).catch((err) => {
+        res.status(400).send(err.message);
+    })
+});
+
 router.get('/email/:email', (req, res) => {
     var email = req.params.email;
     var query = { email: email }
@@ -35,6 +46,7 @@ router.get('/email/:email', (req, res) => {
 
 
 router.post('/', (req, res) => {
+    console.log(req.body)
     var pass = req.body.password;
 
     functions.hashPassword(pass).then((result) => {

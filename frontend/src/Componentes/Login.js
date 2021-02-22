@@ -2,6 +2,8 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import Switch from "./Switch"
 import api from "../api"
+import emailjs from "emailjs-com"
+import { v4 as uuidv4 } from 'uuid';
 
 class Login extends React.Component {
     constructor(props) {
@@ -29,7 +31,10 @@ class Login extends React.Component {
                 this.state.user.password.length < 6 ? this.setState({ passwordValid: false }) : this.setState({ passwordValid: true })
 
                 if (this.state.userValid && this.state.passwordValid && this.state.emailValid) {
-                    api.criarUser(this.state.user)
+                    this.state.user.token = uuidv4();
+                    api.criarUser(this.state.user).then(() => {
+                        this.sendEmail()
+                    }).catch((err) => console.log(err))
                 }
             }).catch((error) => { console.log(error) })
 
@@ -53,6 +58,14 @@ class Login extends React.Component {
             if (this.state.checked) {
             }
         }
+    }
+
+    sendEmail = () => {
+        emailjs.send("service_5vkotgq", "template_90a2eav", {
+            username: this.state.user.username,
+            email: this.state.user.email,
+            id: this.state.user.token
+        }, "user_mnL0jcsUKU7Dg1I4C3rHU");
     }
 
     toggleCheck = () => {
