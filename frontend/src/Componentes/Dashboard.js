@@ -10,7 +10,7 @@ class Dashboard extends React.Component {
                 <table className="table">
                     <thead>
                         <tr>
-                            <td className="TdRef"><b className="TdText">ref</b></td>
+                            <td className="TdRef"><b className="TdText">Referencia</b></td>
                             <td  className="TdImg"><b className="TdText">Imagem</b></td>
                             <td  className="TdNome"> <b className="TdText">Nome</b></td>
                             <td  className="TdTipo"><b className="TdText">Tipo</b></td>
