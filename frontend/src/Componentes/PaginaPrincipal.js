@@ -6,6 +6,7 @@ import Dashboard from "./Dashboard";
 import FormProduto from "./FormProduto";
 import ProdutoInfo from "./ProdutoInfo";
 import Login from "./Login";
+import Perfil from "./Perfil"
 
 class PaginaPrincipal extends React.Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class PaginaPrincipal extends React.Component {
 
     this.state = {
       produtos: [],
+      especiais: []
     };
   }
 
@@ -157,13 +159,6 @@ class PaginaPrincipal extends React.Component {
                                 <h3>{pos.nome}</h3>
                                 <div class="size">
                                   <h3>Size</h3>
-                                  <span>7</span>
-                                  <br></br>
-                                  <span>8</span>
-                                  <br></br>
-                                  <span>9</span>
-                                  <br></br>
-                                  <span>10</span>
                                 </div>
                                 <div class="cor">
                                   <h3>Cor</h3>
@@ -222,6 +217,7 @@ class PaginaPrincipal extends React.Component {
         ></Route>
 
         <Route exact path="/Login" render={() => <Login></Login>}></Route>
+        <Route exact path="/Perfil" render={() => <Perfil></Perfil>}></Route>
         <Route
           exact
           path="/Dashboard"

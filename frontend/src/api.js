@@ -141,9 +141,10 @@ function GetUser(user) {
       return [];
     }
     return response.json();
-  }).catch((error) => { 
+  }).catch((error) => {
     console.log(error);
-    return 2; })
+    return 2;
+  })
 }
 
 function deleteProduto(_id, list) {
@@ -163,8 +164,6 @@ function deleteProduto(_id, list) {
   });
 }
 
-
-
 function criarUser(user) {
   return fetch(BASE_URL + "users/", {
     method: "POST",
@@ -180,6 +179,24 @@ function criarUser(user) {
     return response;
   });
 }
+
+function updateMorada(morada,id) {
+  return fetch(BASE_URL + "users/updatemorada/" + id, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(morada),
+  }).then((response) => {
+    if (response.status !== 200) {
+      return [];
+    }
+    return response;
+  });
+}
+
+
 
 function upadateUser(id, list) {
   return fetch(BASE_URL + "users/" + id, {
@@ -209,7 +226,7 @@ function GetEmail(email) {
       return null;
     }
     return response;
-  }).catch((error)=>{
+  }).catch((error) => {
     console.log(error)
   })
 }
@@ -279,6 +296,7 @@ var funcoes = {
   GetUniqueUser,
   GetVariantesProduto,
   uploadImagem,
+  updateMorada,
 }
 
 export default funcoes;

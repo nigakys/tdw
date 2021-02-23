@@ -20,6 +20,9 @@ const usersSchema = new Schema({
         contacto: {
             type: String
         },
+        distrito:{
+            type: String
+        },
         cidade: {
             type: String
         },

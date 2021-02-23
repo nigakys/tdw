@@ -34,6 +34,8 @@ class Login extends React.Component {
                     this.state.user.token = uuidv4();
                     api.criarUser(this.state.user).then(() => {
                         this.sendEmail()
+                        this.myFormRef.reset();
+                        this.setState({ acao: "log" })
                     }).catch((err) => console.log(err))
                 }
             }).catch((error) => { console.log(error) })
@@ -74,6 +76,7 @@ class Login extends React.Component {
 
     toggleAcao = (acao) => {
         acao === "reg" ? this.setState({ acao: "reg" }) : this.setState({ acao: "log" })
+        
     }
 
     updateField = (event, fieldName) => {
@@ -155,7 +158,7 @@ class Login extends React.Component {
                 <button onClick={() => this.toggleAcao("reg")}>registar</button>
                 <button onClick={() => this.toggleAcao("log")}>login</button>
 
-                <form onSubmit={(e) => this.handleSubmit(e)}>
+                <form ref={(el) => this.myFormRef = el} onSubmit={(e) => this.handleSubmit(e)}>
                     {this.renderForm()}
                     {this.renderErros()}
                 </form>

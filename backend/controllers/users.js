@@ -24,7 +24,7 @@ router.get('/ativar/:id', (req, res) => {
     var newValues = { $set: {verified: true} };
 
     users.updateOne(query, newValues).then(() => {
-        res.status(200).send("Atualizado com sucesso: " + JSON.stringify(req.body));
+        res.redirect("http://localhost:3000/")
     }).catch((err) => {
         res.status(400).send(err.message);
     })
@@ -46,7 +46,6 @@ router.get('/email/:email', (req, res) => {
 
 
 router.post('/', (req, res) => {
-    console.log(req.body)
     var pass = req.body.password;
 
     functions.hashPassword(pass).then((result) => {
@@ -74,6 +73,24 @@ router.put('/:id', (req, res) => {
 
     if (req.body != null && req.params != null) {
         users.updateOne(query, req.body).then(() => {
+            res.status(200).send("Atualizado com sucesso: " + JSON.stringify(req.body));
+        }).catch((err) => {
+            res.status(400).send(err.message);
+        })
+    }
+    else {
+        res.status(400).send("Body ou Id nao enviados");
+    }
+})
+
+router.put('/updatemorada/:id', (req, res) => {
+    var id = new mongo.ObjectID(req.params.id);
+    var query = { _id: id };
+    
+    var newValues = { $set: {morada: req.body} };
+    
+    if (req.body != null && req.params != null) {
+        users.updateOne(query, newValues).then(() => {
             res.status(200).send("Atualizado com sucesso: " + JSON.stringify(req.body));
         }).catch((err) => {
             res.status(400).send(err.message);
