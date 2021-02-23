@@ -16,8 +16,6 @@ function App() {
      
       <PaginaPrincipal></PaginaPrincipal>
       </BrowserRouter>
-   
-      
     </div>
   );
 }

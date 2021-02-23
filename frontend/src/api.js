@@ -138,7 +138,7 @@ function GetUser(user) {
     }
   }).then((response) => {
     if (response.status !== 200) {
-      return [];
+      return null;
     }
     return response.json();
   }).catch((error) => {

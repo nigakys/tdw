@@ -43,10 +43,9 @@ class Header extends React.Component {
             </div>
             <div class="nav-menu">
               <ul class="nav-links">
-                <li>
+                {sessionStorage.isAdmin && <li>
                   <NavLink to="/Dashboard">Dashboard</NavLink>
-                </li>
-
+                </li>}
                 <li>
                   <NavLink to="/ProdutosEspeciais">Especial</NavLink>
                 </li>
@@ -64,7 +63,7 @@ class Header extends React.Component {
 
               </div>
 
-              <div class="coluna"><NavLink to ="/">
+              <div class="coluna"><NavLink to="/">
 
                 <img src="../imagens/pes.png" alt="erro"></img>
               </NavLink>

@@ -31,8 +31,8 @@ class Perfil extends React.Component {
         this.state.morada.codPostal.length == 8 ? this.state.validoCod = true : this.state.validoCod = false;
         var valido = regexCod.test(this.state.morada.codPostal)
         this.setState({ validoCod: valido })
-        if(this.state.validoCod && this.state.validoContacto){
-            api.updateMorada(this.state.morada,sessionStorage.userid)
+        if (this.state.validoCod && this.state.validoContacto) {
+            api.updateMorada(this.state.morada, sessionStorage.userid)
         }
     }
 
@@ -70,6 +70,13 @@ class Perfil extends React.Component {
         }
         this.setState({ morada: morada2 })
         event.preventDefault();
+    }
+
+    componentDidMount() {
+        api.GetUser(sessionStorage.username).then((data) => {
+            this.setState({ morada: data.morada })
+            console.log(data)
+        })
     }
 
 

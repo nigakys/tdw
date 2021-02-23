@@ -17,196 +17,224 @@ class Login extends React.Component {
       emailValid: true,
       passwordValid: true,
       passwordCerta: true,
+      userRepetido: false,
+      userExists: true,
+      formValid: true,
     };
   }
   renderErros = () => {
     if (!this.state.userValid) {
-        return (
-            <div className="erros">
-                Nome de utilizador tem de ter pelo menos 6 caracteres
-            </div>
-        )
+      return (
+        <div className="erros">
+          Nome de utilizador tem de ter pelo menos 6 caracteres
+        </div>
+      )
     }
     else if (!this.state.emailValid) {
-        return (
-            <div className="erros">
-                Já existe uma conta com este email
-            </div>
-        )
+      return (
+        <div className="erros">
+          Já existe uma conta com este email
+        </div>
+      )
+    }
+    else if (!this.state.formValid) {
+      return (
+        <div className="erros">
+          Os campos não podem ser vazios
+        </div>
+      )
+    }
+    else if (this.state.userRepetido) {
+      return (
+        <div className="erros">
+          Já existe uma conta com este username
+        </div>
+      )
     }
     else if (!this.state.passwordValid) {
-        return (
-            <div className="erros">
-                Palavra passe tem de ter pelo menos 6 caracteres
-            </div>
-        )
+      return (
+        <div className="erros">
+          Palavra passe tem de ter pelo menos 6 caracteres
+        </div>
+      )
     }
-    else if (!this.state.passwordValid) {
-        return (
-            <div className="erros">
-                Palavra passe tem de ter pelo menos 6 caracteres
-            </div>
-        )
+    else if (!this.state.userExists) {
+      return (
+        <div className="erros">
+          Username não existe
+        </div>
+      )
     }
     else if (!this.state.passwordCerta) {
-        return (
-            <div className="erros">
-                Palavra passe errada
-            </div>
-        )
+      return (
+        <div className="erros">
+          Palavra passe errada
+        </div>
+      )
     }
-}
+  }
 
   handleSubmit = (event) => {
     event.preventDefault();
     if (this.state.acao === "reg") {
+      if (this.state.user.username === "" || this.state.user.email === "" || this.state.user.password === "") {
+        this.setState({ formValid: false })
+      }
+      else {
+        this.setState({ formValid: true })
         api.GetEmail(this.state.user.email).then((data) => {
-            data === null ? this.setState({ emailValid: false }) : this.setState({ emailValid: true })
+          data === null ? this.setState({ emailValid: false }) : this.setState({ emailValid: true })
+          api.GetUser(this.state.user.username).then((data) => {
+            data === null ? this.setState({ userRepetido: false }) : this.setState({ userRepetido: true })
 
             this.state.user.username.length < 6 ? this.setState({ userValid: false }) : this.setState({ userValid: true })
 
             this.state.user.password.length < 6 ? this.setState({ passwordValid: false }) : this.setState({ passwordValid: true })
 
-            if (this.state.userValid && this.state.passwordValid && this.state.emailValid) {
-                this.state.user.token = uuidv4();
-                api.criarUser(this.state.user).then(() => {
-                    this.sendEmail()
-                    this.myFormRef.reset();
-                    this.setState({ acao: "log" })
-                }).catch((err) => console.log(err))
+            if (this.state.userValid && this.state.passwordValid && this.state.emailValid && !this.state.userRepetido) {
+              this.state.user.token = uuidv4();
+              api.criarUser(this.state.user).then(() => {
+                this.sendEmail()
+                this.myFormRef.reset();
+                this.setState({ acao: "log" })
+              }).catch((err) => console.log(err))
             }
+          })
         }).catch((error) => { console.log(error) })
+      }
+
 
     } else {
+      if (this.state.user.username === undefined || this.state.user.password === undefined) {
+        this.setState({ formValid: false })
+      }
+      else {
+        this.setState({ formValid: true })
         api.GetUser(this.state.user.username).then((data) => {
+          if (data != null && this.state.password != "") {
+            this.setState({ userExists: true })
             var bcrypt = require("bcryptjs")
 
             bcrypt.compare(this.state.user.password, data.password).then((result) => {
-                if (result) {
-                    sessionStorage.username = data.username;
-                    sessionStorage.userid = data._id;
-                    sessionStorage.email = data.email;
-                    window.location.href = "/"
-                }
-                else {
-                    this.setState({ passwordCerta: false })
-                }
+              if (result) {
+                sessionStorage.username = data.username;
+                sessionStorage.userid = data._id;
+                sessionStorage.email = data.email;
+                sessionStorage.isAdmin = data.isAdmin;
+                window.location.href = "/"
+              }
+              else {
+                this.setState({ passwordCerta: false })
+              }
             })
+          }
+          else {
+            this.setState({ userExists: false })
+          }
         }).catch((error) => { console.log(error) })
 
         if (this.state.checked) {
         }
+      }
     }
-}
+  }
 
-sendEmail = () => {
+  sendEmail = () => {
     emailjs.send("service_5vkotgq", "template_90a2eav", {
-        username: this.state.user.username,
-        email: this.state.user.email,
-        id: this.state.user.token
+      username: this.state.user.username,
+      email: this.state.user.email,
+      id: this.state.user.token
     }, "user_mnL0jcsUKU7Dg1I4C3rHU");
-}
+  }
 
-toggleCheck = () => {
+  toggleCheck = () => {
     this.state.checked ? this.setState({ checked: false }) : this.setState({ checked: true })
-}
+  }
 
-toggleAcao = (acao) => {
+  toggleAcao = (acao) => {
     acao === "reg" ? this.setState({ acao: "reg" }) : this.setState({ acao: "log" })
-    
-}
 
-updateField = (event, fieldName) => {
+  }
+
+  updateField = (event, fieldName) => {
     var user2 = this.state.user;
     user2[fieldName] = event.target.value;
 
     this.setState({ user: user2 })
 
     event.preventDefault();
-}
+  }
 
   renderForm = () => {
     if (this.state.acao === "log") {
       return (
-          <div >
-
-        <div className="formLogin">
-          <div className="signHeader"><h1>Sign Up</h1></div>
-          <div className="userLabel">
-           {" "}
-            <input className="inputUser"
-              id="UserLogin"
-              onChange={(e) => this.updateField(e, "username")}
-              placeholder="Username"
+        <div >
+          <div className="formLogin">
+            <div className="signHeader"><h1>Login</h1></div>
+            <div className="userLabel">
+              <input className="inputUser"
+                id="UserLogin"
+                onChange={(e) => this.updateField(e, "username")}
+                placeholder="Username"
               ></input>
-          </div>
-          <div className=
-          'passLabel'>
-            {" "}
-            <input
-              id="PassLogin"
-              type="password"
-              onChange={(e) => this.updateField(e, "password")}
-              placeholder="Password"
+            </div>
+            <div className=
+              'passLabel'>
+              <input
+                id="PassLogin"
+                type="password"
+                onChange={(e) => this.updateField(e, "password")}
+                placeholder="Password"
               ></input>
-          </div>
-          <div className="labelGuardarDados"> 
-            Guardar dados:{" "}
+            </div>
+            <div className="labelGuardarDados">
+              Guardar dados:
             </div>
             <Switch
               className="switchGuardarDados"
               handleToggle={() => this.toggleCheck()}
               checked={this.state.checked}
-              />
-               {this.renderErros()}
-         
-          <button className="buttonForm" type="submit">Login</button>
-          <button onClick={() => this.toggleAcao("reg")}>registar</button>
-     
-       
+            />
+            {this.renderErros()}
+            <button className="buttonForm" type="submit">Login</button>
+            <a onClick={() => this.toggleAcao("reg")}>registar</a>
+          </div>
         </div>
-      </div>
       );
     } else {
       return (
         <div >
-
-        <div className="formLogin">
-          <div className="signHeader"><h1>Sign Up</h1></div>
-          <div className="userLabel">
-           {" "}
-            <input className="inputUser"
-              id="UserLogin"
-              onChange={(e) => this.updateField(e, "username")}
-              placeholder="Username"
+          <div className="formLogin">
+            <div className="signHeader"><h1>Sign Up</h1></div>
+            <div className="userLabel">
+              <input className="inputUser"
+                id="UserLogin"
+                onChange={(e) => this.updateField(e, "username")}
+                placeholder="Username"
               ></input>
-          </div>
-          <div className="passLabel"><input
-            id="EmailRegister"
-            type="email"
-            onChange={(e) => this.updateField(e, "email")}placeholder="Email"
-          ></input></div>
-          <div className=
-          'passLabel'>
-            {" "}
-            <input
-              id="PassLogin"
-              type="password"
-              onChange={(e) => this.updateField(e, "password")}
-              placeholder="Password"
+            </div>
+            <div className="passLabel"><input
+              id="EmailRegister"
+              type="email"
+              onChange={(e) => this.updateField(e, "email")} placeholder="Email"
+            ></input></div>
+            <div className=
+              'passLabel'>
+              <input
+                id="PassLogin"
+                type="password"
+                onChange={(e) => this.updateField(e, "password")}
+                placeholder="Password"
               ></input>
-          </div>
-          <div className="labelGuardarDados"> 
-            Guardar dados:{" "}
+            </div>
+            <div className="labelGuardarDados">
+              Guardar dados:
             </div>
             {this.renderErros()}
-         
-          <button className="buttonForm" type="submit">Registar</button>
-          <button onClick={() => this.toggleAcao("log")}>login</button>
-
+            <button className="buttonForm" type="submit">Registar</button>
+            <a onClick={() => this.toggleAcao("log")}>login</a>
+          </div>
         </div>
-      </div>
-     
       );
     }
   };
@@ -214,10 +242,8 @@ updateField = (event, fieldName) => {
   render() {
     return (
       <div>
-       
-        <form onSubmit={(e) => this.handleSubmit(e)}>
+        <form ref={(el) => this.myFormRef = el} onSubmit={(e) => this.handleSubmit(e)}>
           {this.renderForm()}
-         
         </form>
       </div>
     );

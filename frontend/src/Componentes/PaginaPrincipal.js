@@ -144,7 +144,6 @@ class PaginaPrincipal extends React.Component {
                             <div className="card">
                               <div className="imgbox">
                                 <img
-                                 
                                   src={
                                     "http://localhost:4000/files/" + pos.imagem
                                   }
