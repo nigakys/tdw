@@ -177,7 +177,7 @@ function criarUser(user) {
     if (response.status !== 200) {
       return [];
     }
-    return response.json();
+    return response;
   });
 }
 
