@@ -1,12 +1,13 @@
 table {
-  border: 1px black solid;
+
   overflow-x: auto;
 }
 .ContentImg {
-  width: 100%;
+  width: 80%;
+  height: auto;
 }
 .Content {
-  background: rgb(230, 230, 230);
+  background: rgb(255, 255, 255);
   margin-left: 2%;
   margin-right: 2%;
   
@@ -53,16 +54,17 @@ table {
 .TdPreco,
 .TdRef,
 .TdTipo {
-  border: 1px black solid;
+ 
   padding-left: 2%;
+background-color: black;
 
-  height: 70px;
+  height: 50px;
 }
 .TdText {
     text-transform: uppercase;
   font-weight: bold;
   font-size: 20px;
-  
+  color: white;
   
 }
 
@@ -73,10 +75,10 @@ table {
 .TdRef_,
 .TdTipo_ {
   align-items: center;
-  border: 1px black solid;
+
   padding-top: 2%;
 
-  height: 100px;
+  height: 3px;
 }
 .ContentButtonEdit {
   background-color: #3b6aec;

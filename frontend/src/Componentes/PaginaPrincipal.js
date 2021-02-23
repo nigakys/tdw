@@ -132,14 +132,10 @@ class PaginaPrincipal extends React.Component {
                 </div>
               </section>
               <section class="special">
-                <div>
+                <div className="headerSpecial">
                   <h2>Produtos Especiais</h2>
-                  <NavLink to="/ProdutosEspeciais">
-                    <span>Ver todos</span>
-                  </NavLink>
-                </div>
-
-                <div class="div_produtos">
+                  </div>   
+                  <div class="div_produtos">
                   {this.state.produtos.map((pos) => {
                     if (pos.especial) {
                       return (
@@ -148,8 +144,7 @@ class PaginaPrincipal extends React.Component {
                             <div className="card">
                               <div className="imgbox">
                                 <img
-                                  onMouseEnter={() => MouseEnter()}
-                                  onMouseLeave={() => MouseLeave()}
+                                 
                                   src={
                                     "http://localhost:4000/files/" + pos.imagem
                                   }
@@ -158,7 +153,7 @@ class PaginaPrincipal extends React.Component {
                               <div className="contentbx">
                                 <h3>{pos.nome}</h3>
                                 <div class="size">
-                                  <h3>Size</h3>
+                                
                                 </div>
                                 <div class="cor">
                                   <h3>Cor</h3>
@@ -178,7 +173,7 @@ class PaginaPrincipal extends React.Component {
               </section>
 
               <section class="container_produtos">
-                <div>
+                <div className="headerSpecial">
                   <h2>Novos Produtos</h2>
                   <NavLink to="/Produtos">
                     <span>Ver todos</span>
@@ -194,7 +189,8 @@ class PaginaPrincipal extends React.Component {
                             onMouseLeave={() => MouseLeave()}
                             src={"http://localhost:4000/files/" + pos.imagem}
                           ></img>
-                          <div>{pos.nome}</div>
+                          <div className="infoProduto"><div>{pos.nome}</div>
+                          <div className="precoProduto">{pos.preco + '$'}</div></div>
                         </div>
                       </div>
                     );
@@ -213,7 +209,10 @@ class PaginaPrincipal extends React.Component {
         <Route
           exact
           path="/Produtos"
-          render={() => <Produtos></Produtos>}
+          render={() => <Produtos
+            produtos={this.state.produtos}
+            MouseEnter={this.MouseEnter}
+            MouseLeave={this.MouseLeave}></Produtos>}
         ></Route>
 
         <Route exact path="/Login" render={() => <Login></Login>}></Route>
