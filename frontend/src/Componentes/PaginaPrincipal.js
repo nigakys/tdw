@@ -1,5 +1,5 @@
 import React from "react";
-import api from "../api";
+import api from "../shared/api";
 import { Link, NavLink, Route, Switch, withRouter } from "react-router-dom";
 import Produtos from "./Produtos";
 import Dashboard from "./Dashboard";

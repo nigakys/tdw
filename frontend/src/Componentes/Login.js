@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import Switch from "./Switch"
-import api from "../api"
+import api from "../shared/api"
 import emailjs from "emailjs-com"
 import { v4 as uuidv4 } from 'uuid';
 

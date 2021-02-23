@@ -1,8 +1,8 @@
 import React from "react";
 import { withRouter } from 'react-router-dom'
-import distritos from "../distritos"
-import cidades from "../cidades"
-import api from "../api"
+import distritos from "../shared/distritos"
+import cidades from "../shared/cidades"
+import api from "../shared/api"
 
 class Perfil extends React.Component {
     constructor(props) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import api from "../api";
+import api from "../shared/api";
 
 
 class ProdutoInfo extends React.Component {
