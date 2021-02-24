@@ -43,7 +43,7 @@ class Header extends React.Component {
             </div>
             <div class="nav-menu">
               <ul class="nav-links">
-                {sessionStorage.isAdmin && <li>
+                {sessionStorage.isAdmin === true && <li>
                   <NavLink to="/Dashboard">Dashboard</NavLink>
                 </li>}
                 <li>

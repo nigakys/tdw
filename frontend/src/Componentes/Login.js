@@ -12,6 +12,7 @@ class Login extends React.Component {
     this.state = {
       user: {},
       acao: "log",
+      open: false,
       checked: false,
       userValid: true,
       emailValid: true,
@@ -74,10 +75,18 @@ class Login extends React.Component {
     }
   }
 
+  onOpenModal = () => {
+    this.setState({ open: true });
+  };
+
+  onCloseModal = () => {
+    this.setState({ open: false });
+  };
+
   handleSubmit = (event) => {
     event.preventDefault();
     if (this.state.acao === "reg") {
-      if (this.state.user.username === "" || this.state.user.email === "" || this.state.user.password === "") {
+      if (this.state.user.username === undefined || this.state.user.email === undefined || this.state.user.password === undefined) {
         this.setState({ formValid: false })
       }
       else {
@@ -93,6 +102,13 @@ class Login extends React.Component {
 
             if (this.state.userValid && this.state.passwordValid && this.state.emailValid && !this.state.userRepetido) {
               this.state.user.token = uuidv4();
+              this.state.user.morada = {
+                codPostal: "",
+                contacto: "",
+                cidade: "",
+                ruaCasa: "",
+                distrito: "Açores"
+              }
               api.criarUser(this.state.user).then(() => {
                 this.sendEmail()
                 this.myFormRef.reset();
@@ -132,7 +148,6 @@ class Login extends React.Component {
             this.setState({ userExists: false })
           }
         }).catch((error) => { console.log(error) })
-
         if (this.state.checked) {
         }
       }
@@ -153,7 +168,15 @@ class Login extends React.Component {
 
   toggleAcao = (acao) => {
     acao === "reg" ? this.setState({ acao: "reg" }) : this.setState({ acao: "log" })
-
+    this.setState({
+      userValid: true,
+      emailValid: true,
+      passwordValid: true,
+      passwordCerta: true,
+      userRepetido: false,
+      userExists: true,
+      formValid: true,
+    })
   }
 
   updateField = (event, fieldName) => {
@@ -197,7 +220,7 @@ class Login extends React.Component {
             />
             {this.renderErros()}
             <button className="buttonForm" type="submit">Login</button>
-            <a onClick={() => this.toggleAcao("reg")}>registar</a>
+            <a>Ainda não tem conta?<a style={{ textDecoration: "underline", color: 'blue' }} onClick={() => this.toggleAcao("reg")}> Clique aqui</a> para criar uma</a>
           </div>
         </div>
       );
@@ -232,7 +255,7 @@ class Login extends React.Component {
             </div>
             {this.renderErros()}
             <button className="buttonForm" type="submit">Registar</button>
-            <a onClick={() => this.toggleAcao("log")}>login</a>
+            <a>Já tem conta? <a style={{ textDecoration: "underline", color: 'blue' }} onClick={() => this.toggleAcao("log")}>Clique aqui</a> para fazer Login</a>
           </div>
         </div>
       );

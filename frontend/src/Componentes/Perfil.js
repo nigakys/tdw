@@ -74,8 +74,9 @@ class Perfil extends React.Component {
 
     componentDidMount() {
         api.GetUser(sessionStorage.username).then((data) => {
-            this.setState({ morada: data.morada })
             console.log(data)
+            // this.setState({ morada: data.morada })
+            // console.log(data)
         })
     }
 

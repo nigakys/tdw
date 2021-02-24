@@ -1,5 +1,6 @@
 import React from 'react';
 import api from "../shared/api";
+import { Link, withRouter } from "react-router-dom";
 
 
 class ProdutoInfo extends React.Component {
@@ -7,27 +8,16 @@ class ProdutoInfo extends React.Component {
         super(props);
 
         this.state = {
-            produtos: [],
+            variantes: [],
             visible: false
 
         };
     }
 
-    GetVariantesProduto = () => {
-
-        var id;
-        this.props.produtos.map((pos) => {
-            if(pos._id == this.props.match.params.id){
-                id = pos.ref
-            }
-        });
-        api.GetVariantesProduto(id).then((data) => {
-            this.setState({ produtos: data })
-        })
-    }
-
     componentDidMount() {
-        this.GetVariantesProduto();
+        api.GetVariantesProduto(this.props.match.params.id).then((data) => {
+            this.setState({ variantes: data })
+        })
     }
 
     visibleInput = () => {
@@ -37,10 +27,10 @@ class ProdutoInfo extends React.Component {
     render() {
         return (
             <div>
+                <Link to={`/Dashboard/variante/add/${this.props.match.params.id}`}><button>Adicionar Variante</button></Link>
                 <table className="table">
                     <thead>
                         <tr>
-                            <td><b>ref</b></td>
                             <td><b>Tamanho</b></td>
                             <td><b>Cor</b></td>
                             <td><b>Stock</b></td>
@@ -50,20 +40,14 @@ class ProdutoInfo extends React.Component {
 
                     <tbody>
                         {
-                            this.state.produtos.map((item, i) => {
+                            this.state.variantes.map((item, i) => {
                                 return (
                                     <tr key={i}>
-                                        <td>{item.ref}</td>
-
                                         <td>{item.tamanho}</td>
-
                                         <td>{item.cor}</td>
-
                                         <td>{item.stock}</td>
                                         <td visible={this.state.visible}><button onClick={() => this.visibleInput()}>+</button></td>
-
                                         <td> <button onClick={() => this.props.funcaoRemover(item._id)}>Eliminar</button> </td>
-
                                     </tr>
                                 )
                             })
@@ -76,4 +60,4 @@ class ProdutoInfo extends React.Component {
     }
 }
 
-export default ProdutoInfo;
+export default withRouter(ProdutoInfo);

@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.5",
-    "@testing-library/user-event": "^12.6.3",
     "bcrypt": "^5.0.0",
     "bcryptjs": "^2.4.3",
     "emailjs-com": "^2.6.4",
@@ -13,6 +10,7 @@
     "mongoose": "^5.11.15",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-responsive-modal": "^6.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "uuid": "^8.3.2",
