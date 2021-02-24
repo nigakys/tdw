@@ -50,7 +50,7 @@ class Header extends React.Component {
                   <NavLink to="/ProdutosEspeciais">Especial</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/Novidades">Novidades</NavLink>
+                  <NavLink to="/Produtos">Produtos</NavLink>
                 </li>
                 <li>
                   <NavLink to="/Newsletter">Newsletter</NavLink>
