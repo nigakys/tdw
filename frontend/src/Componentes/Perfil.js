@@ -82,24 +82,26 @@ class Perfil extends React.Component {
 
     render() {
         return (
-            <div>
-                <form onSubmit={(e) => this.handleSubmit(e)}>
+            
+
+            <div style={{background:"red"}}>
+                <form className="dadosPessoaisForm"  onSubmit={(e) => this.handleSubmit(e)}>
                     Contacto: <input maxLength="9" type="text" value={this.state.morada.contacto} id="Contacto" onChange={(e) => this.updateField(e, "contacto")}></input><p></p>
                     Distrito: <select id="Distrito" value={this.state.morada.distrito} onChange={(e) => this.updateField(e, "distrito")}>
                         {this.state.distritos.map((pos) => {
                             return (
                                 <option value={pos}>{pos}</option>
-                            )
-                        })}
+                                )
+                            })}
                     </select>
                     Cidade: <select id="Cidade" value={this.state.morada.cidade} onChange={(e) => this.updateField(e, "cidade")}>
                         {this.state.cidades.map((pos) => {
                             if (pos.distrito === this.state.morada.distrito) {
                                 return (
                                     <option value={pos.cidade}>{pos.cidade}</option>
-                                );
-                            }
-                        })}
+                                    );
+                                }
+                            })}
                     </select><p></p>
                     Rua/casa: <input id="RuaCasa" value={this.state.morada.ruaCasa} onChange={(e) => this.updateField(e, "ruaCasa")}></input><p></p>
                     Codigo Postal: <input maxLength="8" id="CodigoPostal" value={this.state.morada.codPostal} onChange={(e) => this.updateField(e, "codPostal")}></input><p></p>
@@ -107,6 +109,7 @@ class Perfil extends React.Component {
                 </form>
                 {this.renderErros()}
             </div>
+                           
         )
     }
 }

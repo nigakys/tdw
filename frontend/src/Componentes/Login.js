@@ -5,6 +5,8 @@ import api from "../shared/api"
 import emailjs from "emailjs-com"
 import { v4 as uuidv4 } from 'uuid';
 
+
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -77,7 +79,7 @@ class Login extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     if (this.state.acao === "reg") {
-      if (this.state.user.username === "" || this.state.user.email === "" || this.state.user.password === "") {
+      if (this.state.user.username === undefined || this.state.user.email === undefined || this.state.user.password === undefined) {
         this.setState({ formValid: false })
       }
       else {
@@ -241,11 +243,13 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="idk">
+
         <form ref={(el) => this.myFormRef = el} onSubmit={(e) => this.handleSubmit(e)}>
           {this.renderForm()}
         </form>
       </div>
+     
     );
   }
 }

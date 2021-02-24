@@ -6,7 +6,7 @@ import Dashboard from "./Dashboard";
 import FormProduto from "./FormProduto";
 import ProdutoInfo from "./ProdutoInfo";
 import Login from "./Login";
-import Perfil from "./Perfil"
+import Perfil from "./Perfil";
 
 class PaginaPrincipal extends React.Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class PaginaPrincipal extends React.Component {
 
     this.state = {
       produtos: [],
-      especiais: []
+      especiais: [],
     };
   }
 
@@ -73,7 +73,23 @@ class PaginaPrincipal extends React.Component {
     }
     this.props.history.push("/Dashboard");
   };
-
+  MouseEnter=() =>{
+    var color = ["#86e6f9", "#DED87F", "#B25FE8"];
+    document.querySelectorAll(".div_cadaProduto img").forEach((item) => {
+      item.addEventListener("mouseenter", () => {
+        item.style.backgroundColor = color[sessionStorage.getItem("cor")];
+      });
+    });
+  }
+  
+  MouseLeave=() =>{
+    document.querySelectorAll(".div_cadaProduto img ").forEach((item) => {
+      item.addEventListener("mouseleave", () => {
+        item.style.backgroundColor = "#e6e0e0";
+      });
+    });
+  }
+  
   MostrarProdutos = () => {
     if (this.state.produtos != null) {
       return (
@@ -91,24 +107,32 @@ class PaginaPrincipal extends React.Component {
   }
 
   tenis = () => {
-    return (<>
-      <span>7</span><br></br>
-      <span>8</span><br></br>
-      <span>9</span><br></br>
-      <span>10</span>
-    </>
-    )
-  }
+    return (
+      <>
+        <span>7</span>
+        <br></br>
+        <span>8</span>
+        <br></br>
+        <span>9</span>
+        <br></br>
+        <span>10</span>
+      </>
+    );
+  };
 
   casaco = () => {
-    return (<>
-      <span>s</span><br></br>
-      <span>xs</span><br></br>
-      <span>m</span><br></br>
-      <span>l</span>
-    </>
-    )
-  }
+    return (
+      <>
+        <span>s</span>
+        <br></br>
+        <span>xs</span>
+        <br></br>
+        <span>m</span>
+        <br></br>
+        <span>l</span>
+      </>
+    );
+  };
 
   render() {
     return (
@@ -133,13 +157,14 @@ class PaginaPrincipal extends React.Component {
               </section>
               <section class="special">
                 <div className="headerSpecial">
-                  <h2>Produtos Especiais</h2>
-                  </div>   
-                  <div class="div_produtos">
+                  <h2 className="h22">Produtos Especiais</h2>
+                </div>
+                <div class="div_produtos">
                   {this.state.produtos.map((pos) => {
                     if (pos.especial) {
                       return (
                         <div>
+                          
                           <div class="container1">
                             <div className="card">
                               <div className="imgbox">
@@ -151,9 +176,7 @@ class PaginaPrincipal extends React.Component {
                               </div>
                               <div className="contentbx">
                                 <h3>{pos.nome}</h3>
-                                <div class="size">
-                                
-                                </div>
+                                <div class="size"></div>
                                 <div class="cor">
                                   <h3>Cor</h3>
                                   <span></span>
@@ -161,6 +184,7 @@ class PaginaPrincipal extends React.Component {
                                   <span></span>
                                   <span></span>
                                 </div>
+                             
                               </div>
                             </div>
                           </div>
@@ -172,11 +196,14 @@ class PaginaPrincipal extends React.Component {
               </section>
 
               <section class="container_produtos">
-                <div className="headerSpecial">
-                  <h2>Novos Produtos</h2>
+                <div className="headerSpecial"><div>
+
+                  <h2>Novos Produtos</h2><div>
+                </div>
                   <NavLink to="/Produtos">
-                    <span>Ver todos</span>
+                  <button className="buttonHome1">Ver Todos</button>
                   </NavLink>
+                  </div>
                 </div>
                 <div class="div_produtos">
                   {this.state.produtos.map((pos) => {
@@ -184,12 +211,17 @@ class PaginaPrincipal extends React.Component {
                       <div>
                         <div class="div_cadaProduto">
                           <img
-                            onMouseEnter={() => MouseEnter()}
-                            onMouseLeave={() => MouseLeave()}
+                            onMouseEnter={() => this.MouseEnter()}
+                            onMouseLeave={() => this.MouseLeave()}
                             src={"http://localhost:4000/files/" + pos.imagem}
                           ></img>
-                          <div className="infoProduto"><div>{pos.nome}</div>
-                          <div className="precoProduto">{pos.preco + '$'}</div></div>
+                          <div className="infoProduto">
+                            <div className="nomeProduto">{pos.nome}</div>
+                            <div className="precoProduto">
+                              {pos.preco + "$"}
+                            </div>
+                            <div>cor</div>
+                          </div>
                         </div>
                       </div>
                     );
@@ -208,10 +240,13 @@ class PaginaPrincipal extends React.Component {
         <Route
           exact
           path="/Produtos"
-          render={() => <Produtos
-            produtos={this.state.produtos}
-            MouseEnter={this.MouseEnter}
-            MouseLeave={this.MouseLeave}></Produtos>}
+          render={() => (
+            <Produtos
+              produtos={this.state.produtos}
+              MouseEnter={this.MouseEnter}
+              MouseLeave={this.MouseLeave}
+            ></Produtos>
+          )}
         ></Route>
 
         <Route exact path="/Login" render={() => <Login></Login>}></Route>
@@ -265,22 +300,6 @@ class PaginaPrincipal extends React.Component {
   }
 }
 
-function MouseEnter() {
-  var color = ["#86e6f9", "#DED87F", "#B25FE8"];
-  document.querySelectorAll(".div_cadaProduto img").forEach((item) => {
-    item.addEventListener("mouseenter", () => {
-      item.style.backgroundColor = color[sessionStorage.getItem("cor")];
-    });
-  });
-}
-
-function MouseLeave() {
-  document.querySelectorAll(".div_cadaProduto img ").forEach((item) => {
-    item.addEventListener("mouseleave", () => {
-      item.style.backgroundColor = "#e6e0e0";
-    });
-  });
-}
 
 function ProdutosInfo(props) {
   return (
