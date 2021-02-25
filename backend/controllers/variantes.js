@@ -2,7 +2,8 @@ var mongo = require("mongodb");
 var express = require('express');
 const variantes = require("../models/variantes");
 var router = express.Router();
-
+const fileUpload = require("express-fileupload");
+router.use(fileUpload());
 
 router.get('/', (req, res) => {
     variantes.find().then(result => {
@@ -36,10 +37,10 @@ router.get('/:ref', (req, res) => {
 
 router.post('/', (req, res) => {
     if (req.body != null) {
-
-        variantes.create(req.body).then(() => {
-            res.status(200).send("Produto inserido" + JSON.stringify(req.body));
-        })
+        variantes.create(req.body)
+            .then(() => {
+                res.status(200).send("Produto inserido" + JSON.stringify(req.body));
+            })
             .catch((err) => {
                 console.log(err)
             })
@@ -47,8 +48,31 @@ router.post('/', (req, res) => {
     else {
         res.status(400).send("Body sem valores")
     }
-
 })
+
+router.post('/imagem', function (req, res) {
+    var file;
+    var filename;
+    var erro = null;
+    if (req.files != null) {
+        for (let index = 0; index < req.files.file.length; index++) {
+            file = req.files.file[index];
+            filename = file.name
+            file.mv('./public/files/' + filename, function (err) {
+                if (err) {
+                    erro = err;
+                }
+            })
+        }
+
+        if (erro != null) {
+            res.status(200).send("Sucesso")
+        }
+    }
+    else {
+        res.status(400).send("imagem vazia")
+    }
+});
 
 router.put('/:id', (req, res) => {
     var id = new mongo.ObjectID(req.params.id);

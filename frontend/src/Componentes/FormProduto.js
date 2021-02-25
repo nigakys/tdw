@@ -2,15 +2,17 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import "../Switch.css"
 import Switch from "./Switch"
+import api from "../shared/api"
 
 
 class FormProduto extends React.Component {
     constructor(props) {
+        var state = false;
         super(props);
         if (props.match != null && props.match.params.id != null) {
             this.props.produtos.map((pos) => {
                 if (pos._id == props.match.params.id) {
-
+                    state = true
                     this.state = {
                         produtos: {
                             id: pos._id,
@@ -22,7 +24,8 @@ class FormProduto extends React.Component {
                             dataAdicionado: pos.dataAdicionado,
                             imagem: pos.imagem
                         },
-                        imagem: null
+                        imagem: null,
+                        categorias: [],
                     }
                 }
             });
@@ -30,15 +33,17 @@ class FormProduto extends React.Component {
         else {
             this.state = {
                 produtos: {
-                    id: null,
+                    id: "",
+                    ref: "",
                     tipo: "",
                     nome: "",
                     preco: "",
-                    especial: false,
+                    especial: "",
                     dataAdicionado: "",
-                    imagem: null
+                    imagem: ""
                 },
-                imagem: null
+                imagem: null,
+                categorias: [],
             }
         }
     }
@@ -47,7 +52,7 @@ class FormProduto extends React.Component {
     toggle = () => {
         var addProduto = this.state.produtos;
         addProduto.especial ? addProduto.especial = false : addProduto.especial = true
-        this.setState({ produtos: addProduto})
+        this.setState({ produtos: addProduto })
     }
 
     updateField = (event, fieldName) => {
@@ -61,6 +66,11 @@ class FormProduto extends React.Component {
             this.setState({ produtos: addProduto })
         }
         event.preventDefault();
+    }
+    componentDidMount() {
+        api.GetCategorias().then((data) => {
+            this.setState({ categorias: data })
+        })
     }
 
     render() {
@@ -76,17 +86,27 @@ class FormProduto extends React.Component {
                     <p></p>
                     Nome: <input id="Nome" value={this.state.produtos.nome} onChange={(e) => this.updateField(e, "nome")}></input>
                     <p></p>
-                    Categoria: <input id="Tipo" value={this.state.produtos.tipo} onChange={(e) => this.updateField(e, "tipo")}></input>
-                    <p></p>
-                    Preco: <input id="Preco" value={this.state.produtos.preco} onChange={(e) => this.updateField(e, "preco")}></input>
+                    Categoria: <select id="Categoria" value={this.state.produtos.categoria} onChange={(e) => this.updateField(e, "categoria")}>
+                        {this.state.categorias.map((pos) => {
+                            return (
+                                <option value={pos.categoria}>{pos.categoria}</option>
+                            )
+                        })}
+                    </select><p></p>
+
+                    Preco: <input id="Preco" type="number" value={this.state.produtos.preco} onChange={(e) => this.updateField(e, "preco")}></input>
                     <p></p>
                     Imagem: <input type="File" id="Imagem" onChange={(e) => this.updateField(e, "imagem")}></input>
                     <p></p>
-                    <img src={"http://localhost:4000/files/" + this.state.produtos.imagem}></img>
-                    Especial: <Switch  checked={this.state.produtos.especial} handleToggle={() => this.toggle()}/>
+                    <img src={"http://localhost:4000/files/" + this.state.produtos.imagem}></img><p></p>
+                    Especial: <Switch checked={this.state.produtos.especial} handleToggle={() => this.toggle()} />
                     <p></p>
                     <Link to="/dashboard"><button >Voltar</button></Link>
-                    <button type="submit">Adicionar</button>
+                    {this.state.produtos.id === null ?
+                        <button type="submit">Adicionar</button> :
+                        <button type="submit">Editar</button>
+                    }
+
                 </form>
             </div>
         );

@@ -1,11 +1,61 @@
 .dadosPessoaisForm{
-    background-color: blue;
- width: 60%;
+  display: flex;
  
- display: flex;
-  align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-left:20% ;
+  border: 2px rgb(107, 145, 228) solid;
+  box-shadow: 10px 10px 5px grey;
+ text-align:  left;
+  background:linear-gradient(to bottom, #dfdfeb 10%, #9ab7f5 100%);
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 20px;
+  margin-top: 50px;
+ min-height: 55vh;
+
+}
+.dadosPessoaisForm input, select{
+  width:40%;
+  margin-left: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   
+}
+.dadospessoais{
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 100px;
+}
+ .dadosPessoaisForm a {
+margin-left: 30px;
+font-size: 22px;
+ }
+ .buttonForm1 {
+   margin-left: 30%;
+  margin-top: 60px;
+  border-radius: 20px;
+  background-color: #2b2f63;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+  cursor: pointer;
+  width: 200px;
+}
+
+.buttonForm1:active {
+  transform: scale(0.95);
+}
+
+.buttonForm1:focus {
+  outline: none;
+}
+
+.buttonForm1.ghost {
+  background-color: transparent;
+  border-color: #ffffff;
 }

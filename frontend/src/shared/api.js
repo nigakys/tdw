@@ -92,13 +92,31 @@ function criarProduto(produto, imagem) {
     if (response.status !== 200) {
       return [];
     }
-    uploadImagem(imagem)
+    uploadImagemProduto(imagem)
     return response.json();
   });
 }
 
-function updateProduto(_id, produto, imagem) {
+function criarVariante(variante) {
+  return fetch(BASE_URL + "variantes/", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(variante),
+  }).then((response) => {
+    if (response.status !== 200) {
+      return null;
+    }
+    return true;
+  }).catch(() => {
+  })
+}
 
+
+
+function updateProduto(_id, produto, imagem) {
   var id = new mongo.ObjectID(_id);
   return fetch(BASE_URL + "produtos/" + id, {
     method: "PUT",
@@ -112,18 +130,97 @@ function updateProduto(_id, produto, imagem) {
       return [];
     }
 
-    uploadImagem(imagem)
+    uploadImagemProduto(imagem)
     return response.json();
   });
 }
 
-function uploadImagem(imagem) {
+function uploadImagemProduto(imagem) {
   return fetch(BASE_URL + "produtos/imagem", {
     method: "POST",
     body: imagem,
   }).then((response) => {
     if (response.status !== 200) {
+      return null;
+    }
+    return "success";
+  }).catch((error) => {
+    console.log(error)
+  })
+}
+
+function uploadImagemVariante(imagem) {
+  return fetch(BASE_URL + "variantes/imagem", {
+    method: "POST",
+    body: imagem,
+  }).then((response) => {
+    if (response.status !== 200) {
+      return null;
+    }
+    return "success";
+  }).catch(() => {
+  })
+}
+
+
+function GetCategorias() {
+  return fetch(BASE_URL + "atributos/categorias/", {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
       return [];
+    }
+    return response.json();
+  });
+}
+
+function GetCores() {
+  return fetch(BASE_URL + "atributos/cores/", {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      return [];
+    }
+    return response.json();
+  });
+}
+
+function CriarCategoria(atributo) {
+  console.log(atributo)
+  return fetch(BASE_URL + "atributos/categorias/", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(atributo),
+  }).then((response) => {
+    if (response.status !== 200) {
+      return null;
+    }
+    return "success";
+  });
+}
+
+function CriarCor(atributo) {
+  return fetch(BASE_URL + "atributos/cores/", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(atributo),
+  }).then((response) => {
+    if (response.status !== 200) {
+      return null;
     }
     return "success";
   });
@@ -147,20 +244,35 @@ function GetUser(user) {
   })
 }
 
-function deleteProduto(_id, list) {
+function DeleteProduto(_id) {
   var id = new mongo.ObjectID(_id);
   return fetch(BASE_URL + "produtos/" + id, {
     method: "DELETE",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-    },
-    body: JSON.stringify(list),
+    }
   }).then((response) => {
     if (response.status !== 200) {
       return [];
     }
     return response.json();
+  });
+}
+
+function DeleteVariante(_id) {
+  var id = new mongo.ObjectID(_id);
+  return fetch(BASE_URL + "variantes/" + id, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    }
+  }).then((response) => {
+    if (response.status !== 200) {
+      return null;
+    }
+    return true;
   });
 }
 
@@ -180,7 +292,7 @@ function criarUser(user) {
   });
 }
 
-function updateMorada(morada,id) {
+function updateMorada(morada, id) {
   return fetch(BASE_URL + "users/updatemorada/" + id, {
     method: "PUT",
     headers: {
@@ -283,7 +395,8 @@ var funcoes = {
   GetProdutos,
   criarProduto,
   updateProduto,
-  deleteProduto,
+  DeleteProduto,
+  DeleteVariante,
   criarCarrinho,
   upadateCarrinho,
   criarUser,
@@ -295,8 +408,13 @@ var funcoes = {
   upadateUser,
   GetUniqueUser,
   GetVariantesProduto,
-  uploadImagem,
   updateMorada,
+  criarVariante,
+  GetCores,
+  GetCategorias,
+  CriarCategoria,
+  CriarCor,
+  uploadImagemVariante,
 }
 
 export default funcoes;

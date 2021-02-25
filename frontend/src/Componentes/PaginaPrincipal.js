@@ -8,9 +8,15 @@ import ProdutoInfo from "./ProdutoInfo";
 import FormVariantes from "./FormVariantes";
 import Login from "./Login";
 import Perfil from "./Perfil";
+import Carrinho from "./Carrinho"
+import Produto from "./Produto"
 
 class PaginaPrincipal extends React.Component {
   constructor(props) {
+    if (localStorage.carrinho == undefined) {
+      localStorage.setItem('carrinho', "[]")
+    }
+
     super(props);
 
     this.state = {
@@ -23,10 +29,6 @@ class PaginaPrincipal extends React.Component {
     api.GetProdutos().then((data) => {
       this.setState({ produtos: data });
     });
-  };
-
-  addCarrinho = (produto) => {
-    localStorage.setItem("cart", JSON.stringify(produto));
   };
 
   criarEditar = (event, produto, imagem) => {
@@ -74,7 +76,7 @@ class PaginaPrincipal extends React.Component {
     }
     this.props.history.push("/Dashboard");
   };
-  MouseEnter=() =>{
+  MouseEnter = () => {
     var color = ["#86e6f9", "#DED87F", "#B25FE8"];
     document.querySelectorAll(".div_cadaProduto img").forEach((item) => {
       item.addEventListener("mouseenter", () => {
@@ -82,15 +84,15 @@ class PaginaPrincipal extends React.Component {
       });
     });
   }
-  
-  MouseLeave=() =>{
+
+  MouseLeave = () => {
     document.querySelectorAll(".div_cadaProduto img ").forEach((item) => {
       item.addEventListener("mouseleave", () => {
         item.style.backgroundColor = "#e6e0e0";
       });
     });
   }
-  
+
   MostrarProdutos = () => {
     if (this.state.produtos != null) {
       return (
@@ -164,14 +166,13 @@ class PaginaPrincipal extends React.Component {
                     if (pos.especial) {
                       return (
                         <div>
-                          
                           <div class="container1">
                             <div className="card">
                               <div className="imgbox">
                                 <img
                                   src={
                                     "http://localhost:4000/files/" + pos.imagem
-                                  }
+                                  } alt="erro"
                                 ></img>
                               </div>
                               <div className="contentbx">
@@ -184,7 +185,7 @@ class PaginaPrincipal extends React.Component {
                                   <span></span>
                                   <span></span>
                                 </div>
-                             
+
                               </div>
                             </div>
                           </div>
@@ -199,11 +200,11 @@ class PaginaPrincipal extends React.Component {
                 <div className="headerSpecial"><div>
 
                   <h2>Novos Produtos</h2><div>
-                </div>
-                  <NavLink to="/Produtos">
-                  <button className="buttonHome1">Ver Todos</button>
-                  </NavLink>
                   </div>
+                  <NavLink to="/Produtos">
+                    <button className="buttonHome1">Ver Todos</button>
+                  </NavLink>
+                </div>
                 </div>
                 <div class="div_produtos">
                   {this.state.produtos.map((pos) => {
@@ -216,11 +217,10 @@ class PaginaPrincipal extends React.Component {
                             src={"http://localhost:4000/files/" + pos.imagem}
                           ></img>
                           <div className="infoProduto">
-                            <div className="nomeProduto">{pos.nome}</div>
+                            <Link style={{ textDecoration: "none" }} to={"/Produto/" + pos.ref}><div className="nomeProduto">{pos.nome}</div></Link>
                             <div className="precoProduto">
-                              {pos.preco + "$"}
+                              {pos.preco + " €"}
                             </div>
-                            <div>cor</div>
                           </div>
                         </div>
                       </div>
@@ -250,66 +250,50 @@ class PaginaPrincipal extends React.Component {
         ></Route>
         <Route exact path="/Login" render={() => <Login></Login>}></Route>
         <Route exact path="/Perfil" render={() => <Perfil></Perfil>}></Route>
-        
-        {sessionStorage.isAdmin === true ? <>
-          <Route
-            exact
-            path="/Dashboard"
-            render={() => (
-              <Dashboard
-                criarEditar={this.criarEditar}
-                produtos={this.state.produtos}
-              ></Dashboard>
-            )}
+        <Route exact path="/Carrinho" render={() => <Carrinho></Carrinho>}></Route>
+        <Route exact path="/Produto/:id" render={(props) => <Produto {...props}></Produto>}></Route>
+        {sessionStorage.isAdmin === "true" ? 
+        <>
+          <Route exact path="/Dashboard" render={() => (
+            <Dashboard
+              criarEditar={this.criarEditar}
+              produtos={this.state.produtos}
+            ></Dashboard>
+          )}
           ></Route>
 
-          <Route
-            exact
-            path="/Dashboard/add"
-            render={(props) => (
-              <FormProduto
-                {...props}
-                produtos={this.state.produtos}
-                criarEditar={this.criarEditar}
-              ></FormProduto>
-            )}
+          <Route exact path="/Dashboard/add" render={(props) => (
+            <FormProduto
+              {...props}
+              produtos={this.state.produtos}
+              criarEditar={this.criarEditar}
+            ></FormProduto>
+          )}
           ></Route>
 
-          <Route
-            exact
-            path="/Dashboard/edit/:id"
-            render={(props) => (
-              <FormProduto
-                {...props}
-                produtos={this.state.produtos}
-                criarEditar={this.criarEditar}
-              ></FormProduto>
-            )} />
+          <Route exact path="/Dashboard/edit/:id" render={(props) => (
+            <FormProduto
+              {...props}
+              produtos={this.state.produtos}
+              criarEditar={this.criarEditar}
+            ></FormProduto>
+          )} />
 
-          <Route
-            exact
-            path="/Dashboard/info/:id"
-            render={(props) => (
-              <ProdutoInfo
-                {...props}
-                produtos={this.state.produtos}
-              ></ProdutoInfo>
-            )} />
-          <Route
-            exact
-            path="/Dashboard/variante/add/:id"
-            render={(props) => (
-              <FormVariantes
-                {...props}
-                produtos={this.state.produtos}
-              ></FormVariantes>
-            )} />
+          <Route exact path="/Dashboard/info/:id" render={(props) => (
+            <ProdutoInfo
+              {...props}
+              produtos={this.state.produtos}
+            ></ProdutoInfo>
+          )} />
+          <Route exact path="/Dashboard/variante/add/:id" render={(props) => (
+            <FormVariantes
+              {...props}
+              produtos={this.state.produtos}
+            ></FormVariantes>
+          )} />
 
         </> :
-          <Route
-            exact
-            path="/Dashboard"
-            render={() => (window.location.href = "/")}
+          <Route exact path="/Dashboard" render={() => (window.location.href = "/")}
           ></Route>}
       </Switch>
     );

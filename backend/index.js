@@ -15,11 +15,14 @@ connect.then(() => {
     let produtos = require("./controllers/produtos");
     let variantes = require("./controllers/variantes");
     let users = require("./controllers/users");
+    let atributos = require("./controllers/atributos");
+
     app.use(express.static('public'))
     app.use(cors());
     app.use("/variantes", variantes)
     app.use("/users", users)
     app.use("/produtos", produtos)
+    app.use("/atributos", atributos)
     
     app.use((req, next) => {
         var data = new Date();

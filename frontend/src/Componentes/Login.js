@@ -195,7 +195,8 @@ class Login extends React.Component {
       return (
         <div >
           <div className="formLogin">
-            <div className="signHeader"><h1>Login</h1></div>
+            <div className="signHeader"><h1>Login</h1 ><h1 style={{marginLeft:"10px"}}>/</h1>
+            <h1  onClick={()=>this.toggleAcao("reg")}  style={{marginLeft:"30px"},{cursor:"pointer"}}>Sign Up</h1></div>
             <div className="userLabel">
               <input className="inputUser"
                 id="UserLogin"
@@ -222,7 +223,7 @@ class Login extends React.Component {
             />
             {this.renderErros()}
             <button className="buttonForm" type="submit">Login</button>
-            <a>Ainda não tem conta?<a style={{ textDecoration: "underline", color: 'blue' }} onClick={() => this.toggleAcao("reg")}> Clique aqui</a> para criar uma</a>
+            
           </div>
         </div>
       );
@@ -230,7 +231,8 @@ class Login extends React.Component {
       return (
         <div >
           <div className="formLogin">
-            <div className="signHeader"><h1>Sign Up</h1></div>
+            <div className="signHeader"><h1 style={{marginLeft:"10px"}}>Sign Up</h1><h1 style={{marginLeft:"10px"}}>/</h1>
+            <h1  onClick={()=>this.toggleAcao("log")}  style={{marginLeft:"10px"},{cursor:"pointer"}}>Login</h1></div>
             <div className="userLabel">
               <input className="inputUser"
                 id="UserLogin"
@@ -252,12 +254,9 @@ class Login extends React.Component {
                 placeholder="Password"
               ></input>
             </div>
-            <div className="labelGuardarDados">
-              Guardar dados:
-            </div>
+           
             {this.renderErros()}
             <button className="buttonForm" type="submit">Registar</button>
-            <a>Já tem conta? <a style={{ textDecoration: "underline", color: 'blue' }} onClick={() => this.toggleAcao("log")}>Clique aqui</a> para fazer Login</a>
           </div>
         </div>
       );
@@ -266,8 +265,7 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className="idk">
-
+      <div>
         <form ref={(el) => this.myFormRef = el} onSubmit={(e) => this.handleSubmit(e)}>
           {this.renderForm()}
         </form>

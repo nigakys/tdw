@@ -20,7 +20,7 @@ const usersSchema = new Schema({
         contacto: {
             type: String
         },
-        distrito:{
+        distrito: {
             type: String
         },
         cidade: {
@@ -32,6 +32,20 @@ const usersSchema = new Schema({
         codPostal: {
             type: String
         }
+    },
+    carrinho: {
+        ref: {
+            type: Number
+        },
+        tamanho: {
+            type: String
+        },
+        cor: {
+            type: String
+        },
+        quantidade: {
+            type: Number
+        },
     },
     isAdmin: {
         type: Boolean,

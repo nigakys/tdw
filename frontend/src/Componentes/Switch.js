@@ -1,5 +1,5 @@
 import React from 'react';
-import "../Switch.css"
+import "..//Switch.css"
 
 const Switch = ({ checked, handleToggle }) => {
   return (

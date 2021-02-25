@@ -31,9 +31,10 @@
   margin-top: 20px;
   font-size: 20px;
 }
-.idk{
-
+.signHeader{
+  display: flex;
 }
+
 .buttonForm {
   margin-top: 60px;
   border-radius: 20px;

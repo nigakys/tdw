@@ -30,20 +30,35 @@ class Header extends React.Component {
         </NavLink >
       )
     }
+  }
 
+  getCarrinhoCount = () => {
+    var count = 0;
+    var cart = JSON.parse(localStorage.carrinho);
+    for (let index = 0; index < cart.length; index++) {
+      count += cart[index].quantidade;
+    }
+    return count
   }
 
   render() {
+    this.getCarrinhoCount()
     return (
       <div>
         <div className="header">
           <nav class="nav">
             <div>
-              <NavLink className="loja" to="/">Loja</NavLink>
+              <NavLink className="loja" to="/">
+                <div>
+                  Loja <br></br>
+                  <a className="sub">TDW</a>
+                </div>
+              </NavLink>
             </div>
             <div class="nav-menu">
               <ul class="nav-links">
-                {sessionStorage.isAdmin === true && <li>
+
+                {sessionStorage.isAdmin === "true" && <li>
                   <NavLink to="/Dashboard">Dashboard</NavLink>
                 </li>}
                 <li>
@@ -60,7 +75,6 @@ class Header extends React.Component {
             <div class="icons">
               <div class="coluna">
                 {this.renderLink()}
-
               </div>
 
               <div class="coluna"><NavLink to="/">
@@ -69,8 +83,11 @@ class Header extends React.Component {
               </NavLink>
               </div>
 
-              <div class="coluna">
-                <img src="../imagens/cart.png" alt="erro"></img>
+              <div className="coluna">
+                <NavLink to="/Carrinho">
+                  <img src="../imagens/cart.png" alt="erro"></img>
+                  <span className='badge badge-warning' id='cartCounter'>{this.getCarrinhoCount()}</span>
+                </NavLink>
               </div>
             </div>
 
@@ -133,7 +150,7 @@ function navSlide() {
 
     nav.classList.toggle("nav-active");
 
-    // Animte Links
+    // Animate Links
 
     navLinks.forEach((link, index) => {
       if (link.style.animation) {

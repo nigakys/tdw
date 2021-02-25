@@ -74,28 +74,29 @@ class Perfil extends React.Component {
 
     componentDidMount() {
         api.GetUser(sessionStorage.username).then((data) => {
-            console.log(data)
-            // this.setState({ morada: data.morada })
-            // console.log(data)
+            this.setState({ morada: data.morada })
         })
     }
 
 
     render() {
         return (
-            
-
-            <div style={{background:"red"}}>
-                <form className="dadosPessoaisForm"  onSubmit={(e) => this.handleSubmit(e)}>
-                    Contacto: <input maxLength="9" type="text" value={this.state.morada.contacto} id="Contacto" onChange={(e) => this.updateField(e, "contacto")}></input><p></p>
-                    Distrito: <select id="Distrito" value={this.state.morada.distrito} onChange={(e) => this.updateField(e, "distrito")}>
+            <div><h1 className="dadospessoais">Dados Pessoais</h1>
+                <form className="dadosPessoaisForm"  onSubmit={(e) => this.handleSubmit(e)}><a>
+                    Contacto: </a>
+                    <input maxLength="9" type="text" value={this.state.morada.contacto} id="Contacto" onChange={(e) => this.updateField(e, "contacto")}></input>
+                    <p></p><a>
+                    Distrito: </a><select id="Distrito" value={this.state.morada.distrito} onChange={(e) => this.updateField(e, "distrito")}>
                         {this.state.distritos.map((pos) => {
                             return (
                                 <option value={pos}>{pos}</option>
                                 )
                             })}
-                    </select>
-                    Cidade: <select id="Cidade" value={this.state.morada.cidade} onChange={(e) => this.updateField(e, "cidade")}>
+                    </select><a>
+
+                    Cidade: 
+                    </a>
+                    <select id="Cidade" value={this.state.morada.cidade} onChange={(e) => this.updateField(e, "cidade")}>
                         {this.state.cidades.map((pos) => {
                             if (pos.distrito === this.state.morada.distrito) {
                                 return (
@@ -104,9 +105,9 @@ class Perfil extends React.Component {
                                 }
                             })}
                     </select><p></p>
-                    Rua/casa: <input id="RuaCasa" value={this.state.morada.ruaCasa} onChange={(e) => this.updateField(e, "ruaCasa")}></input><p></p>
-                    Codigo Postal: <input maxLength="8" id="CodigoPostal" value={this.state.morada.codPostal} onChange={(e) => this.updateField(e, "codPostal")}></input><p></p>
-                    <button type="submit">Adicionar</button>
+                    <a>Rua/casa: </a><input id="RuaCasa" value={this.state.morada.ruaCasa} onChange={(e) => this.updateField(e, "ruaCasa")}></input><p></p>
+                    <a>Codigo Postal:</a> <input maxLength="8" id="CodigoPostal" value={this.state.morada.codPostal} onChange={(e) => this.updateField(e, "codPostal")}></input><p></p>
+                    <button type="submit" className="buttonForm1">Confirmar</button>
                 </form>
                 {this.renderErros()}
             </div>

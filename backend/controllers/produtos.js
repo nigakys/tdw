@@ -52,19 +52,24 @@ router.post('/', (req, res) => {
 })
 
 router.post('/imagem', function (req, res) {
-    console.log(req.files)
-    // if (req.files != null) {
-    //     var file = req.files.file;
-    //     var filename = file.name;
-
-    //     file.mv('./public/files/' + filename, function (err) {
-    //         if (err) {
-    //             console.log(err)
-    //         } else {
-    //             res.status(200).send("Imagem recebida")
-    //         }
-    //     })
-    // }
+    var file;
+    var filename;
+    var erro = null;
+    if (req.files != null) {
+        file = req.files.file
+        filename = file.name
+        file.mv('./public/files/' + filename, function (err) {
+            if (err) {
+                erro = err;
+            }
+        })
+        if (erro != null) {
+            res.status(200).send("Sucesso")
+        }
+    }
+    else {
+        res.status(400).send("imagem vazia")
+    }
 });
 
 router.put('/:id', (req, res) => {
