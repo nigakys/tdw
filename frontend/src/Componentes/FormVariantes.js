@@ -4,6 +4,7 @@ import "../Switch.css"
 import api from "../shared/api";
 import tamanhosCalcado from "../shared/tamanhosCalcado";
 import tamanhosRoupa from "../shared/tamanhosRoupa";
+import cor from "../shared/cores";
 
 let file = '';
 var imagemForm = new FormData();
@@ -14,12 +15,13 @@ class FormProduto extends React.Component {
         this.state = {
             variante: {
                 id: null,
-                ref: "",
-                tamanho: "",
+                ref: this.props.match.params.id,
+                tamanho: "XS",
                 imagens: [],
-                cor: "",
+                cor: "Branco",
                 stock: ""
             },
+            selectedCor: {},
             imagens: [],
             cores: [],
             tamanhos: [],
@@ -27,13 +29,6 @@ class FormProduto extends React.Component {
     }
 
     componentDidMount() {
-        api.GetCores().then((data) => {
-            this.setState({ cores: data })
-        }).then(() => {
-            this.state.variante.cor = this.state.cores[0].cor
-            this.state.variante.tamanho = this.state.tamanhos[0]
-            this.state.variante.ref = this.props.match.params.id;
-        })
         this.props.produtos.map((pos) => {
             if (pos.ref == this.props.match.params.id) {
                 if (pos.tipo === "Calçado") {
@@ -44,6 +39,7 @@ class FormProduto extends React.Component {
                 }
             }
         })
+        this.setState({ cores: cor })
     }
 
     toggle = () => {
@@ -81,7 +77,13 @@ class FormProduto extends React.Component {
     updateField = (event, fieldName) => {
         var addVariante = this.state.variante;
         addVariante[fieldName] = event.target.value;
-
+        if (fieldName === "cor") {
+            this.state.cores.map((pos) => {
+                if (pos.cor === event.target.value) {
+                    this.setState({ selectedCor: pos })
+                }
+            })
+        }
         this.setState({ variante: addVariante })
         event.preventDefault();
     }
@@ -97,7 +99,7 @@ class FormProduto extends React.Component {
                     Tamanho: <select id="Tamanho" value={this.state.variante.tamanho} onChange={(e) => this.updateField(e, "tamanho")}>
                         {this.state.tamanhos.map((pos) => {
                             return (
-                                <option value={pos}>{pos}</option>
+                                <option value={pos.cor}>{pos}</option>
                             )
                         })}
                     </select><p></p>
@@ -110,7 +112,10 @@ class FormProduto extends React.Component {
                                 <option value={pos.cor}>{pos.cor}</option>
                             )
                         })}
-                    </select><p></p>
+                    </select>
+                    <div style={{ width: "30px", height: "30px", backgroundColor: this.state.selectedCor.hex,float:"right",marginRight:"40%" }}></div>
+                    <p></p>
+
                     Stock: <input id="Stock" type="number" value={this.state.variante.stock} onChange={(e) => this.updateField(e, "stock")}></input>
                     <p></p>
                     <Link to={"/dashboard/info/" + this.props.match.params.id}><button >Voltar</button></Link>

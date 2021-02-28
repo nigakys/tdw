@@ -4,9 +4,10 @@ import Switch from "./Switch"
 import api from "../shared/api"
 import emailjs from "emailjs-com"
 import { v4 as uuidv4 } from 'uuid';
+import { toast } from 'react-toastify'
 
 
-
+toast.configure()
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -25,8 +26,10 @@ class Login extends React.Component {
       formValid: true,
     };
   }
+
   renderErros = () => {
     if (!this.state.userValid) {
+      document.getElementById("UserRegister").style.border = "0.3px solid #FF0000";
       return (
         <div className="erros">
           Nome de utilizador tem de ter pelo menos 6 caracteres
@@ -34,6 +37,7 @@ class Login extends React.Component {
       )
     }
     else if (!this.state.emailValid) {
+      document.getElementById("EmailRegister").style.border = "0.3px solid #FF0000";
       return (
         <div className="erros">
           Já existe uma conta com este email
@@ -41,6 +45,12 @@ class Login extends React.Component {
       )
     }
     else if (!this.state.formValid) {
+      var x = document.getElementsByTagName("input")
+      for (let index = 0; index < x.length; index++) {
+        if (x[index].value.length === 0) {
+          x[index].style.border = "0.3px solid #FF0000";
+        }
+      }
       return (
         <div className="erros">
           Os campos não podem ser vazios
@@ -48,6 +58,7 @@ class Login extends React.Component {
       )
     }
     else if (this.state.userRepetido) {
+      document.getElementById("UserRegister").style.border = "0.3px solid #FF0000";
       return (
         <div className="erros">
           Já existe uma conta com este username
@@ -55,6 +66,7 @@ class Login extends React.Component {
       )
     }
     else if (!this.state.passwordValid) {
+      document.getElementById("PasswordRegister").style.border = "0.3px solid #FF0000";
       return (
         <div className="erros">
           Palavra passe tem de ter pelo menos 6 caracteres
@@ -62,6 +74,7 @@ class Login extends React.Component {
       )
     }
     else if (!this.state.userExists) {
+      document.getElementById("UserLogin").style.border = "0.3px solid #FF0000";
       return (
         <div className="erros">
           Username não existe
@@ -69,6 +82,7 @@ class Login extends React.Component {
       )
     }
     else if (!this.state.passwordCerta) {
+      document.getElementById("PasswordLogin").style.border = "0.3px solid #FF0000";
       return (
         <div className="erros">
           Palavra passe errada
@@ -76,14 +90,6 @@ class Login extends React.Component {
       )
     }
   }
-
-  onOpenModal = () => {
-    this.setState({ open: true });
-  };
-
-  onCloseModal = () => {
-    this.setState({ open: false });
-  };
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -112,9 +118,9 @@ class Login extends React.Component {
                 distrito: "Açores"
               }
               api.criarUser(this.state.user).then(() => {
+                toast.success('Conta criada com sucesso, verifique o seu email para validar a conta', { position: toast.POSITION.TOP_CENTER })
                 this.sendEmail()
-                this.myFormRef.reset();
-                this.setState({ acao: "log" })
+                this.SignIn();
               }).catch((err) => console.log(err))
             }
           })
@@ -139,6 +145,7 @@ class Login extends React.Component {
                 sessionStorage.userid = data._id;
                 sessionStorage.email = data.email;
                 sessionStorage.isAdmin = data.isAdmin;
+                sessionStorage.verified = data.verified
                 window.location.href = "/"
               }
               else {
@@ -168,19 +175,6 @@ class Login extends React.Component {
     this.state.checked ? this.setState({ checked: false }) : this.setState({ checked: true })
   }
 
-  toggleAcao = (acao) => {
-    acao === "reg" ? this.setState({ acao: "reg" }) : this.setState({ acao: "log" })
-    this.setState({
-      userValid: true,
-      emailValid: true,
-      passwordValid: true,
-      passwordCerta: true,
-      userRepetido: false,
-      userExists: true,
-      formValid: true,
-    })
-  }
-
   updateField = (event, fieldName) => {
     var user2 = this.state.user;
     user2[fieldName] = event.target.value;
@@ -190,87 +184,94 @@ class Login extends React.Component {
     event.preventDefault();
   }
 
-  renderForm = () => {
-    if (this.state.acao === "log") {
-      return (
-        <div >
-          <div className="formLogin">
-            <div className="signHeader"><h1>Login</h1 ><h1 style={{marginLeft:"10px"}}>/</h1>
-            <h1  onClick={()=>this.toggleAcao("reg")}  style={{marginLeft:"30px"},{cursor:"pointer"}}>Sign Up</h1></div>
-            <div className="userLabel">
-              <input className="inputUser"
-                id="UserLogin"
-                onChange={(e) => this.updateField(e, "username")}
-                placeholder="Username"
-              ></input>
-            </div>
-            <div className=
-              'passLabel'>
-              <input
-                id="PassLogin"
-                type="password"
-                onChange={(e) => this.updateField(e, "password")}
-                placeholder="Password"
-              ></input>
-            </div>
-            <div className="labelGuardarDados">
-              Guardar dados:
-            </div>
-            <Switch
-              className="switchGuardarDados"
-              handleToggle={() => this.toggleCheck()}
-              checked={this.state.checked}
-            />
-            {this.renderErros()}
-            <button className="buttonForm" type="submit">Login</button>
-            
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <div >
-          <div className="formLogin">
-            <div className="signHeader"><h1 style={{marginLeft:"10px"}}>Sign Up</h1><h1 style={{marginLeft:"10px"}}>/</h1>
-            <h1  onClick={()=>this.toggleAcao("log")}  style={{marginLeft:"10px"},{cursor:"pointer"}}>Login</h1></div>
-            <div className="userLabel">
-              <input className="inputUser"
-                id="UserLogin"
-                onChange={(e) => this.updateField(e, "username")}
-                placeholder="Username"
-              ></input>
-            </div>
-            <div className="passLabel"><input
-              id="EmailRegister"
-              type="email"
-              onChange={(e) => this.updateField(e, "email")} placeholder="Email"
-            ></input></div>
-            <div className=
-              'passLabel'>
-              <input
-                id="PassLogin"
-                type="password"
-                onChange={(e) => this.updateField(e, "password")}
-                placeholder="Password"
-              ></input>
-            </div>
-           
-            {this.renderErros()}
-            <button className="buttonForm" type="submit">Registar</button>
-          </div>
-        </div>
-      );
+  resetValidacoes = () => {
+    this.setState({ user: {} })
+    this.setState({
+      userValid: true,
+      emailValid: true,
+      passwordValid: true,
+      passwordCerta: true,
+      userRepetido: false,
+      userExists: true,
+      formValid: true,
+    })
+    var x = document.getElementsByTagName("input")
+    for (let index = 0; index < x.length; index++) {
+      x[index].style.border = "none";
     }
-  };
+  }
+
+  SignUp = () => {
+    this.setState({ acao: "reg" })
+    this.resetValidacoes();
+    this.registerForm.reset()
+    const signUpButton = document.getElementById('signUp');
+    const container = document.getElementById('container');
+    if (signUpButton != null) {
+      container.classList.add("right-panel-active");
+    }
+  }
+
+  SignIn = () => {
+    this.setState({ acao: "log" })
+    this.resetValidacoes();
+    this.loginForm.reset();
+    const signInButton = document.getElementById('signIn');
+    const container = document.getElementById('container');
+    if (signInButton != null) {
+      container.classList.remove("right-panel-active");
+    }
+  }
+
 
   render() {
     return (
-      <div>
-        <form ref={(el) => this.myFormRef = el} onSubmit={(e) => this.handleSubmit(e)}>
-          {this.renderForm()}
-        </form>
+      <div className="yes">
+        <div className="background">
+          <div class="containerLogin" id="container">
+            <div class="form-container sign-up-container">
+              <form className="form" ref={(el) => this.registerForm = el} onSubmit={(e) => this.handleSubmit(e)}>
+                <h1 className="h1">Criar Conta</h1>
+                <span></span>
+                <input id="UserRegister" value={this.state.user.username}
+                  onChange={(e) => this.updateField(e, "username")} type="text" placeholder="Username" />
+                <input id="EmailRegister" value={this.state.user.email}
+                  onChange={(e) => this.updateField(e, "email")} type="email" placeholder="Email" />
+                <input id="PasswordRegister" value={this.state.user.password}
+                  onChange={(e) => this.updateField(e, "password")} type="password" placeholder="Password" />
+                {this.renderErros()}
+                <button className="button">Registar</button>
+              </form>
+            </div>
+            <div class="form-container sign-in-container">
+              <form className="form" ref={(el) => this.loginForm = el} onSubmit={(e) => this.handleSubmit(e)}>
+                <h1 className="h1">Entrar</h1>
+                <span ></span>
+                <input id="UserLogin" value={this.state.user.username}
+                  onChange={(e) => this.updateField(e, "username")} type="text" placeholder="Username" />
+                <input id="PasswordLogin" value={this.state.user.password}
+                  onChange={(e) => this.updateField(e, "password")} type="password" placeholder="Password" />
+                {this.renderErros()}
+                <button className="button">Login</button>
+              </form>
+            </div>
+            <div class="overlay-container">
+              <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                  <h1 className="h1">Bem vindo de volta!</h1>
+                  <p className="p"> Para te manteres conectado faz login.</p>
+                  <button onClick={() => this.SignIn()} className="button buttonghost" id="signIn">Login</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                  <h1 className="h1">Olá!</h1>
+                  <p className="p">Regista-te para uma melhor experiência!</p>
+                  <button onClick={() => this.SignUp()} className="button buttonghost" id="signUp">Registar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-     
     );
   }
 }

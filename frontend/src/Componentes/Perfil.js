@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 import distritos from "../shared/distritos"
 import cidades from "../shared/cidades"
 import api from "../shared/api"
+import { NavLink } from "react-router-dom";
 
 class Perfil extends React.Component {
     constructor(props) {
@@ -21,6 +22,10 @@ class Perfil extends React.Component {
             distritos: distritos,
             cidades: cidades
         };
+    }
+    logout = () => {
+        sessionStorage.clear();
+        window.location.href = "/Login"
     }
 
     handleSubmit = (event) => {
@@ -81,37 +86,51 @@ class Perfil extends React.Component {
 
     render() {
         return (
-            <div><h1 className="dadospessoais">Dados Pessoais</h1>
-                <form className="dadosPessoaisForm"  onSubmit={(e) => this.handleSubmit(e)}><a>
-                    Contacto: </a>
+            <div style={{background:"grey"}}><h1 className="dadospessoais">Dados Pessoais</h1>
+                <form className="dadosPessoaisForm" onSubmit={(e) => this.handleSubmit(e)}><div className="divDados">
+                    <a>
+                        Contacto: </a>
                     <input maxLength="9" type="text" value={this.state.morada.contacto} id="Contacto" onChange={(e) => this.updateField(e, "contacto")}></input>
                     <p></p><a>
-                    Distrito: </a><select id="Distrito" value={this.state.morada.distrito} onChange={(e) => this.updateField(e, "distrito")}>
+                        Distrito: </a><select id="Distrito" value={this.state.morada.distrito} onChange={(e) => this.updateField(e, "distrito")}>
                         {this.state.distritos.map((pos) => {
                             return (
                                 <option value={pos}>{pos}</option>
-                                )
-                            })}
+                            )
+                        })}
                     </select><a>
 
-                    Cidade: 
+                        Cidade:
                     </a>
                     <select id="Cidade" value={this.state.morada.cidade} onChange={(e) => this.updateField(e, "cidade")}>
                         {this.state.cidades.map((pos) => {
                             if (pos.distrito === this.state.morada.distrito) {
                                 return (
                                     <option value={pos.cidade}>{pos.cidade}</option>
-                                    );
-                                }
-                            })}
+                                );
+                            }
+                        })}
                     </select><p></p>
                     <a>Rua/casa: </a><input id="RuaCasa" value={this.state.morada.ruaCasa} onChange={(e) => this.updateField(e, "ruaCasa")}></input><p></p>
-                    <a>Codigo Postal:</a> <input maxLength="8" id="CodigoPostal" value={this.state.morada.codPostal} onChange={(e) => this.updateField(e, "codPostal")}></input><p></p>
-                    <button type="submit" className="buttonForm1">Confirmar</button>
+                    <a>Codigo Postal:</a> <input maxLength="8" id="CodigoPostal" value={this.state.morada.codPostal} onChange={(e) => this.updateField(e, "codPostal")}></input>
+                </div>
+                    <div className="divInfo">
+                        <div className="divImgagem">
+
+                        <img src="../imagens/user.png" alt="erro"></img>
+                    </div>
+                        <div className="divInfoss">
+                        <button type="submit" className="buttonForm1">Confirmar</button>
+                               <NavLink  style={{color:"white",textDecoration:"none",fontSize:"16px", margin:"0px",textAlign:"center"}} onClick={() => { this.logout() }} to="/Login">Terminar Sessao
+                                </NavLink>
+                    </div>
+                    </div>
+                 
+                       
                 </form>
                 {this.renderErros()}
             </div>
-                           
+
         )
     }
 }

@@ -7,18 +7,17 @@ import api from "../shared/api"
 
 class FormProduto extends React.Component {
     constructor(props) {
-        var state = false;
         super(props);
         if (props.match != null && props.match.params.id != null) {
             this.props.produtos.map((pos) => {
                 if (pos._id == props.match.params.id) {
-                    state = true
                     this.state = {
                         produtos: {
                             id: pos._id,
                             ref: pos.ref,
                             tipo: pos.tipo,
                             nome: pos.nome,
+                            genero: pos.genero,
                             preco: pos.preco,
                             especial: pos.especial,
                             dataAdicionado: pos.dataAdicionado,
@@ -35,10 +34,11 @@ class FormProduto extends React.Component {
                 produtos: {
                     id: "",
                     ref: "",
-                    tipo: "",
+                    genero: "Masculino",
+                    tipo: "Calças",
                     nome: "",
                     preco: "",
-                    especial: "",
+                    especial: false,
                     dataAdicionado: "",
                     imagem: ""
                 },
@@ -55,10 +55,10 @@ class FormProduto extends React.Component {
         this.setState({ produtos: addProduto })
     }
 
+
     updateField = (event, fieldName) => {
         var addProduto = this.state.produtos;
         addProduto[fieldName] = event.target.value;
-
         if (fieldName === "imagem") {
             this.setState({ imagem: event.target.files[0] })
         }
@@ -67,6 +67,7 @@ class FormProduto extends React.Component {
         }
         event.preventDefault();
     }
+
     componentDidMount() {
         api.GetCategorias().then((data) => {
             this.setState({ categorias: data })
@@ -74,39 +75,45 @@ class FormProduto extends React.Component {
     }
 
     render() {
+        console.log(this.state.produtos)
         return (
             <div>
-                {this.state.produtos.id === null ?
+                {this.state.produtos.id === "" ?
                     <h1>Adicionar Produto</h1> :
                     <h1>Editar Produto</h1>
                 }
-                <form onSubmit={(e) => this.props.criarEditar(e, this.state.produtos, this.state.imagem)}>
-
-                    Referência: <input id="Ref" value={this.state.produtos.ref} onChange={(e) => this.updateField(e, "ref")}></input>
+                <form  className="formEdit" onSubmit={(e) => this.props.criarEditar(e, this.state.produtos, this.state.imagem)}>
+                    <div className="labels">
+                    Referência: <input className="input1" id="Ref" value={this.state.produtos.ref} onChange={(e) => this.updateField(e, "ref")}></input>
                     <p></p>
-                    Nome: <input id="Nome" value={this.state.produtos.nome} onChange={(e) => this.updateField(e, "nome")}></input>
+                    Nome: <input className="input1" id="Nome" value={this.state.produtos.nome} onChange={(e) => this.updateField(e, "nome")}></input>
                     <p></p>
-                    Categoria: <select id="Categoria" value={this.state.produtos.categoria} onChange={(e) => this.updateField(e, "categoria")}>
+                    Categoria: <select className="select1" id="Categoria" value={this.state.produtos.tipo} onChange={(e) => this.updateField(e, "tipo")}>
                         {this.state.categorias.map((pos) => {
                             return (
                                 <option value={pos.categoria}>{pos.categoria}</option>
                             )
                         })}
                     </select><p></p>
-
-                    Preco: <input id="Preco" type="number" value={this.state.produtos.preco} onChange={(e) => this.updateField(e, "preco")}></input>
+                    Género: <select className="select1" id="Genero" value={this.state.produtos.genero} onChange={(e) => this.updateField(e, "genero")}>
+                        <option className="option1" value="Masculino">Masculino</option>
+                        <option  className="option1" value="Feminino">Feminino</option>
+                        <option className="option1"  value="Unissexo">Unissexo</option>
+                    </select><p></p>
+                    Preco: <input className="input1" id="Preco" type="number" value={this.state.produtos.preco} onChange={(e) => this.updateField(e, "preco")}></input>
                     <p></p>
-                    Imagem: <input type="File" id="Imagem" onChange={(e) => this.updateField(e, "imagem")}></input>
+                    Imagem: <input className="input1" type="File" id="Imagem" onChange={(e) => this.updateField(e, "imagem")}></input>
                     <p></p>
                     <img src={"http://localhost:4000/files/" + this.state.produtos.imagem}></img><p></p>
                     Especial: <Switch checked={this.state.produtos.especial} handleToggle={() => this.toggle()} />
                     <p></p>
                     <Link to="/dashboard"><button >Voltar</button></Link>
-                    {this.state.produtos.id === null ?
-                        <button type="submit">Adicionar</button> :
+                    {this.state.produtos.id === "" ?
+                        <button type="submit">Adicionar</button>
+                        :
                         <button type="submit">Editar</button>
                     }
-
+                    </div>
                 </form>
             </div>
         );

@@ -31,7 +31,14 @@ const produtosSchema = new Schema({
         type: String,
         required: true,
     },
-
+    genero: {
+        type: String,
+        required: true,
+    },
+    visibilidade:{
+        type: Boolean,
+        default:true,
+    },
 })
 
 module.exports = mongoose.model("Produtos", produtosSchema,"produtos")

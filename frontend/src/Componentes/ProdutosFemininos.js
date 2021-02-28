@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link, Route, Switch, withRouter } from "react-router-dom";
+import { Link} from "react-router-dom";
 
-class Produtos extends React.Component {
+class ProdutosFemininos extends React.Component {
   
 
     render() {
@@ -9,17 +9,18 @@ class Produtos extends React.Component {
         return (
             <div>
                    <section class="container_produtos">
-               
-                <div class="div_produtos">
+                   <div class="div_produtos">
                   {this.props.produtos.map((pos) => {
-                    return (
-                      <div>
+                     
+                      if(pos.genero === "Feminino"){
+                           return (
+                              <div>
                         <div class="div_cadaProduto">
                           <img
                             onMouseEnter={this.props.MouseEnter}
                             onMouseLeave={this.props.MouseLeave}
                             src={"http://localhost:4000/files/" + pos.imagem}
-                          ></img>
+                            ></img>
                           <div className="infoProduto">
                           <Link style={{ textDecoration: "none" }} to={"/Produto/" + pos.ref}><div className="nomeProduto">{pos.nome}</div></Link>
                             <div className="precoProduto">
@@ -30,8 +31,12 @@ class Produtos extends React.Component {
                         </div>
                       </div>
                     );
-                  })}
+                }
+                })}
+            
                 </div>
+               
+            
               </section>
            
             </div>
@@ -43,4 +48,4 @@ class Produtos extends React.Component {
     }
 }
 
-export default Produtos;
+export default ProdutosFemininos;

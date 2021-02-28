@@ -35,6 +35,25 @@ router.get('/:id', (req, res) => {
     }
 });
 
+router.get('/ref/:ref', (req, res) => {
+    var query = { ref: req.params.ref };
+
+    if (req.params != null) {
+        produtos.findOne(query).then(result => {
+            if (result != null) {
+                res.status(200).send(result);
+            }
+            else {
+                res.status(400).send("Nada encontrado")
+            }
+        })
+    }
+    else {
+
+    }
+});
+
+
 router.post('/', (req, res) => {
     if (req.body != null) {
         produtos.create(req.body)

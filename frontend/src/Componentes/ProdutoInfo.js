@@ -10,10 +10,8 @@ class ProdutoInfo extends React.Component {
         this.state = {
             variantes: [],
             visibleCategoria: false,
-            visibleCor: false,
             atributo: {
-                "cor": "",
-                "categoria": "",
+                categoria: "",
             }
         };
     }
@@ -22,16 +20,6 @@ class ProdutoInfo extends React.Component {
         api.GetVariantesProduto(this.props.match.params.id).then((data) => {
             this.setState({ variantes: data })
         })
-    }
-
-    visibleCor = () => {
-        var visible = !this.state.visibleCor;
-        this.setState({ visibleCor: visible })
-        this.setState({ atributo: {} })
-        this.myFormRef.reset();
-        if (this.state.visibleCategoria === true) {
-            this.setState({ visibleCategoria: false })
-        }
     }
 
     visibleCategoria = () => {
@@ -55,17 +43,8 @@ class ProdutoInfo extends React.Component {
         })
     }
 
-    adicionarAtributo = (atributo) => {
-        if (atributo === "cor") {
-            if (this.state.atributo.cor !== "") {
-                api.CriarCor(this.state.atributo);
-            }
-        }
-        else {
-            if (this.state.atributo.categoria !== "") {
-                api.CriarCategoria(this.state.atributo);
-            }
-        }
+    adicionarAtributo = () => {
+        api.CriarCategoria(this.state.atributo);
     }
 
     updateField = (event, fieldName) => {
@@ -78,17 +57,7 @@ class ProdutoInfo extends React.Component {
 
 
     renderForms = () => {
-        if (this.state.visibleCor === true) {
-            return (
-                <>
-                    <p></p>
-                    Nova Cor: <input id="Cor" value={this.state.atributo.cor} onChange={(e) => this.updateField(e, "cor")}></input>
-                    <p></p>
-                    <button onClick={() => this.adicionarAtributo("cor")}>Adicionar Cor</button>
-                </>
-            )
-        }
-        else if (this.state.visibleCategoria === true) {
+        if (this.state.visibleCategoria === true) {
             return (
                 <>
                     <p></p>
@@ -104,7 +73,7 @@ class ProdutoInfo extends React.Component {
         return (
             <div>
                 <Link to={`/Dashboard/variante/add/${this.props.match.params.id}`}><button>Adicionar Variante</button></Link>
-                <button onClick={() => this.visibleCor()}>Adicionar Cor</button>
+
                 <button onClick={() => this.visibleCategoria()}>Adicionar Categoria</button>
                 <form ref={(el) => this.myFormRef = el}>
                     {this.renderForms()}

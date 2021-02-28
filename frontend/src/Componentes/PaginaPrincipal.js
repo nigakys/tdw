@@ -9,14 +9,15 @@ import FormVariantes from "./FormVariantes";
 import Login from "./Login";
 import Perfil from "./Perfil";
 import Carrinho from "./Carrinho"
-import Produto from "./Produto"
+import Produto from "./Produto";
+import ProdutosMasculinos from './ProdutosMasculinos';
+import ProdutosFemininos from './ProdutosFemininos';
+import { toast } from 'react-toastify'
+
+toast.configure()
 
 class PaginaPrincipal extends React.Component {
   constructor(props) {
-    if (localStorage.carrinho == undefined) {
-      localStorage.setItem('carrinho', "[]")
-    }
-
     super(props);
 
     this.state = {
@@ -31,6 +32,10 @@ class PaginaPrincipal extends React.Component {
     });
   };
 
+  alterarVisibilidade = (produto) => {
+    this.setState({ produtos: produto })
+  }
+
   criarEditar = (event, produto, imagem) => {
     var id;
     event.preventDefault();
@@ -39,22 +44,21 @@ class PaginaPrincipal extends React.Component {
     var nomeImagem;
     imagem == null ? (nomeImagem = "") : (nomeImagem = imagem.name);
     var data = new Date();
-
-    if (produto.id == null) {
+    if (produto.id === "") {
       this.state.produtos.push({
         tipo: produto.tipo,
         nome: produto.nome,
         ref: produto.ref,
+        genero: produto.genero,
         preco: produto.preco,
         especial: produto.especial,
         dataAdicionado: data.toUTCString(),
         imagem: nomeImagem,
       });
       id = produto.id;
-      api.criarProduto(
-        this.state.produtos[this.state.produtos.length - 1],
-        imagemForm
-      );
+      api.criarProduto(this.state.produtos[this.state.produtos.length - 1], imagemForm);
+
+      this.props.history.push("/Dashboard/variante/add/" + produto.ref);
     } else {
       this.state.produtos.map((pos) => {
         if (imagem == null) {
@@ -70,14 +74,16 @@ class PaginaPrincipal extends React.Component {
           pos.especial = produto.especial;
           pos.dataAdicionado = produto.dataAdicionado;
           pos.imagem = nomeImagem;
+          pos.genero = produto.genero;
+          api.updateProduto(produto.id, pos, imagemForm);
         }
-        api.updateProduto(produto.id, pos, imagemForm);
+        this.props.history.push("/Dashboard");
       });
     }
-    this.props.history.push("/Dashboard");
   };
+
   MouseEnter = () => {
-    var color = ["#86e6f9", "#DED87F", "#B25FE8"];
+    var color = ["rgba(172,111,226)", "rgba(143,107,244)", "rgba(104,107,236)"];
     document.querySelectorAll(".div_cadaProduto img").forEach((item) => {
       item.addEventListener("mouseenter", () => {
         item.style.backgroundColor = color[sessionStorage.getItem("cor")];
@@ -107,6 +113,9 @@ class PaginaPrincipal extends React.Component {
 
   componentDidMount() {
     this.GetProdutos();
+    if (sessionStorage.verified == "false") {
+      toast.warning('Para poder utilizar a sua conta tem de verificar o email', { position: toast.POSITION.TOP_CENTER })
+    }
   }
 
   tenis = () => {
@@ -150,7 +159,7 @@ class PaginaPrincipal extends React.Component {
                   <h1 className="tit1">NOVOS</h1>
                   <h3 className="tit2">PRODUTOS</h3>
                   <NavLink to="/Produtos">
-                    <button className="buttonHome">Ver Produtos</button>
+                    <button className="buttonHome buttonHome1">Ver Produtos</button>
                   </NavLink>
                 </div>
                 <div className="home_data">
@@ -163,7 +172,7 @@ class PaginaPrincipal extends React.Component {
                 </div>
                 <div class="div_produtos">
                   {this.state.produtos.map((pos) => {
-                    if (pos.especial) {
+                    if (pos.especial && pos.visibilidade) {
                       return (
                         <div>
                           <div class="container1">
@@ -185,7 +194,6 @@ class PaginaPrincipal extends React.Component {
                                   <span></span>
                                   <span></span>
                                 </div>
-
                               </div>
                             </div>
                           </div>
@@ -202,30 +210,34 @@ class PaginaPrincipal extends React.Component {
                   <h2>Novos Produtos</h2><div>
                   </div>
                   <NavLink to="/Produtos">
-                    <button className="buttonHome1">Ver Todos</button>
+                    <button className="buttonHome buttonHome2">Ver Todos</button>
                   </NavLink>
                 </div>
                 </div>
                 <div class="div_produtos">
                   {this.state.produtos.map((pos) => {
-                    return (
-                      <div>
-                        <div class="div_cadaProduto">
-                          <img
-                            onMouseEnter={() => this.MouseEnter()}
-                            onMouseLeave={() => this.MouseLeave()}
-                            src={"http://localhost:4000/files/" + pos.imagem}
-                          ></img>
-                          <div className="infoProduto">
-                            <Link style={{ textDecoration: "none" }} to={"/Produto/" + pos.ref}><div className="nomeProduto">{pos.nome}</div></Link>
-                            <div className="precoProduto">
-                              {pos.preco + " €"}
+                    if (pos.visibilidade === true) {
+                      return (
+                        <div>
+                          <div class="div_cadaProduto">
+                            <img
+                              onMouseEnter={() => this.MouseEnter()}
+                              onMouseLeave={() => this.MouseLeave()}
+                              src={"http://localhost:4000/files/" + pos.imagem}
+                            ></img>
+                            <div className="infoProduto">
+                              <Link style={{ textDecoration: "none" }} to={"/Produto/" + pos.ref}><div className="nomeProduto">{pos.nome}</div></Link>
+                              <div className="precoProduto">
+                                {pos.preco + " €"}
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    );
+
+                      );
+                    }
                   })}
+
                 </div>
               </section>
               <section id="subscrever" class="subscrever">
@@ -235,6 +247,7 @@ class PaginaPrincipal extends React.Component {
                 </div>
               </section>
             </div>
+
           )}
         ></Route>
         <Route
@@ -248,51 +261,74 @@ class PaginaPrincipal extends React.Component {
             ></Produtos>
           )}
         ></Route>
+          <Route
+          exact
+          path="/ProdutosMasculinos"
+          render={() => (
+            <ProdutosMasculinos
+            produtos={this.state.produtos}
+             MouseEnter={this.MouseEnter}
+              MouseLeave={this.MouseLeave}
+            ></ProdutosMasculinos>
+          )}
+        ></Route>
+              <Route
+          exact
+          path="/ProdutosFemininos"
+          render={() => (
+            <ProdutosFemininos
+            produtos={this.state.produtos}
+             MouseEnter={this.MouseEnter}
+              MouseLeave={this.MouseLeave}
+            ></ProdutosFemininos>
+          )}
+        ></Route>
         <Route exact path="/Login" render={() => <Login></Login>}></Route>
         <Route exact path="/Perfil" render={() => <Perfil></Perfil>}></Route>
         <Route exact path="/Carrinho" render={() => <Carrinho></Carrinho>}></Route>
         <Route exact path="/Produto/:id" render={(props) => <Produto {...props}></Produto>}></Route>
-        {sessionStorage.isAdmin === "true" ? 
-        <>
-          <Route exact path="/Dashboard" render={() => (
-            <Dashboard
-              criarEditar={this.criarEditar}
-              produtos={this.state.produtos}
-            ></Dashboard>
-          )}
-          ></Route>
+        {sessionStorage.isAdmin === "true" ?
+          <>
+            <Route exact path="/Dashboard" render={() => (
+              <Dashboard
+                alterarVisibilidade={this.alterarVisibilidade}
+                criarEditar={this.criarEditar}
+                produtos={this.state.produtos}
+              ></Dashboard>
+            )}
+            ></Route>
 
-          <Route exact path="/Dashboard/add" render={(props) => (
-            <FormProduto
-              {...props}
-              produtos={this.state.produtos}
-              criarEditar={this.criarEditar}
-            ></FormProduto>
-          )}
-          ></Route>
+            <Route exact path="/Dashboard/add" render={(props) => (
+              <FormProduto
+                {...props}
+                produtos={this.state.produtos}
+                criarEditar={this.criarEditar}
+              ></FormProduto>
+            )}
+            ></Route>
 
-          <Route exact path="/Dashboard/edit/:id" render={(props) => (
-            <FormProduto
-              {...props}
-              produtos={this.state.produtos}
-              criarEditar={this.criarEditar}
-            ></FormProduto>
-          )} />
+            <Route exact path="/Dashboard/edit/:id" render={(props) => (
+              <FormProduto
+                {...props}
+                produtos={this.state.produtos}
+                criarEditar={this.criarEditar}
+              ></FormProduto>
+            )} />
 
-          <Route exact path="/Dashboard/info/:id" render={(props) => (
-            <ProdutoInfo
-              {...props}
-              produtos={this.state.produtos}
-            ></ProdutoInfo>
-          )} />
-          <Route exact path="/Dashboard/variante/add/:id" render={(props) => (
-            <FormVariantes
-              {...props}
-              produtos={this.state.produtos}
-            ></FormVariantes>
-          )} />
+            <Route exact path="/Dashboard/info/:id" render={(props) => (
+              <ProdutoInfo
+                {...props}
+                produtos={this.state.produtos}
+              ></ProdutoInfo>
+            )} />
+            <Route exact path="/Dashboard/variante/add/:id" render={(props) => (
+              <FormVariantes
+                {...props}
+                produtos={this.state.produtos}
+              ></FormVariantes>
+            )} />
 
-        </> :
+          </> :
           <Route exact path="/Dashboard" render={() => (window.location.href = "/")}
           ></Route>}
       </Switch>

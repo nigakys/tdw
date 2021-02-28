@@ -15,6 +15,20 @@ function GetProdutos() {
     return response.json();
   });
 }
+function GetProdutoByRef(ref) {
+  return fetch(BASE_URL + "produtos/ref/" + ref, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      return [];
+    }
+    return response.json();
+  });
+}
 
 function GetVariantesProduto(id) {
   return fetch(BASE_URL + "variantes/" + id, {
@@ -129,9 +143,10 @@ function updateProduto(_id, produto, imagem) {
     if (response.status !== 200) {
       return [];
     }
-
-    uploadImagemProduto(imagem)
-    return response.json();
+    if (imagem != null) {
+      uploadImagemProduto(imagem)
+    }
+    return "sucess";
   });
 }
 
@@ -415,6 +430,7 @@ var funcoes = {
   CriarCategoria,
   CriarCor,
   uploadImagemVariante,
+  GetProdutoByRef,
 }
 
 export default funcoes;

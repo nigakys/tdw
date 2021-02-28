@@ -6,7 +6,7 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 .table thead tr {
-  background-color: #232833;
+  background-color: #1C1C1C;
   color: #ffffff;
   text-align: left;
 }
@@ -20,11 +20,8 @@
 }
 
 .table tbody tr:hover{
-  background-color: #afcbff62;
+  background-color: rgba(152, 75, 219, 0.2);
 }
-
-
-
 table {
 
   overflow-x: auto;
@@ -40,22 +37,21 @@ table {
   margin-right: auto;
   margin-left:  auto;
   justify-content: center;
-  
 }
 .TdRef {
-  width: 6%;
+  width: 3%;
 }
 .TdImg {
-  width: 10%;
+  width: 15%;
 }
 .TdTipo {
   width: 10%;
 }
 .TdPreco {
-  width: 10%;
+  width: 5%;
 }
 .TdNome {
-  width: 20%;
+  width: 15%;
 }
 .TdAcoes {
   width: 15%;
@@ -63,7 +59,6 @@ table {
 .TdRef_ {
   padding-left: 2%;
 }
-
 .TdTipo_ {
   padding-left: 2%;
 }
@@ -92,7 +87,6 @@ height: 50px;
   font-weight: bold;
   font-size: 17px;
   color: white;
-  
 }
 
 .TdAcoes_,
@@ -106,45 +100,46 @@ height: 50px;
   padding-top: 2%;
 
   height: 3px;
+  text-transform: lowercase;
 }
 .ContentButtonEdit {
-  background-color: #90A8D4;
+  background-color: rgba(143,107,244);
   border-radius: 5px;
-  border: 1px solid #232833;
-  width: 90%;
+  border: none;
+  width: 80%;
   display: inline-block;
   cursor: pointer;
   color: #ffffff;
   font-family: Arial;
-  font-size: 90%;
+  font-size: 80%;
   font-weight: bold;
   padding: 6px 24px;
   text-decoration: none;
 }
 .ContentButtonEdit:hover {
-  background-color: #232833;
+  background-color: #4346E8;
 }
 .ContentButtonEdit:active {
   position: relative;
   top: 1px;
 }
 .ContentButtonStock {
-  background-color: #7689AD;
-  width: 90%;
+  background-color: rgba(143,107,244);
+  width: 80%;
   border-radius: 5px;
-  border: 1px solid #232833;
+  border: none;
   display: inline-block;
   cursor: pointer;
   color: #ffffff;
   font-family: Arial;
-  font-size: 90%;
+  font-size: 80%;
   font-weight: bold;
   padding: 6px 24px;
   text-decoration: none;
   margin-top: 10%;
 }
 .ContentButtonStock:hover {
-  background-color: #232833;
+  background-color: #4346E8;
 }
 .ContentButtonStock:active {
   position: relative;
@@ -152,22 +147,22 @@ height: 50px;
 }
 
 .ContentButtonElim {
- width: 90%;
-  background-color: #4B576E;
+ width: 80%;
+  background-color: rgba(143,107,244);
   border-radius: 5px;
-  border: 1px solid#232833;
+  border: none;
   display: inline-block;
   cursor: pointer;
   color: #ffffff;
   font-family: Arial;
-  font-size: 90%;
+  font-size: 80%;
   font-weight: bold;
   padding: 6px 24px;
   text-decoration: none;
   margin-top: 10%;
 }
 .ContentButtonElim:hover {
-  background-color: #232833;
+  background-color: #4346E8;
 }
 .ContentButtonElim:active {
   position: relative;
@@ -177,7 +172,7 @@ height: 50px;
     width: 30%;
     background-color: #90A8D4;
     border-radius: 6px;
-    border: 1px solid#232833;
+    border: none;
     display: inline-block;
     cursor: pointer;
     color: #ffffff;
@@ -200,7 +195,7 @@ background-color: #232833;
     text-align: center;
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 850px) {
     .ContentButtonStock ,.ContentButtonElim,.ContentButtonEdit{
         width: 95%;     
     font-size: 9px;
@@ -222,6 +217,9 @@ background-color: #232833;
       }
       .TdImg{
           width: 20%;
+      }
+      .TdNome {
+        width: 3%;
       }
       .ContentButtonAdd{
     font-size: 12px;
