@@ -240,12 +240,7 @@ class PaginaPrincipal extends React.Component {
 
                 </div>
               </section>
-              <section id="subscrever" class="subscrever">
-                <div>
-                  <h2>Newsletter</h2>
-                  <span>promocoes etc</span>
-                </div>
-              </section>
+              
             </div>
 
           )}

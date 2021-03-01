@@ -95,42 +95,45 @@ class Produto extends React.Component {
                             if (pos.ref == this.props.match.params.id) {
                                 return (
                                     <>
-                                        <h1> {pos.nome}</h1>
-                                        <h2>{pos.preco}€</h2>
+                                        <h1 style={{marginTop:"20px"}}> {pos.nome}</h1>
+                                        <h2 style={{marginTop:"30px"}}>{pos.preco}€</h2>
                                     </>
                                 )
                             }
                         })}
                     </div>
                     <div className="variantes">
-
-                        tamanhos disponiveis: {this.state.variantes.map((pos) => {
-                        return (
-                            <>
-                                <button value={pos.tamanho} onClick={(e) => this.tamanhoSelected(e)}>{pos.tamanho}</button>
-                            </>
-                        )
-                    })}
-
-                            cores disponiveis:
+                        <div className="variantess">
+                            
                              {this.state.cores.map((cor) => {
-                        return (
-                            <>
-                                {this.state.variantes.map((pos) => {
-                                    if (pos.cor === cor.cor) {
-                                        return (
-                                            <div className="varianteCores" style={{ backgroundColor: cor.hex }} onClick={() => this.corSelected(cor)} >
+                            return (
+                                <>
+                                    {this.state.variantes.map((pos) => {
+                                        if (pos.cor === cor.cor) {
+                                            return (
+                                                <div className="varianteCores" style={{ backgroundColor: cor.hex }} onClick={() => this.corSelected(cor)} >
 
-                                            </div>
-                                        )
-                                    }
-                                })}
-                            </>
-                        )
-
-                    })}
-
-                        <button onClick={() => this.addCarrinho()}>Adicionar ao carrinho</button>
+                                                </div>
+                                            )
+                                        }
+                                    })}
+                                </>
+                            )
+                            
+                            })}
+                        
+                        </div>
+                        <div className="variantess">
+                          
+                        {this.state.variantes.map((pos) => {
+                            return (
+                                <>
+                                    <button className="varianteCores" style={{background:"white",border:"none"}} value={pos.tamanho}  onClick={(e) => this.tamanhoSelected(e)}>{pos.tamanho}</button>
+                                </>
+                            )
+                        })}
+                        </div>
+                        <button  style={{marginTop:"60px",marginLeft:"30px",background:"black",color:"white",padding:"15px 60px"}}onClick={() => this.addCarrinho()}>Adicionar ao carrinho</button>
                     </div>
                 </div>
             </div>

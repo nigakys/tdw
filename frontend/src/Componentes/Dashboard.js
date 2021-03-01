@@ -51,7 +51,7 @@ class Dashboard extends React.Component {
                         </span>
                     </label>
 
-                    <button onClick={() => this.adicionarAtributo("categoria")}>Adicionar Categoria</button>
+                    <button style={{marginTop:"60px",marginLeft:"30px",background:"black",color:"white",padding:"10px 50px"}} onClick={() => this.adicionarAtributo("categoria")}>Adicionar Categoria</button>
                 </div>
             )
         }
@@ -115,7 +115,7 @@ class Dashboard extends React.Component {
                             )
                         })}
                     </select>
-                    <button onClick={() => this.visibleCategoria()}>Adicionar Categoria</button>
+                    <button  style={{marginTop:"60px",marginLeft:"30px",background:"black",color:"white",padding:"8px 30px"}} onClick={() => this.visibleCategoria()}>Adicionar Categoria</button>
                     <form ref={(el) => this.myFormRef = el}>
                         {this.renderForms()}
                     </form>

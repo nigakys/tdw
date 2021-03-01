@@ -79,8 +79,8 @@ class FormProduto extends React.Component {
         return (
             <div>
                 {this.state.produtos.id === "" ?
-                    <h1>Adicionar Produto</h1> :
-                    <h1>Editar Produto</h1>
+                    <h1 style={{textAlign:"center",marginTop:"50px"}}>Adicionar Produto</h1> :
+                    <h1 style={{textAlign:"center",marginTop:"50px"}}>Editar Produto</h1>
                 }
                 <form  className="formEdit" onSubmit={(e) => this.props.criarEditar(e, this.state.produtos, this.state.imagem)}>
                     <div className="labels">
@@ -104,7 +104,7 @@ class FormProduto extends React.Component {
                     <p></p>
                     Imagem: <input className="input1" type="File" id="Imagem" onChange={(e) => this.updateField(e, "imagem")}></input>
                     <p></p>
-                    <img src={"http://localhost:4000/files/" + this.state.produtos.imagem}></img><p></p>
+                    <img  style={{width:"250px",background:"white"}} src={"http://localhost:4000/files/" + this.state.produtos.imagem}></img><p></p>
                     Especial: <Switch checked={this.state.produtos.especial} handleToggle={() => this.toggle()} />
                     <p></p>
                     <Link to="/dashboard"><button >Voltar</button></Link>

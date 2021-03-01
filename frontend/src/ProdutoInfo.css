@@ -4,6 +4,7 @@
     display: flex;
     margin-left: auto;
     margin-right: auto;
+padding-top: 100px;
 }
 .infoProdutoImagens{
 width: 55%;
@@ -15,13 +16,12 @@ display: inline-block;
     width: 340px;
     margin-top: 50px;
     margin: 10px 10px;
-  
    max-width: 100%; 
 }
  
    .protudoInfoCont{
        width: 45%;
-       text-align: center;
+       text-align: center;      
    }
    .variantes{
        text-align: center;
@@ -29,19 +29,19 @@ display: inline-block;
        justify-content: center;
        align-items: center;
        flex-direction: column;
-       
-       
-      
-    }
+         }
     .variantess{
 display: flex;
+font-size: 21px;
+
     }
     .varianteCores{
     width: 30px;
     height: 30px;
     cursor: pointer;
     padding: 0;
-    margin-left: 10px;
+    margin-left: 25px;
+    margin-top: 20px;
    }
    
    @media screen and (max-width: 768px) {
@@ -49,12 +49,16 @@ display: flex;
         width: 100%;
     }
     .infoProdutoImagens img{
-    
-        width: 160px;
+       
+       
         margin-top: 50px;
-        margin: 10px 10px;
+        margin: 10px 1px;
       
        max-width: 100%; }
+       .protudoInfoCont{
+        width: 55%;
+        text-align: center;
+    }
    
     }
    

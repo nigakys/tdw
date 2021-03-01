@@ -1,18 +1,21 @@
 .formEdit{
     display: flex;
-    background:rgb(150, 116, 160);
+    background: rgb(0, 0, 0);
+    min-height: calc(100vh - 260px);
+    
     width: 60%;
     margin-left: auto;
     margin-right: auto;
     border-radius: 20px;
     margin-top: 50px;
    min-height: 60vh;
-   color: rgb(5, 5, 5);
+   color: rgb(255, 255, 255);
   margin-bottom: 30px;
     display: flex;
     justify-content: center;
     flex-direction: column;
     text-align:  left;
+    font-size: 21px;
 }
 
 .input1 , .select1 {
@@ -21,13 +24,20 @@
     display: block;
     width: 100%;
     border: none;
-    border-bottom: 1px solid rgb(84, 9, 119);
-    margin: 2px 0;
-    background-color:rgb(150, 116, 160) ;
+    border-bottom: 5px solid rgb(84, 9, 119);
+    margin: 20px 0;
+    
+    
+  }
+  .select1:focus {
+    outline: none;
+    border: none;
   }
   .input1:focus {
     outline: none;
   }
+
+
   .labels{
       padding: 20px 20px 20px 20px;
   }
