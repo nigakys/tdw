@@ -9,10 +9,7 @@ class ProdutoInfo extends React.Component {
 
         this.state = {
             variantes: [],
-            visibleCategoria: false,
-            atributo: {
-                categoria: "",
-            }
+            
         };
     }
 
@@ -22,15 +19,7 @@ class ProdutoInfo extends React.Component {
         })
     }
 
-    visibleCategoria = () => {
-        var visible = !this.state.visibleCategoria;
-        this.setState({ visibleCategoria: visible })
-        this.setState({ atributo: {} })
-        this.myFormRef.reset();
-        if (this.state.visibleCor === true) {
-            this.setState({ visibleCor: false })
-        }
-    }
+   
 
     deleteVariante = (id) => {
         var deleteVariantes = this.state.variantes;
@@ -43,41 +32,15 @@ class ProdutoInfo extends React.Component {
         })
     }
 
-    adicionarAtributo = () => {
-        api.CriarCategoria(this.state.atributo);
-    }
 
-    updateField = (event, fieldName) => {
-        var addAtributo = this.state.atributo;
-        addAtributo[fieldName] = event.target.value;
-
-        this.setState({ atributo: addAtributo })
-        event.preventDefault();
-    }
-
-
-    renderForms = () => {
-        if (this.state.visibleCategoria === true) {
-            return (
-                <>
-                    <p></p>
-                    Nova Categoria: <input id="Categoria" value={this.state.atributo.categoria} onChange={(e) => this.updateField(e, "categoria")}></input>
-                    <p></p>
-                    <button onClick={() => this.adicionarAtributo("categoria")}>Adicionar Categoria</button>
-                </>
-            )
-        }
-    }
+    
 
     render() {
         return (
             <div>
                 <Link to={`/Dashboard/variante/add/${this.props.match.params.id}`}><button>Adicionar Variante</button></Link>
 
-                <button onClick={() => this.visibleCategoria()}>Adicionar Categoria</button>
-                <form ref={(el) => this.myFormRef = el}>
-                    {this.renderForms()}
-                </form>
+                
                 <table className="table">
                     <thead>
                         <tr>

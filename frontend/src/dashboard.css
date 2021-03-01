@@ -32,11 +32,18 @@ table {
 }
 .Content {
   display: flex;
-  background: rgb(255, 255, 255);
   width: 90%;
   margin-right: auto;
   margin-left:  auto;
   justify-content: center;
+  min-height: 100%;
+}
+
+.cat{
+  width: 90%;
+  margin-right: auto;
+  margin-left:  auto;
+  font-size: 21px;
 }
 .TdRef {
   width: 3%;
@@ -225,5 +232,7 @@ background-color: #232833;
     font-size: 12px;
     }
       
+    
+    
     
 }

@@ -55,16 +55,26 @@ router.post('/imagem', function (req, res) {
     var filename;
     var erro = null;
     if (req.files != null) {
-        for (let index = 0; index < req.files.file.length; index++) {
-            file = req.files.file[index];
-            filename = file.name
+        if (req.files.file.length === undefined) {
+            file = req.files.file;
+            filename = file.name;
             file.mv('./public/files/' + filename, function (err) {
                 if (err) {
                     erro = err;
                 }
             })
         }
-
+        else {
+            for (let index = 0; index < req.files.file.length; index++) {
+                file = req.files.file[index];
+                filename = file.name
+                file.mv('./public/files/' + filename, function (err) {
+                    if (err) {
+                        erro = err;
+                    }
+                })
+            }
+        }
         if (erro != null) {
             res.status(200).send("Sucesso")
         }

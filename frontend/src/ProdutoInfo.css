@@ -1,3 +1,60 @@
 .containerProdutoInfo{
-    background-color: red;
+    min-height: calc(100vh - 260px);
+    width: 90%;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
 }
+.infoProdutoImagens{
+width: 55%;
+text-align: center;
+display: inline-block;
+}
+.infoProdutoImagens img{
+    
+    width: 340px;
+    margin-top: 50px;
+    margin: 10px 10px;
+  
+   max-width: 100%; 
+}
+ 
+   .protudoInfoCont{
+       width: 45%;
+       text-align: center;
+   }
+   .variantes{
+       text-align: center;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       flex-direction: column;
+       
+       
+      
+    }
+    .variantess{
+display: flex;
+    }
+    .varianteCores{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 10px;
+   }
+   
+   @media screen and (max-width: 768px) {
+    .containerProdutoInfo{
+        width: 100%;
+    }
+    .infoProdutoImagens img{
+    
+        width: 160px;
+        margin-top: 50px;
+        margin: 10px 10px;
+      
+       max-width: 100%; }
+   
+    }
+   

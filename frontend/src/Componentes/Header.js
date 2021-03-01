@@ -11,7 +11,7 @@ class Header extends React.Component {
   renderLink = () => {
     if (sessionStorage.username != null) {
       return (<>
-      
+
 
         <NavLink to="/Perfil">
           <img
@@ -50,12 +50,12 @@ class Header extends React.Component {
       <div>
         <div id="header" className="header">
           <nav class="nav">
-            <div style={{textAlign:"center"}}>
-              <NavLink style={{textDecoration:"none"}} to="/">
+            <div style={{ textAlign: "center" }}>
+              <NavLink style={{ textDecoration: "none" }} to="/">
                 <div className="loja">
-                  Loja 
+                  Loja
                 </div>
-                  <a className="sub">TDW</a>
+                <a className="sub">TDW</a>
               </NavLink>
             </div>
             <div class="nav-menu">
@@ -144,11 +144,9 @@ function navSlide() {
   const navLinks = document.querySelectorAll(".nav-links li");
 
   menu.addEventListener("click", () => {
-    // Toggle Nav
 
     nav.classList.toggle("nav-active");
 
-    // Animate Links
     navLinks.forEach((link, index) => {
       if (link.style.animation) {
         link.style.animation = "";
@@ -158,13 +156,11 @@ function navSlide() {
       }
     });
 
-    // Menu Animation
 
     menu.classList.toggle("toggle");
   });
 }
 
-// hover img
 
 
 export default Header;

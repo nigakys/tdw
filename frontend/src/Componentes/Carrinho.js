@@ -25,7 +25,6 @@ class Carrinho extends React.Component {
             var carrinho = this.state.carrinho
             if (carrinho.length != 0) {
                 var produtosCarrinho = "[";
-
                 for (let i = 0; i < produtos.length; i++) {
                     for (let k = 0; k < carrinho.length; k++) {
                         if (produtos[i].ref === carrinho[k].ref) {
@@ -42,7 +41,7 @@ class Carrinho extends React.Component {
                 produtosCarrinho += "]"
                 var preco = this.state.total;
                 this.setState({ produtoscarrinho: JSON.parse(produtosCarrinho) })
-
+ 
                 this.state.produtoscarrinho.map((item) => {
                     preco += item.produto.preco * item.variante.quantidade
                 })
@@ -53,9 +52,9 @@ class Carrinho extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="containerCarrinho">
                 <div className="Content">
-                    <table className="table">
+                    <table style={{width:"100%"}} className="table">
                         <thead>
                             <tr>
                                 <td><b>Artigo</b></td>
@@ -85,7 +84,6 @@ class Carrinho extends React.Component {
                                                         <td>{item.variante.tamanho}</td>
                                                         <td>{item.variante.quantidade}</td>
                                                         <td>{item.produto.preco}€ x {item.variante.quantidade} {item.produto.preco * item.variante.quantidade}€</td>
-
                                                     </tr>
                                                 )
                                             }

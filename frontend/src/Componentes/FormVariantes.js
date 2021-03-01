@@ -50,6 +50,7 @@ class FormProduto extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
+        console.log(imagemForm)
         api.criarVariante(this.state.variante);
         api.uploadImagemVariante(imagemForm);
         window.location.href = "/dashboard/info/" + this.state.variante.ref

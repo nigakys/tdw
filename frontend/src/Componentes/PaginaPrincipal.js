@@ -286,7 +286,7 @@ class PaginaPrincipal extends React.Component {
         <Route exact path="/Login" render={() => <Login></Login>}></Route>
         <Route exact path="/Perfil" render={() => <Perfil></Perfil>}></Route>
         <Route exact path="/Carrinho" render={() => <Carrinho></Carrinho>}></Route>
-        <Route exact path="/Produto/:id" render={(props) => <Produto {...props}></Produto>}></Route>
+        <Route exact path="/Produto/:id" render={(props) => <Produto {...props}  produtos={this.state.produtos}></Produto>}></Route>
         {sessionStorage.isAdmin === "true" ?
           <>
             <Route exact path="/Dashboard" render={() => (

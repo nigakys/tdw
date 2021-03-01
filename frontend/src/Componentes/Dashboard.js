@@ -11,7 +11,50 @@ class Dashboard extends React.Component {
             categorias: [],
             produtosMostrar: this.props.produtos,
             selectedCategoria: "Todos",
+            visibleCategoria: false,
+            atributo: {
+                categoria: "",
+            }
         };
+    }
+
+    visibleCategoria = () => {
+        var visible = !this.state.visibleCategoria;
+        this.setState({ visibleCategoria: visible })
+        this.setState({ atributo: {} })
+        this.myFormRef.reset();
+        if (this.state.visibleCor === true) {
+            this.setState({ visibleCor: false })
+        }
+    }
+
+    adicionarAtributo = () => {
+        api.CriarCategoria(this.state.atributo);
+    }
+
+    updateCategoria = (event, fieldName) => {
+        var addAtributo = this.state.atributo;
+        addAtributo[fieldName] = event.target.value;
+
+        this.setState({ atributo: addAtributo })
+        event.preventDefault();
+    }
+
+    renderForms = () => {
+        if (this.state.visibleCategoria === true) {
+            return (
+                <div>
+                    <label className="field field_v1">
+                        <input placeholder="Categoria" className="field_input" id="Categoria" value={this.state.atributo.categoria} onChange={(e) => this.updateCategoria(e, "categoria")}></input>
+                        <span className="field_label-wrap">
+                            <span className="field_label">Categoria</span>
+                        </span>
+                    </label>
+
+                    <button onClick={() => this.adicionarAtributo("categoria")}>Adicionar Categoria</button>
+                </div>
+            )
+        }
     }
 
     componentDidMount() {
@@ -57,18 +100,26 @@ class Dashboard extends React.Component {
 
     render() {
         return (
+
             <div>
                 <div className="DivButtonAdd">
                     <Link to={`/Dashboard/add/`}><button className="ContentButtonAdd">Adicionar novos items</button></Link>
+
+                </div><div className="cat">
+
+                    Categoria: <select style={{ width: "30%" }} id="Categoria" value={this.state.selectedCategoria} onChange={(e) => this.updateField(e)}>
+                        <option value="Todos">Todos</option>
+                        {this.state.categorias.map((pos) => {
+                            return (
+                                <option value={pos.categoria}>{pos.categoria}</option>
+                            )
+                        })}
+                    </select>
+                    <button onClick={() => this.visibleCategoria()}>Adicionar Categoria</button>
+                    <form ref={(el) => this.myFormRef = el}>
+                        {this.renderForms()}
+                    </form>
                 </div>
-                Categoria: <select id="Categoria" value={this.state.selectedCategoria} onChange={(e) => this.updateField(e)}>
-                    <option value="Todos">Todos</option>
-                    {this.state.categorias.map((pos) => {
-                        return (
-                            <option value={pos.categoria}>{pos.categoria}</option>
-                        )
-                    })}
-                </select>
                 <div className="Content">
                     <table className="table">
                         <thead>

@@ -12,10 +12,118 @@
   --navtextColor: rgb(241, 232, 232);
   --navmenuColor: rgb(226, 226, 226);
 }
+
+
+   
+.field_input{ 
+  --uiFieldPlaceholderColor: var(--fieldPlaceholderColor, #767676);
+  
+  background-color: transparent;
+  border-radius: 0;
+  border: none;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.field_input:focus::-webkit-input-placeholder{
+  color: var(--uiFieldPlaceholderColor);
+}
+
+.field_input:focus::-moz-placeholder{
+  color: var(--uiFieldPlaceholderColor);
+}
+
+.field{
+  --uiFieldBorderWidth: var(--fieldBorderWidth, 2px);
+  --uiFieldPaddingRight: var(--fieldPaddingRight, 1rem);
+  --uiFieldPaddingLeft: 0;   
+  --uiFieldBorderColorActive: var(--fieldBorderColorActive, rgba(22, 22, 22, 1));
+
+  display: var(--fieldDisplay, inline-flex);
+  position: relative;
+  font-size: var(--fieldFontSize, 1rem);
+}
+
+.field_input{
+  box-sizing: border-box;
+  width: var(--fieldWidth, 100%);
+  height: var(--fieldHeight, 3rem);
+  padding: var(--fieldPaddingTop, 1.25rem) var(--uiFieldPaddingRight) var(--fieldPaddingBottom, .5rem) var(--uiFieldPaddingLeft);
+  border-bottom: var(--uiFieldBorderWidth) solid var(--fieldBorderColor, rgba(0, 0, 0, .25));  
+}
+
+.field_input:focus{
+  outline: none;
+}
+
+.field_input::-webkit-input-placeholder{
+  opacity: 0;
+  transition: opacity .2s ease-out;
+}
+
+.field_input::-moz-placeholder{
+  opacity: 0;
+  transition: opacity .2s ease-out;
+}
+
+.field_label-wrap::after{
+  content: "";
+  box-sizing: border-box;
+  width: 100%;
+  height: 0;
+  opacity: 0;
+
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+
+.field_input:focus ~ .field_label-wrap::after{
+  opacity: 1;
+}
+.field_label{
+  position: absolute;
+  left: 0;
+  top: calc(50% - .5em);
+  line-height: 1;
+  font-size: var(--fieldHintFontSize, inherit);
+
+  transition: top .2s cubic-bezier(0.9, -0.15, 0.1, 1.15), opacity .2s ease-out, font-size .2s ease-out;
+  will-change: bottom, opacity, font-size;
+}
+
+.field_input:focus ~ .field_label-wrap .field_label,
+.field_input:not(:placeholder-shown) ~ .field_label-wrap .field_label{
+  --fieldHintFontSize: var(--fieldHintFontSizeFocused, .75rem);
+
+  top: var(--fieldHintTopHover, .25rem);
+}
+
+.field_v1 .field_label-wrap::after{
+  border-bottom: var(--uiFieldBorderWidth) solid var(--uiFieldBorderColorActive);
+  transition: opacity .2s ease-out;
+  will-change: opacity;
+}
+
+.field{
+  --fieldBorderColor: #D1C4E9;
+  --fieldBorderColorActive: #673AB7;
+}
+
+
 .sticky {
   position: fixed;
   top: 0;
   width: 100%;
+}
+
+.containerCarrinho{
+  min-height: calc(100vh - 260px);
 }
 
 .nav {
@@ -55,7 +163,7 @@
   display: flex;
   justify-content: space-around;
   text-align: center;
-  width: 55%;
+  width: 65%;
   float: right;
 }
 .nav-links li {
@@ -373,6 +481,7 @@
   flex-wrap: wrap;
   margin: 0 auto;
   justify-content: start;
+  
 }
 .container_produtos {
   width: 90%;
@@ -561,12 +670,12 @@ footer {
   .nav-links {
     position: absolute;
     right: 0px;
-    height: 60vh;
+    min-height: 60vh;
     top: 8vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 35%;
+    width: 45%;
     padding: 0px 1px;
     right: -37px;
 
@@ -582,6 +691,7 @@ footer {
     transform: translateX(0%);
     transition: transform 0.5s ease-in;
   }
+ 
   .nav-activee {
     transform: translateX(100%);
     transition: transform 0.5s ease-in;

@@ -112,6 +112,7 @@ function criarProduto(produto, imagem) {
 }
 
 function criarVariante(variante) {
+  console.log(variante)
   return fetch(BASE_URL + "variantes/", {
     method: "POST",
     headers: {
@@ -165,6 +166,7 @@ function uploadImagemProduto(imagem) {
 }
 
 function uploadImagemVariante(imagem) {
+  console.log("ola" + imagem)
   return fetch(BASE_URL + "variantes/imagem", {
     method: "POST",
     body: imagem,
