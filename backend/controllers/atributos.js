@@ -33,7 +33,7 @@ router.post('/categorias/', (req, res) => {
     if (req.body != null) {
         categorias.create(req.body)
             .then(() => {
-                res.status(200).send("Produto inserido" + JSON.stringify(req.body));
+                res.status(200).send("Produto inserido" + JSON.strinSgify(req.body));
             })
             .catch((err) => {
                 console.log(err)

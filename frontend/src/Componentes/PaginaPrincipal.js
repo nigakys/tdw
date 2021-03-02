@@ -10,6 +10,7 @@ import Login from "./Login";
 import Perfil from "./Perfil";
 import Carrinho from "./Carrinho"
 import Produto from "./Produto";
+import Encomendas from "./Encomendas";
 import ProdutosMasculinos from './ProdutosMasculinos';
 import ProdutosFemininos from './ProdutosFemininos';
 import { toast } from 'react-toastify'
@@ -309,6 +310,7 @@ class PaginaPrincipal extends React.Component {
         ></Route>
         <Route exact path="/Login" render={() => <Login></Login>}></Route>
         <Route exact path="/Perfil" render={() => <Perfil></Perfil>}></Route>
+        <Route exact path="/Encomendas/:id" render={() => <Encomendas></Encomendas>}></Route>
         <Route exact path="/Carrinho" render={() => <Carrinho></Carrinho>}></Route>
         <Route exact path="/Produto/:id" render={(props) => <Produto {...props} produtos={this.state.produtos}></Produto>}></Route>
         {sessionStorage.isAdmin === "true" ?

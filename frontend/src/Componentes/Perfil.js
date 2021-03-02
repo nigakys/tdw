@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import distritos from "../shared/distritos"
 import cidades from "../shared/cidades"
 import api from "../shared/api"
-import { NavLink } from "react-router-dom";
+import { NavLink,Link } from "react-router-dom";
 
 class Perfil extends React.Component {
     constructor(props) {
@@ -40,6 +40,7 @@ class Perfil extends React.Component {
         if (this.state.validoCod && this.state.validoContacto) {
             api.updateMorada(this.state.morada, sessionStorage.userid)
         }
+        this.props.history.push("/")
     }
 
     renderErros = () => {
@@ -121,10 +122,11 @@ class Perfil extends React.Component {
                         <img src="http://localhost:4000/files/user.png" alt="erro"></img>
                     </div>
                         <div className="divInfoss">
+                        <Link to={"/Encomendas/" + sessionStorage.userid}><button  className="buttonForm1"  style={{fontSize:"14px",padding:"12px 0px"}}>Encomendas</button></Link>
                         <button type="submit" className="buttonForm1" >Confirmar</button>
-                               <NavLink  style={{color:"white",textDecoration:"none",fontSize:"16px", margin:"0px",textAlign:"center"}} onClick={() => { this.logout() }} to="/Login">Terminar Sessao
-                                </NavLink>
                     </div>
+                               <NavLink  style={{color:"white",textDecoration:"none",fontSize:"16px",marginLeft:"102px"}} onClick={() => { this.logout() }} to="/Login">Terminar Sessao
+                                </NavLink>
                     </div>
                  
                        

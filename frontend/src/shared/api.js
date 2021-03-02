@@ -214,6 +214,21 @@ function GetEncomendas() {
   });
 }
 
+function GetEncomendasByUserId(id) {
+  return fetch(BASE_URL + "encomendas/" + id, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      return [];
+    }
+    return response.json();
+  });
+}
+
 function uploadImagemVariante(imagem) {
   console.log("ola" + imagem)
   return fetch(BASE_URL + "variantes/imagem", {
@@ -451,6 +466,7 @@ var funcoes = {
   GetVariantes,
   updateVariante,
   GetEncomendas,
+  GetEncomendasByUserId,
 }
 
 export default funcoes;

@@ -67,7 +67,7 @@ class ProdutoInfo extends React.Component {
     render() {
         return (
             <div style={{ textAlign: "center" }}>
-                <Link to={`/Dashboard/variante/add/${this.props.match.params.id}`}><button style={{ background: "black", padding: "8px 30px", color: "white", marginTop: "50px" }}>Adicionar Vawwwwwwwwwriante</button></Link>
+                <Link to={`/Dashboard/variante/add/${this.props.match.params.id}`}><button style={{ background: "black", padding: "8px 30px", color: "white", marginTop: "50px" }}>Adicionar Variante</button></Link>
                 <div style={{ textAlign: "center" }}>
 
                     <table className="table" style={{ width: "90%", textAlign: "left", marginLeft: "5%" }} >

@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
     var id = new mongo.ObjectID(req.params.id);
-    var query = { _id: id };
+    var query = { userId: id };
     if (req.params != null) {
         encomendas.find(query).then(result => {
             if (result != null) {
