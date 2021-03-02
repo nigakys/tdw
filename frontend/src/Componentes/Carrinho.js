@@ -1,6 +1,7 @@
 import React from 'react';
 import api from "../shared/api"
 import cores from "../shared/cores"
+import { withRouter } from "react-router-dom";
 
 class Carrinho extends React.Component {
     constructor(props) {
@@ -14,6 +15,7 @@ class Carrinho extends React.Component {
             produtoscarrinho: [],
             cores: cores,
             total: 0,
+            variantes: {},
         };
     }
 
@@ -41,22 +43,59 @@ class Carrinho extends React.Component {
                 produtosCarrinho += "]"
                 var preco = this.state.total;
                 this.setState({ produtoscarrinho: JSON.parse(produtosCarrinho) })
- 
+
                 this.state.produtoscarrinho.map((item) => {
                     preco += item.produto.preco * item.variante.quantidade
                 })
                 this.setState({ total: preco })
             }
         })
+        api.GetVariantes().then((data) => {
+            this.setState({ variantes: data })
+        })
+
+    }
+
+    finalizarCompra = () => {
+        var encomenda = {};
+        encomenda.userId = sessionStorage.userid;
+        encomenda.produtos = this.state.produtoscarrinho;
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = mm + '/' + dd + '/' + yyyy;
+        encomenda.dataEncomenda = today;
+        encomenda.custo = this.state.total;
+        localStorage.setItem('carrinho', "[]")
+        api.criarEncomenda(encomenda);
+        var items = [];
+        var quantidade = [];
+        var stock = { "stock": 0 }
+        var variantes = this.state.variantes;
+
+        this.state.produtoscarrinho.map((pos) => {
+            items.push(pos.variante._id)
+            quantidade.push(pos.variante.quantidade)
+        })
+
+        for (let index = 0; index < items.length; index++) {
+            var stockatual = variantes.find(x => x._id === items[index]).stock;
+            stock.stock = stockatual - quantidade[index];
+            api.updateVariante(items[index], stock)
+        }
+
+        window.location.href = "/";
     }
 
     render() {
         return (
             <div className="containerCarrinho">
                 <div className="Content">
-                    <table style={{width:"100%"}} className="table">
+                    <table style={{ width: "100%" }} className="table">
                         <thead>
-                            <tr>
+                            <tr style={{ textAlign: "left" }} >
                                 <td><b>Artigo</b></td>
                                 <td><b>Cor</b></td>
                                 <td><b>Medida</b></td>
@@ -73,11 +112,11 @@ class Carrinho extends React.Component {
                                             if (cor.cor === item.variante.cor) {
                                                 return (
                                                     <tr className="tr1" key={i}>
-                                                        <td >
+                                                        <td style={{display:"flex"}} >
                                                             <img style={{ width: "40px", height: "40px" }} src={"http://localhost:4000/files/" + item.variante.imagens[0]}></img>
-                                                            <span style={{ float: "right" }}>
+                                                            <span style={{paddingTop:"0px",fontSize:"21px",marginLeft:"20px"}}>
                                                                 {item.produto.nome}
-                                                                <p style={{ fontSize: "11px" }}>{item.produto.ref}</p>
+                                                                <p style={{ fontSize: "12px",paddingTop:"3px" }}>{item.produto.ref}</p>
                                                             </span>
                                                         </td>
                                                         <td><div style={{ width: "20px", height: "20px", borderRadius: "50%", backgroundColor: cor.hex }}></div></td>
@@ -96,10 +135,18 @@ class Carrinho extends React.Component {
                 </div>
                 <div className="Content">
                     Custo Total: {this.state.total}€
+                    {sessionStorage.userid != null ?
+                        <>
+                            <button onClick={() => this.finalizarCompra()}>Efetuar pagamento</button>
+                        </>
+                        : <>
+                            <span style={{color:"red",marginLeft:"20px"}}>Tem de ter uma conta conectada para poder fazer uma compra</span>
+                        </>
+                    }
                 </div>
             </div>
         )
     }
 }
 
-export default Carrinho;
+export default withRouter(Carrinho);

@@ -16,7 +16,7 @@ class Header extends React.Component {
         <NavLink to="/Perfil">
           <img
             className="img1"
-            src="../imagens/pessoa.png"
+            src="http://localhost:4000/files/pessoa.png"
             alt="erro"
           ></img>
         </NavLink >
@@ -28,7 +28,7 @@ class Header extends React.Component {
         <NavLink to="/Login">
           <img
             className="img1"
-            src="../imagens/pessoa.png"
+            src="http://localhost:4000/files/pessoa.png"
             alt="erro"
           ></img>
         </NavLink >
@@ -81,13 +81,13 @@ class Header extends React.Component {
 
               <div class="coluna"><NavLink to="/">
 
-                <img src="../imagens/pes.png" alt="erro"></img>
+                <img src="http://localhost:4000/files/pes.png" alt="erro"></img>
               </NavLink>
               </div>
 
               <div className="coluna">
                 <NavLink to="/Carrinho">
-                  <img src="../imagens/saco.png" alt="erro"></img>
+                  <img src="http://localhost:4000/files/saco.png" alt="erro"></img>
                   <span className='badge badge-warning' id='cartCounter'>{this.getCarrinhoCount()}</span>
                 </NavLink>
               </div>

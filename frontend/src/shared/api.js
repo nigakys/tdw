@@ -15,6 +15,7 @@ function GetProdutos() {
     return response.json();
   });
 }
+
 function GetProdutoByRef(ref) {
   return fetch(BASE_URL + "produtos/ref/" + ref, {
     method: "GET",
@@ -47,9 +48,7 @@ function GetVariantesProduto(id) {
   });
 }
 
-
-
-function GetUniqueProduto(id) {
+function GetProdutoById(id) {
   return fetch(BASE_URL + "produtos/" + id, {
     method: "GET",
     headers: {
@@ -79,8 +78,8 @@ function GetTipoProduto(tipo) {
   });
 }
 
-function GetSortProdutoPreco(preco) {
-  return fetch(BASE_URL + "produtos/preco/" + preco, {
+function GetSortProdutoPreco(order) {
+  return fetch(BASE_URL + "produtos/preco/" + order, {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -165,6 +164,56 @@ function uploadImagemProduto(imagem) {
   })
 }
 
+function updateVariante(_id, stock) {
+  var id = new mongo.ObjectID(_id);
+  return fetch(BASE_URL + "variantes/stock/" + id, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(stock),
+  }).then((response) => {
+    if (response.status !== 200) {
+      return [];
+    }
+    return "sucess";
+  });
+}
+
+function criarEncomenda(encomenda) {
+  return fetch(BASE_URL + "encomendas/", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(encomenda),
+  }).then((response) => {
+    if (response.status !== 200) {
+      return null;
+    }
+    return "success";
+  }).catch((error) => {
+    console.log(error)
+  })
+}
+
+function GetEncomendas() {
+  return fetch(BASE_URL + "encomendas/", {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      return [];
+    }
+    return response.json();
+  });
+}
+
 function uploadImagemVariante(imagem) {
   console.log("ola" + imagem)
   return fetch(BASE_URL + "variantes/imagem", {
@@ -195,8 +244,8 @@ function GetCategorias() {
   });
 }
 
-function GetCores() {
-  return fetch(BASE_URL + "atributos/cores/", {
+function GetVariantes() {
+  return fetch(BASE_URL + "variantes/", {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -213,22 +262,6 @@ function GetCores() {
 function CriarCategoria(atributo) {
   console.log(atributo)
   return fetch(BASE_URL + "atributos/categorias/", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(atributo),
-  }).then((response) => {
-    if (response.status !== 200) {
-      return null;
-    }
-    return "success";
-  });
-}
-
-function CriarCor(atributo) {
-  return fetch(BASE_URL + "atributos/cores/", {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -325,8 +358,6 @@ function updateMorada(morada, id) {
   });
 }
 
-
-
 function upadateUser(id, list) {
   return fetch(BASE_URL + "users/" + id, {
     method: "PATCH",
@@ -360,20 +391,6 @@ function GetEmail(email) {
   })
 }
 
-function GetUniqueUser(id) {
-  return fetch(BASE_URL + "users/" + id, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  }).then((response) => {
-    if (response.status !== 200) {
-      return [];
-    }
-    return response.json();
-  });
-}
 
 
 function criarCarrinho(list) {
@@ -418,21 +435,22 @@ var funcoes = {
   upadateCarrinho,
   criarUser,
   GetUser,
-  GetUniqueProduto,
+  GetProdutoById,
   GetEmail,
   GetTipoProduto,
   GetSortProdutoPreco,
   upadateUser,
-  GetUniqueUser,
   GetVariantesProduto,
   updateMorada,
   criarVariante,
-  GetCores,
   GetCategorias,
   CriarCategoria,
-  CriarCor,
   uploadImagemVariante,
   GetProdutoByRef,
+  criarEncomenda,
+  GetVariantes,
+  updateVariante,
+  GetEncomendas,
 }
 
 export default funcoes;

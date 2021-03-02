@@ -13,6 +13,7 @@ import Produto from "./Produto";
 import ProdutosMasculinos from './ProdutosMasculinos';
 import ProdutosFemininos from './ProdutosFemininos';
 import { toast } from 'react-toastify'
+import cores from "../shared/cores"
 
 toast.configure()
 
@@ -23,6 +24,9 @@ class PaginaPrincipal extends React.Component {
     this.state = {
       produtos: [],
       especiais: [],
+      variantes: [],
+      cores: cores,
+      corSelected: "",
     };
   }
 
@@ -116,6 +120,13 @@ class PaginaPrincipal extends React.Component {
     if (sessionStorage.verified == "false") {
       toast.warning('Para poder utilizar a sua conta tem de verificar o email', { position: toast.POSITION.TOP_CENTER })
     }
+    api.GetVariantes().then((data) => {
+      this.setState({ variantes: data })
+    })
+  }
+
+  corSelected = (cor) => {
+    this.setState({ corSelected: cor.cor })
   }
 
   tenis = () => {
@@ -177,24 +188,45 @@ class PaginaPrincipal extends React.Component {
                         <div>
                           <div class="container1">
                             <div className="card">
-                              <div className="imgbox">
-                                <img
-                                  src={
-                                    "http://localhost:4000/files/" + pos.imagem
-                                  } alt="erro"
-                                ></img>
-                              </div>
-                              <div className="contentbx">
-                                <h3>{pos.nome}</h3>
-                                <div class="size"></div>
-                                <div class="cor">
-                                  <h3>Cor</h3>
-                                  <span></span>
-                                  <span></span>
-                                  <span></span>
-                                  <span></span>
-                                </div>
-                              </div>
+
+                              {this.state.variantes.map((variante) => {
+                                if (this.state.corSelected === "") {
+                                  this.setState({ corSelected: variante.cor })
+                                }
+                                if (this.state.corSelected === variante.cor && variante.ref === pos.ref) {
+                                  return (
+                                    <><div className="imgbox">
+                                      <img
+                                        src={
+                                          "http://localhost:4000/files/" + variante.imagens[0]
+                                        } alt="erro"
+                                      ></img>
+                                    </div>
+                                      <div className="contentbx">
+                                      <Link style={{ textDecoration: "none" }} to={"/Produto/" + pos.ref}><h3>{pos.nome}</h3></Link>
+                                        <div class="size"></div>
+                                       
+                                        <div class="cor">
+                                          {this.state.cores.map((cor) => {
+                                            return (
+                                              <>
+                                                {this.state.variantes.map((variante) => {
+                                                  if (variante.cor === cor.cor && pos.ref === variante.ref)
+                                                    return (
+                                                      <>
+                                                        <div  onClick={() => this.corSelected(cor)} style={{ width: "20px", height: "20px", borderRadius: "50%", backgroundColor: cor.hex,marginTop:"30px",marginRight:"10px",cursor:"pointer"}}></div>
+                                                      </>
+                                                    )
+                                                })}
+                                              </>
+                                            )
+                                          })}
+                                        </div>
+                                      </div>
+                                    </>
+                                  )
+                                }
+                              })}
                             </div>
                           </div>
                         </div>
@@ -206,7 +238,6 @@ class PaginaPrincipal extends React.Component {
 
               <section class="container_produtos">
                 <div className="headerSpecial"><div>
-
                   <h2>Novos Produtos</h2><div>
                   </div>
                   <NavLink to="/Produtos">
@@ -233,14 +264,12 @@ class PaginaPrincipal extends React.Component {
                             </div>
                           </div>
                         </div>
-
                       );
                     }
                   })}
-
                 </div>
               </section>
-              
+
             </div>
 
           )}
@@ -256,24 +285,24 @@ class PaginaPrincipal extends React.Component {
             ></Produtos>
           )}
         ></Route>
-          <Route
+        <Route
           exact
           path="/ProdutosMasculinos"
           render={() => (
             <ProdutosMasculinos
-            produtos={this.state.produtos}
-             MouseEnter={this.MouseEnter}
+              produtos={this.state.produtos}
+              MouseEnter={this.MouseEnter}
               MouseLeave={this.MouseLeave}
             ></ProdutosMasculinos>
           )}
         ></Route>
-              <Route
+        <Route
           exact
           path="/ProdutosFemininos"
           render={() => (
             <ProdutosFemininos
-            produtos={this.state.produtos}
-             MouseEnter={this.MouseEnter}
+              produtos={this.state.produtos}
+              MouseEnter={this.MouseEnter}
               MouseLeave={this.MouseLeave}
             ></ProdutosFemininos>
           )}
@@ -281,7 +310,7 @@ class PaginaPrincipal extends React.Component {
         <Route exact path="/Login" render={() => <Login></Login>}></Route>
         <Route exact path="/Perfil" render={() => <Perfil></Perfil>}></Route>
         <Route exact path="/Carrinho" render={() => <Carrinho></Carrinho>}></Route>
-        <Route exact path="/Produto/:id" render={(props) => <Produto {...props}  produtos={this.state.produtos}></Produto>}></Route>
+        <Route exact path="/Produto/:id" render={(props) => <Produto {...props} produtos={this.state.produtos}></Produto>}></Route>
         {sessionStorage.isAdmin === "true" ?
           <>
             <Route exact path="/Dashboard" render={() => (

@@ -469,9 +469,7 @@
   width: 399px;
   background-color: #f7f2f2;
   margin-top: 50px;
-  height: 379px;
-
-
+  height: 450px;
 }
 .h22{
   margin-bottom: 70px;
@@ -488,6 +486,7 @@
   margin-left: auto;
   margin-right: auto;
   margin-top: 100px;
+  min-height: 56vh;
  
   border-radius: 8px;}
 

@@ -16,10 +16,12 @@ connect.then(() => {
     let variantes = require("./controllers/variantes");
     let users = require("./controllers/users");
     let atributos = require("./controllers/atributos");
+    let encomendas = require("./controllers/encomendas");
 
     app.use(express.static('public'))
     app.use(cors());
     app.use("/variantes", variantes)
+    app.use("/encomendas", encomendas)
     app.use("/users", users)
     app.use("/produtos", produtos)
     app.use("/atributos", atributos)

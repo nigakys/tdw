@@ -44,3 +44,59 @@
   .option1{
       background-color: white;
   }
+
+  .formVariantes{
+    display: flex;
+   
+    min-height: calc(100vh - 260px);
+     width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    margin-top: 50px;
+   min-height: 60vh;
+   color: rgb(0, 0, 0);
+  margin-bottom: 30px;
+  justify-content: center;
+  padding: 10px 10px 10px 10px;
+  border: 2px solid black;
+  border-radius: 10px;
+    background: rgb(195, 205, 223);
+    flex-direction: column;
+    text-align:  left;
+    font-size: 21px;
+}
+
+.formVariantes select{
+  margin: 10px 0px 10px 0px;
+  padding-top: 8px;
+}
+.formVariantes input{
+  width: 60%;
+  padding-top: 8px;
+}
+.formVariantes a{
+  padding-top: 35px;
+}
+@media screen and (max-width: 768px) {
+  .formVariantes{
+    width: 100%;}
+  
+  .buttonHome {
+
+    background: linear-gradient(to bottom, #90A8D4 5%, #4e5a72 100%);
+    background-color: #4e5a72;
+    border-radius: 10px;
+    border: none;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 19px;
+    font-weight: bold;
+    padding: 4px 24px;
+    text-decoration: none;
+  
+  }}
+  
+ 

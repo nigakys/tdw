@@ -23,6 +23,7 @@ class Perfil extends React.Component {
             cidades: cidades
         };
     }
+    
     logout = () => {
         sessionStorage.clear();
         window.location.href = "/Login"
@@ -86,7 +87,7 @@ class Perfil extends React.Component {
 
     render() {
         return (
-            <div style={{background:"grey"}}><h1 className="dadospessoais">Dados Pessoais</h1>
+            <div><h1 className="dadospessoais">Dados Pessoais</h1>
                 <form className="dadosPessoaisForm" onSubmit={(e) => this.handleSubmit(e)}><div className="divDados">
                     <a>
                         Contacto: </a>
@@ -117,10 +118,10 @@ class Perfil extends React.Component {
                     <div className="divInfo">
                         <div className="divImgagem">
 
-                        <img src="../imagens/user.png" alt="erro"></img>
+                        <img src="http://localhost:4000/files/user.png" alt="erro"></img>
                     </div>
                         <div className="divInfoss">
-                        <button type="submit" className="buttonForm1">Confirmar</button>
+                        <button type="submit" className="buttonForm1" >Confirmar</button>
                                <NavLink  style={{color:"white",textDecoration:"none",fontSize:"16px", margin:"0px",textAlign:"center"}} onClick={() => { this.logout() }} to="/Login">Terminar Sessao
                                 </NavLink>
                     </div>

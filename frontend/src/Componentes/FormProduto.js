@@ -107,11 +107,11 @@ class FormProduto extends React.Component {
                     <img  style={{width:"250px",background:"white"}} src={"http://localhost:4000/files/" + this.state.produtos.imagem}></img><p></p>
                     Especial: <Switch checked={this.state.produtos.especial} handleToggle={() => this.toggle()} />
                     <p></p>
-                    <Link to="/dashboard"><button >Voltar</button></Link>
+                    <Link to="/dashboard"><button className="buttonHome buttonHome1" style={{background:"white",color:"black",margin:"0px"}}>Voltar</button></Link>
                     {this.state.produtos.id === "" ?
-                        <button type="submit">Adicionar</button>
+                        <button type="submit" className="buttonHome buttonHome1" style={{background:"white",color:"black"}}>Adicionar</button>
                         :
-                        <button type="submit">Editar</button>
+                        <button type="submit" className="buttonHome buttonHome1" style={{background:"white",color:"black"}}>Editar</button>
                     }
                     </div>
                 </form>

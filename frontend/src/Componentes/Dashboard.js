@@ -23,9 +23,6 @@ class Dashboard extends React.Component {
         this.setState({ visibleCategoria: visible })
         this.setState({ atributo: {} })
         this.myFormRef.reset();
-        if (this.state.visibleCor === true) {
-            this.setState({ visibleCor: false })
-        }
     }
 
     adicionarAtributo = () => {

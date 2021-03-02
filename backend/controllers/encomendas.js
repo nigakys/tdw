@@ -1,12 +1,10 @@
 var mongo = require("mongodb");
 var express = require('express');
-const variantes = require("../models/variantes");
+const encomendas = require("../models/encomendas");
 var router = express.Router();
-const fileUpload = require("express-fileupload");
-router.use(fileUpload());
 
 router.get('/', (req, res) => {
-    variantes.find().then(result => {
+    encomendas.find().then(result => {
         if (result != null) {
             res.status(200).send(result);
         }
@@ -17,11 +15,11 @@ router.get('/', (req, res) => {
 });
 
 
-router.get('/:ref', (req, res) => {
-    var query = { ref: req.params.ref };
-
-    if (req.params != null && !isNaN(req.params.ref)) {
-        variantes.find(query).then(result => {
+router.get('/:id', (req, res) => {
+    var id = new mongo.ObjectID(req.params.id);
+    var query = { _id: id };
+    if (req.params != null) {
+        encomendas.find(query).then(result => {
             if (result != null) {
                 res.status(200).send(result);
             }
@@ -35,17 +33,11 @@ router.get('/:ref', (req, res) => {
     }
 });
 
-
-
-
 router.post('/', (req, res) => {
     if (req.body != null) {
-        variantes.create(req.body)
+        encomendas.create(req.body)
             .then(() => {
                 res.status(200).send("Produto inserido" + JSON.stringify(req.body));
-            })
-            .catch((err) => {
-                console.log(err)
             })
     }
     else {
@@ -53,47 +45,13 @@ router.post('/', (req, res) => {
     }
 })
 
-router.post('/imagem', function (req, res) {
-    var file;
-    var filename;
-    var erro = null;
-    if (req.files != null) {
-        if (req.files.file.length === undefined) {
-            file = req.files.file;
-            filename = file.name;
-            file.mv('./public/files/' + filename, function (err) {
-                if (err) {
-                    erro = err;
-                }
-            })
-        }
-        else {
-            for (let index = 0; index < req.files.file.length; index++) {
-                file = req.files.file[index];
-                filename = file.name
-                file.mv('./public/files/' + filename, function (err) {
-                    if (err) {
-                        erro = err;
-                    }
-                })
-            }
-        }
-        if (erro != null) {
-            res.status(200).send("Sucesso")
-        }
-    }
-    else {
-        res.status(400).send("imagem vazia")
-    }
-});
 
-router.put('/stock/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     var id = new mongo.ObjectID(req.params.id);
     var query = { _id: id };
-   
-    var stock = { $set: { stock: req.body.stock } };
+
     if (req.body != null && req.params != null) {
-        variantes.updateOne(query, stock).then(() => {
+        encomendas.updateOne(query, req.body).then(() => {
             res.status(200).send("Atualizado com sucesso: " + JSON.stringify(req.body));
         }).catch((err) => {
             res.status(400).send(err.message);
@@ -108,7 +66,7 @@ router.delete('/:id', (req, res) => {
     var id = new mongo.ObjectID(req.params.id);
     var query = { _id: id };
     if (req.params.id != null) {
-        variantes.deleteOne(query).then(() => {
+        encomendas.deleteOne(query).then(() => {
             res.status(200).send("Apagado com sucesso");
         }).catch((err) => {
             res.status(400).send(err.message);
@@ -120,7 +78,7 @@ router.delete('/:id', (req, res) => {
 })
 
 router.delete('/', (req, res) => {
-    variantes.deleteMany().then(() => {
+    encomendas.deleteMany().then(() => {
         res.status(200).send("Apagado com sucesso");
     }).catch((err) => {
         res.status(400).send(err.message);

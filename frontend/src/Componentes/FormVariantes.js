@@ -93,21 +93,24 @@ class FormProduto extends React.Component {
         return (
             <div>
                 {this.state.variante.id === null ?
-                    <h1>Adicionar Variante</h1> :
+                    <h1 style={{textAlign:"center",marginTop:"50px"}}>Adicionar Variante</h1> :
                     <h1>Editar Variante</h1>
                 }
-                <form onSubmit={(e) => this.handleSubmit(e)}>
-                    Tamanho: <select id="Tamanho" value={this.state.variante.tamanho} onChange={(e) => this.updateField(e, "tamanho")}>
+                <form className="formVariantes" onSubmit={(e) => this.handleSubmit(e)}>
+                   <a>Tamanho:</a> <select  id="Tamanho" value={this.state.variante.tamanho} onChange={(e) => this.updateField(e, "tamanho")}>
                         {this.state.tamanhos.map((pos) => {
                             return (
                                 <option value={pos.cor}>{pos}</option>
                             )
                         })}
-                    </select><p></p>
-                    <p></p>
-                    Imagens: <input type="file" name="file" onChange={(e) => this.updateImagens(e)} ref={(input) => { file = input; }} multiple />
-                    <p></p>
-                    Cor: <select id="Cores" value={this.state.variante.cor} onChange={(e) => this.updateField(e, "cor")}>
+                    </select><a>
+                    Imagens: 
+
+                    </a>
+                   
+                  <input type="file" name="file" onChange={(e) => this.updateImagens(e)} ref={(input) => { file = input; }} multiple />
+                   
+                   <a> Cor:  </a> <select id="Cores" value={this.state.variante.cor} onChange={(e) => this.updateField(e, "cor")}>
                         {this.state.cores.map((pos) => {
                             return (
                                 <option value={pos.cor}>{pos.cor}</option>
@@ -115,12 +118,13 @@ class FormProduto extends React.Component {
                         })}
                     </select>
                     <div style={{ width: "30px", height: "30px", backgroundColor: this.state.selectedCor.hex,float:"right",marginRight:"40%" }}></div>
-                    <p></p>
+                    
 
-                    Stock: <input id="Stock" type="number" value={this.state.variante.stock} onChange={(e) => this.updateField(e, "stock")}></input>
-                    <p></p>
-                    <Link to={"/dashboard/info/" + this.props.match.params.id}><button >Voltar</button></Link>
-                    <button type="submit">Adicionar</button>
+                    Stock: <input  id="Stock" type="number" value={this.state.variante.stock} onChange={(e) => this.updateField(e, "stock")}></input>
+                    
+                    <Link to={"/dashboard/info/" + this.props.match.params.id}>
+                        <button className="buttonHome buttonHome1" style={{margin:"0px"}}>Voltar</button></Link>
+                    <button type="submit" className="buttonHome buttonHome1" style={{width:"160px",margin:"-40px 0px 0px 180px"}}>Adicionar</button>
                 </form>
             </div>
         );

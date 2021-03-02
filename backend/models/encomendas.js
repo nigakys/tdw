@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const encomendasSchema = new Schema({
     userId: {
-        type: Number,
+        type: String,
         required: true,
     },
     produtos: {
@@ -11,7 +11,11 @@ const encomendasSchema = new Schema({
         required: true
     },
     dataEncomenda: {
-        type: Date,
+        type: String,
+        required: true
+    },
+    custo: {
+        type: Number,
         required: true
     }
 })
